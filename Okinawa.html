@@ -157,64 +157,71 @@
 <body class="okinawa-ambient-bg text-slate-800 font-sans min-h-screen antialiased flex flex-col selection:bg-sky-500 selection:text-white pb-24 md:pb-8">
 
   <!-- =========================================================================
-       TOP NAVIGATION & WEATHER BAR
-       ========================================================================= -->
-  <header class="wave-bg text-white shadow-lg sticky-header-safe">
+       TOP NAVIGATI  <header class="wave-bg text-white shadow-lg sticky-header-safe">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
+      <div class="flex items-center justify-between h-15 sm:h-18 gap-2">
         
-        <!-- Logo & Title with Shisa Artwork Avatar -->
-        <div class="flex items-center space-x-2.5 sm:space-x-3.5 min-w-0">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-md shrink-0 p-0.5 overflow-hidden ring-2 ring-amber-300/80" title="沖繩守護神 風獅爺">
-            <img src="avatar.png" class="w-full h-full object-cover rounded-xl" alt="風獅爺">
+        <!-- Screenshot-style Location & Title: 📍 沖繩 OKINAWA -->
+        <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
+          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-xs shrink-0 p-0.5 overflow-hidden ring-2 ring-amber-300/80">
+            <img src="avatar.png" class="w-full h-full object-cover rounded-full" alt="沖繩風獅爺">
           </div>
-          <div class="min-w-0 flex-1">
-            <div class="flex items-center space-x-1.5 sm:space-x-2">
-              <h1 class="text-base sm:text-xl md:text-2xl font-black tracking-wide text-white whitespace-nowrap drop-shadow-sm">煥然一新</h1>
-              <span class="text-[10px] bg-amber-400 text-amber-950 font-black px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-xs">
-                沖繩行
-              </span>
+          <div class="flex flex-col min-w-0">
+            <div class="flex items-baseline space-x-1.5">
+              <span class="text-white text-base sm:text-lg">📍</span>
+              <h1 class="text-lg sm:text-2xl font-black tracking-wider text-white whitespace-nowrap drop-shadow-md">沖繩</h1>
+              <span class="text-[10px] sm:text-xs text-amber-300 font-bold tracking-widest uppercase hidden xs:inline">OKINAWA</span>
+              <span class="text-xs animate-pulse hidden sm:inline">🌺</span>
             </div>
-            <p class="text-[10px] sm:text-xs text-sky-100 font-medium tracking-wide truncate max-w-[180px] sm:max-w-none">
-              2026/11/16 ~ 11/19 • 4天3夜動態導航
-            </p>
+            <div class="h-0.5 w-14 sm:w-20 bg-gradient-to-r from-amber-300 via-sky-200 to-transparent rounded-full -mt-0.5"></div>
           </div>
         </div>
 
-        <!-- Quick Controls: Compact on Mobile (Z Flip 6), Expanded on Tablet (Tab S10 FE) -->
-        <div class="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
+        <!-- Top Right Actions: 🔍 🗺️ ☰ and Weather (Matching Screenshot) -->
+        <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
           
-          <!-- Live Weather Pill (Compact on Mobile) -->
-          <div class="bg-white/15 hover:bg-white/20 transition backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1.5 shadow-inner cursor-pointer" onclick="toggleWeatherCity()" title="點擊切換那霸 / 名護氣溫">
-            <div id="weatherIconContainer" class="text-lg sm:text-xl">⛅</div>
-            <div class="text-left leading-tight">
-              <span id="liveWeatherTemp" class="text-xs sm:text-sm font-bold text-amber-300">23°C</span>
-            </div>
-          </div>
+          <!-- Live Weather Pill -->
+          <button onclick="toggleWeatherCity()" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md px-2 sm:px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1 shadow-inner text-xs" title="切換那霸 / 名護氣溫">
+            <span id="weatherIconContainer">⛅</span>
+            <span id="liveWeatherTemp" class="font-bold text-amber-300">23°C</span>
+          </button>
 
-          <!-- Desktop / Tablet Quick Modal Buttons (Hidden on small mobile to avoid crowding) -->
-          <div class="hidden md:flex items-center space-x-2">
-            <button onclick="openModal('currencyModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="日幣台幣即時換算">
+          <!-- Search Button (🔍) -->
+          <button onclick="openModal('searchModal')" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center" title="搜尋景點、美食與代碼">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+          </button>
+
+          <!-- Map Shortcut Button (🗺️) -->
+          <a href="#mapSection" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center" title="跳轉至動態地圖">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+          </a>
+
+          <!-- Menu Hamburger Button (☰) -->
+          <button onclick="openModal('menuModal')" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center" title="所有行程與旅行工具選單">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+
+          <!-- Desktop Quick Modal Buttons -->
+          <div class="hidden lg:flex items-center space-x-1.5 pl-1.5 border-l border-white/20">
+            <button onclick="openModal('currencyModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition shadow-sm">
               <span>💴</span>
-              <span>匯率換算</span>
+              <span>匯率</span>
             </button>
-
-            <button onclick="openModal('checklistModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="出國行李與購物清單">
+            <button onclick="openModal('checklistModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition shadow-sm">
               <span>🎒</span>
-              <span>Checklist</span>
+              <span>清單</span>
               <span id="checklistBadge" class="bg-rose-500 text-[10px] text-white px-1.5 py-0.2 rounded-full font-bold">0</span>
             </button>
-
-            <button onclick="openModal('drivingModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="自駕守則與MapCode導航">
+            <button onclick="openModal('drivingModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition shadow-sm">
               <span>🚗</span>
-              <span class="hidden lg:inline">自駕導航手冊</span>
+              <span>自駕</span>
             </button>
           </div>
 
-          <!-- PWA Android Install Button (Auto shown on Chrome) -->
+          <!-- PWA Android Install Button -->
           <button id="pwaInstallBtnHeader" onclick="triggerPwaInstall()" class="pwa-install-btn hidden bg-amber-400 hover:bg-amber-300 text-amber-950 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition shadow-md animate-bounce" title="安裝至 Android 手機主畫面">
             <span>📲</span>
-            <span class="hidden xs:inline">安裝</span>
+            <span class="hidden sm:inline">安裝</span>
           </button>
 
         </div>
@@ -226,7 +233,110 @@
   <!-- =========================================================================
        MAIN APPLICATION CONTAINER
        ========================================================================= -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-5">
+  <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-5 space-y-4 sm:space-y-5">
+    
+    <!-- =========================================================================
+         RESORT HERO SHOWCASE BANNER (Matching Screenshot Theme & Signposts)
+         ========================================================================= -->
+    <section class="relative rounded-3xl overflow-hidden shadow-xl border border-white/80 bg-slate-900 group">
+      <!-- Background Artwork (hero-art.jpg) -->
+      <div class="relative h-60 sm:h-72 md:h-88 w-full overflow-hidden">
+        <img src="hero-art.jpg" class="w-full h-full object-cover object-top filter brightness-[0.98] group-hover:scale-102 transition duration-700 ease-out" alt="沖繩 Okinawa">
+        
+        <!-- Multi-layer gradient overlays for contrast & island aesthetic -->
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/35 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-sky-950/60 via-transparent to-slate-950/30"></div>
+
+        <!-- Top Badges -->
+        <div class="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between pointer-events-none">
+          <span class="bg-amber-400/95 backdrop-blur-md text-amber-950 text-[11px] font-black px-2.5 py-0.5 rounded-full shadow-md tracking-wider flex items-center gap-1 pointer-events-auto">
+            <span>めんそーれ！</span>
+            <span class="text-[10px] opacity-90 font-normal">琉球迎賓</span>
+          </span>
+
+          <span class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-white/30 shadow-xs pointer-events-auto">
+            2026/11/16 ~ 11/19 • 4天3夜
+          </span>
+        </div>
+
+        <!-- Center & Bottom Content: Calligraphy Title + Wooden Signpost Waypoint Quick Jumps -->
+        <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-5 sm:right-5 text-white space-y-2 sm:space-y-2.5">
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-wide drop-shadow-md flex items-center gap-1.5">
+                <span>沖縄</span>
+                <span class="text-lg sm:text-2xl font-serif italic text-amber-300">OKINAWA</span>
+                <span class="text-xl sm:text-2xl animate-pulse">🌺</span>
+              </h2>
+            </div>
+            <p class="text-xs sm:text-sm text-sky-100/95 font-medium tracking-wide drop-shadow mt-0.5">
+              — 美しい島、また行きたくなる —
+            </p>
+          </div>
+
+          <!-- Interactive Wooden Signposts (Directly referencing screenshot wooden arrow signs) -->
+          <div class="pt-0.5">
+            <div class="text-[10px] font-bold text-sky-200 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+              <span>🪵 木牌景點直達</span>
+              <span class="text-[9px] text-amber-300 font-normal">（點選定位卡片）</span>
+            </div>
+            <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scroll-smooth" style="scrollbar-width: none;">
+              
+              <!-- Sign 1: 古宇利島 -->
+              <button onclick="jumpToSpot(1, 'd2-3')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>🌉</span>
+                <span>古宇利島</span>
+                <span class="text-[10px] text-amber-300 font-mono">D2</span>
+              </button>
+
+              <!-- Sign 2: 美ら海水族館 -->
+              <button onclick="jumpToSpot(1, 'd2-4')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>🐟</span>
+                <span>美ら海水族館</span>
+                <span class="text-[10px] text-sky-300 font-mono">D2</span>
+              </button>
+
+              <!-- Sign 3: 首里城 / 波上宮 -->
+              <button onclick="jumpToSpot(2, 'd3-1')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-100 rounded-xl text-xs font-bold border border-rose-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>⛩️</span>
+                <span>波上宮海灘</span>
+                <span class="text-[10px] text-rose-300 font-mono">D3</span>
+              </button>
+
+              <!-- Sign 4: 瀨長島 -->
+              <button onclick="jumpToSpot(2, 'd3-3')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-teal-950/80 hover:bg-teal-900 text-teal-100 rounded-xl text-xs font-bold border border-teal-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>🥞</span>
+                <span>瀨長島海景</span>
+                <span class="text-[10px] text-teal-300 font-mono">D3</span>
+              </button>
+
+              <!-- Sign 5: ASHIBINAA -->
+              <button onclick="jumpToSpot(0, 'd1-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>🛍️</span>
+                <span>奧特萊斯</span>
+                <span class="text-[10px] text-amber-300 font-mono">D1</span>
+              </button>
+
+              <!-- Sign 6: 美國村 -->
+              <button onclick="jumpToSpot(1, 'd2-5')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-indigo-950/80 hover:bg-indigo-900 text-indigo-100 rounded-xl text-xs font-bold border border-indigo-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>🎡</span>
+                <span>美國村夜景</span>
+                <span class="text-[10px] text-indigo-300 font-mono">D2</span>
+              </button>
+
+              <!-- Sign 7: 傑克牛排 -->
+              <button onclick="jumpToSpot(0, 'd1-4')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-red-950/80 hover:bg-red-900 text-red-100 rounded-xl text-xs font-bold border border-red-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>🥩</span>
+                <span>傑克牛排</span>
+                <span class="text-[10px] text-red-300 font-mono">D1</span>
+              </button>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
     
     <!-- Multi-Day Tabs Selector & Mobile-Responsive Action Bar -->
     <div class="bg-white/90 backdrop-blur-md p-2.5 sm:p-3 rounded-2xl border border-white/80 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
@@ -646,6 +756,109 @@
     </div>
   </div>
 
+  <!-- 5. Interactive Spot Search Modal (Matching 🔍 in screenshot) -->
+  <div id="searchModal" class="hidden fixed inset-0 z-50 flex items-start justify-center p-3 sm:p-6 pt-16 sm:pt-20">
+    <div class="modal-backdrop fixed inset-0" onclick="closeModal('searchModal')"></div>
+    <div class="bg-white rounded-3xl p-4 sm:p-6 w-full max-w-xl z-10 shadow-2xl space-y-3.5 border border-slate-200 relative max-h-[80vh] flex flex-col animate-in fade-in zoom-in-95 duration-150">
+      
+      <!-- Search Input Header -->
+      <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
+        <span class="text-xl text-sky-600">🔍</span>
+        <input type="text" id="spotSearchInput" placeholder="搜尋景點、拉麵、牛排、MapCode、代碼..." oninput="handleSpotSearch(this.value)" class="flex-grow text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium text-slate-800">
+        <button onclick="closeModal('searchModal')" class="text-slate-400 hover:text-slate-600 text-base font-bold p-1.5 rounded-lg">✕</button>
+      </div>
+
+      <!-- Quick Category Suggestions -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs shrink-0" style="scrollbar-width: none;">
+        <span class="text-slate-400 text-[11px] shrink-0 font-medium">熱搜：</span>
+        <button onclick="fillSearchAndRun('水族館')" class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-lg hover:bg-sky-100 shrink-0 font-medium">🐟 水族館</button>
+        <button onclick="fillSearchAndRun('牛排')" class="px-2.5 py-1 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 shrink-0 font-medium">🥩 牛排</button>
+        <button onclick="fillSearchAndRun('古宇利')" class="px-2.5 py-1 bg-amber-50 text-amber-800 rounded-lg hover:bg-amber-100 shrink-0 font-medium">🌉 古宇利</button>
+        <button onclick="fillSearchAndRun('鬆餅')" class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 shrink-0 font-medium">🥞 瀨長島鬆餅</button>
+        <button onclick="fillSearchAndRun('波上宮')" class="px-2.5 py-1 bg-rose-50 text-rose-700 rounded-lg hover:bg-rose-100 shrink-0 font-medium">⛩️ 波上宮</button>
+        <button onclick="fillSearchAndRun('Outlet')" class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 shrink-0 font-medium">🛍️ Outlet</button>
+      </div>
+
+      <!-- Results Container -->
+      <div class="overflow-y-auto flex-grow space-y-2 pr-1" id="spotSearchResultsContainer">
+        <!-- Injected via handleSpotSearch() -->
+      </div>
+      
+      <div class="text-right text-[11px] text-slate-400 pt-1 border-t border-slate-100">
+        點擊任一結果即可自動跳轉並定位景點卡片
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 6. Hamburger Travel Tools Drawer (Matching ☰ in screenshot) -->
+  <div id="menuModal" class="hidden fixed inset-0 z-50 flex items-start sm:items-center justify-end p-2 sm:p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeModal('menuModal')"></div>
+    <div class="bg-white rounded-3xl p-5 w-full max-w-sm z-10 shadow-2xl space-y-4 border border-slate-200 relative animate-in slide-in-from-right duration-200 mt-14 sm:mt-0">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🌺</span>
+          <div>
+            <h3 class="font-black text-slate-900 text-base">沖繩旅行工具箱</h3>
+            <p class="text-[11px] text-slate-500">快速導航 ＆ 實用小幫手</p>
+          </div>
+        </div>
+        <button onclick="closeModal('menuModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+      </div>
+
+      <div class="space-y-2 text-xs">
+        <button onclick="closeModal('menuModal'); openModal('currencyModal');" class="w-full flex items-center justify-between p-3 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded-2xl font-bold transition">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">💴</span>
+            <span>即時匯率換算 (JPY / TWD)</span>
+          </div>
+          <span class="text-xs text-amber-600">開啟 →</span>
+        </button>
+
+        <button onclick="closeModal('menuModal'); openModal('checklistModal');" class="w-full flex items-center justify-between p-3 bg-rose-50 hover:bg-rose-100 text-rose-900 rounded-2xl font-bold transition">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">🎒</span>
+            <span>出國 Checklist 行李清單</span>
+          </div>
+          <span class="text-xs text-rose-600">檢視 →</span>
+        </button>
+
+        <button onclick="closeModal('menuModal'); openModal('drivingModal');" class="w-full flex items-center justify-between p-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-900 rounded-2xl font-bold transition">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">🚗</span>
+            <span>自駕守則 ＆ MapCode 速查</span>
+          </div>
+          <span class="text-xs text-indigo-600">查閱 →</span>
+        </button>
+
+        <button onclick="closeModal('menuModal'); openAddStopModal();" class="w-full flex items-center justify-between p-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 rounded-2xl font-bold transition">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">➕</span>
+            <span>新增自訂站點 / 美食備忘</span>
+          </div>
+          <span class="text-xs text-emerald-600">新增 →</span>
+        </button>
+
+        <button onclick="closeModal('menuModal'); triggerPwaInstall();" class="w-full flex items-center justify-between p-3 bg-sky-50 hover:bg-sky-100 text-sky-900 rounded-2xl font-bold transition">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">📲</span>
+            <span>安裝至 Android 手機主畫面 (PWA)</span>
+          </div>
+          <span class="text-xs text-sky-600">安裝 →</span>
+        </button>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+        <span>天氣切換：</span>
+        <button onclick="toggleWeatherCity()" class="font-bold text-okinawa-ocean hover:underline flex items-center gap-1">
+          <span>切換那霸 / 名護</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
   <!-- =========================================================================
        FIXED MOBILE BOTTOM NAVIGATION BAR
        ========================================================================= -->
@@ -953,6 +1166,83 @@
       renderDayTabs();
       renderActiveDay();
       showToast(`已切換至 Day ${tripData.days[index].day} • ${tripData.days[index].title}`, '🗓️');
+    }
+
+    /* Jump directly to a waypoint from wooden signs or search */
+    function jumpToSpot(dayIndex, spotId) {
+      if (currentDayIndex !== dayIndex) {
+        currentDayIndex = dayIndex;
+        renderDayTabs();
+        renderActiveDay();
+      }
+      
+      setTimeout(() => {
+        const card = document.getElementById(`timeline-card-${spotId}`);
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.classList.add('ring-4', 'ring-amber-400', 'transition-all', 'duration-500');
+          setTimeout(() => card.classList.remove('ring-4', 'ring-amber-400'), 2500);
+        }
+      }, 250);
+    }
+
+    /* Spot Search across all 4 days */
+    function handleSpotSearch(rawQuery) {
+      const query = (rawQuery || '').trim().toLowerCase();
+      const container = document.getElementById('spotSearchResultsContainer');
+      if (!container) return;
+
+      if (!query) {
+        container.innerHTML = `
+          <div class="text-center py-6 text-slate-400 text-xs">
+            <span>🏝️ 輸入關鍵字（如：水族館、牛排、飯糰、古宇利、MapCode）</span>
+          </div>
+        `;
+        return;
+      }
+
+      const results = [];
+      tripData.days.forEach((day, dIdx) => {
+        day.waypoints.forEach(wp => {
+          const matchTarget = `${wp.name} ${wp.desc || ''} ${wp.tips || ''} ${(wp.tags || []).join(' ')} ${wp.category || ''} ${wp.mapCode || ''}`.toLowerCase();
+          if (matchTarget.includes(query)) {
+            results.push({ day, dIdx, wp });
+          }
+        });
+      });
+
+      if (results.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-slate-400 text-xs">
+            <p class="text-2xl mb-1">🔍</p>
+            <p>查無符合「${rawQuery}」的景點或備註</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = results.map(item => `
+        <div onclick="closeModal('searchModal'); jumpToSpot(${item.dIdx}, '${item.wp.id}');" class="p-3 bg-slate-50 hover:bg-sky-50/80 border border-slate-200 hover:border-sky-300 rounded-2xl cursor-pointer transition flex items-center justify-between gap-2 group">
+          <div class="min-w-0">
+            <div class="flex items-center gap-1.5 mb-1">
+              <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">Day ${item.day.day} (${item.day.weekday})</span>
+              <span class="text-[10px] bg-slate-200 text-slate-700 font-medium px-1.5 py-0.5 rounded-md">${item.wp.category || '景點'}</span>
+              <span class="text-[10px] text-slate-400 font-mono">${item.wp.time}</span>
+            </div>
+            <h5 class="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-okinawa-ocean truncate">${item.wp.name}</h5>
+            <p class="text-[11px] text-slate-500 truncate mt-0.5">${item.wp.desc || item.wp.tips || ''}</p>
+          </div>
+          <span class="text-xs text-sky-600 font-semibold shrink-0 group-hover:translate-x-0.5 transition">前往 →</span>
+        </div>
+      `).join('');
+    }
+
+    function fillSearchAndRun(term) {
+      const input = document.getElementById('spotSearchInput');
+      if (input) {
+        input.value = term;
+        handleSpotSearch(term);
+      }
     }
 
     function renderActiveDay() {
