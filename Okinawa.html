@@ -1357,21 +1357,29 @@
 
     /* Common action buttons helper for timeline cards */
     function renderActionButtons(wp) {
+      const parkingSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(wp.name + ' 停車場 駐車場 parking')}`;
+
       return `
         <div class="space-y-2 pt-1">
-          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+          <div class="flex flex-wrap items-center gap-2">
             <!-- Google Maps Link -->
-            <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 px-3.5 py-2 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs active:scale-[0.99] transition">
+            <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[120px] px-3.5 py-2 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs active:scale-[0.99] transition">
               <span>🗺️</span>
-              <span>Google Maps 導航</span>
+              <span>導航</span>
+            </a>
+
+            <!-- 附近停車場快捷搜尋 -->
+            <a href="${parkingSearchUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[120px] px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-xs active:scale-[0.99] transition" title="在 Google Maps 快速搜尋 ${wp.name} 周邊收費停車場">
+              <span>🅿️</span>
+              <span>附近停車場</span>
             </a>
 
             <!-- MapCode Copy -->
             ${wp.mapCode ? `
-              <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！可直接在車機輸入')" class="flex-1 sm:flex-initial px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99]" title="點擊複製 MapCode">
+              <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！可直接在車機輸入')" class="flex-initial px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99]" title="點擊複製 MapCode">
                 <span>🚗</span>
                 <span>MC: ${wp.mapCode}</span>
-                <span class="text-[10px] text-amber-700 bg-amber-200/70 px-1.5 py-0.5 rounded font-normal">複製</span>
+                <span class="text-[10px] text-amber-700 bg-amber-200/70 px-1 py-0.2 rounded font-normal">複製</span>
               </button>
             ` : ''}
           </div>
@@ -1387,9 +1395,9 @@
               ` : ''}
 
               ${wp.parkingInfo ? `
-                <span class="text-[11px] bg-slate-50 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 flex items-center gap-1 max-w-full" title="${wp.parkingInfo}">
-                  <span>🅿️</span>
-                  <span class="truncate max-w-[200px] sm:max-w-xs">${wp.parkingInfo}</span>
+                <span class="text-[11px] bg-emerald-50 text-emerald-900 px-2.5 py-1 rounded-lg border border-emerald-200/80 flex items-center gap-1 max-w-full" title="${wp.parkingInfo}">
+                  <span>🅿️ 現場情報：</span>
+                  <span class="font-medium truncate max-w-[220px] sm:max-w-md">${wp.parkingInfo}</span>
                 </span>
               ` : ''}
 
@@ -1410,6 +1418,7 @@
       container.innerHTML = day.waypoints.map((wp, idx) => {
         const customNoteKey = `user_note_${wp.id}`;
         const userNote = localStorage.getItem(customNoteKey) || '';
+        const parkingSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(wp.name + ' 停車場 駐車場 parking')}`;
 
         // Category 1: 交通 / 住宿 (Transit & Lodging) -> Compact streamlined pill card
         if (wp.category === '交通' || wp.category === '住宿') {
@@ -1431,14 +1440,23 @@
                     </div>
                     <h4 class="text-sm sm:text-base font-bold text-slate-900 mt-1 truncate">${idx + 1}. ${wp.name}</h4>
                     <p class="text-xs text-slate-500 mt-0.5 leading-snug">${wp.desc || wp.tips || ''}</p>
+                    ${wp.parkingInfo ? `
+                      <div class="mt-1 text-[11px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md inline-flex items-center gap-1 border border-emerald-200/60">
+                        <span>🅿️</span>
+                        <span>${wp.parkingInfo}</span>
+                      </div>
+                    ` : ''}
                   </div>
 
-                  <div class="flex items-center gap-1.5 shrink-0 pt-1 sm:pt-0">
+                  <div class="flex flex-wrap items-center gap-1.5 shrink-0 pt-1 sm:pt-0">
                     <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs active:scale-95">
                       <span>🗺️ 導航</span>
                     </a>
+                    <a href="${parkingSearchUrl}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs active:scale-95" title="搜尋附近停車場">
+                      <span>🅿️ 停車場</span>
+                    </a>
                     ${wp.mapCode ? `
-                      <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！')" class="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-mono font-bold transition">
+                      <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！')" class="px-2 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-mono font-bold transition">
                         MC: ${wp.mapCode}
                       </button>
                     ` : ''}
