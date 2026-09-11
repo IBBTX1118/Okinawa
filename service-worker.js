@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v5';
+const CACHE_NAME = 'okinawa-trip-v6';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -11,6 +11,14 @@ const STATIC_ASSETS = [
   './avatar.png',
   './shisa-art.jpg',
   './hero-art.jpg',
+  './thumb-ashibinaa.jpg',
+  './thumb-jacksteak.jpg',
+  './thumb-manzamo.jpg',
+  './thumb-kouri.jpg',
+  './thumb-churaumi.jpg',
+  './thumb-american.jpg',
+  './thumb-naminoue.jpg',
+  './thumb-senagajima.jpg',
   'https://cdn.tailwindcss.com',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
   'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js',

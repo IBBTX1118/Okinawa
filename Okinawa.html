@@ -107,6 +107,7 @@
     }
     .leaflet-tile-pane {
       will-change: transform;
+      filter: contrast(1.04) saturate(1.15) sepia(0.08) hue-rotate(-8deg);
     }
     .leaflet-container {
       background-color: #f1f5f9 !important;
@@ -453,52 +454,52 @@
           </div>
         </div>
 
-        <!-- Day-Specific Featured Guide / Recommendation Box -->
-        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card space-y-4" id="dayFeaturedGuideBox">
+        <!-- Day-Specific Featured Guide / Recommendation Box (Shuri Coral Gradient) -->
+        <div class="bg-gradient-to-br from-rose-50/95 via-amber-50/50 to-white rounded-3xl p-4 sm:p-5 border border-rose-200/90 shadow-card space-y-4" id="dayFeaturedGuideBox">
           <!-- Dynamically populated via renderFeaturedGuide() -->
         </div>
 
-        <!-- Quick JPY Currency Conversion Widget -->
-        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card space-y-3">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <!-- Quick JPY Currency Conversion Widget (Sea Salt Gold Gradient) -->
+        <div class="bg-gradient-to-br from-amber-50/95 via-yellow-50/45 to-white rounded-3xl p-4 sm:p-5 border border-amber-200/90 shadow-card space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-100 pb-2.5">
             <div class="flex items-center space-x-2">
               <span class="text-xl">💴</span>
               <h4 class="font-bold text-slate-900 text-sm sm:text-base">日幣 ⇄ 台幣快速試算</h4>
             </div>
-            <span class="text-[11px] text-slate-400">目前匯率約 0.215</span>
+            <span class="text-[11px] text-amber-800/80 font-medium">目前匯率約 0.215</span>
           </div>
 
           <div class="grid grid-cols-2 gap-2 text-xs">
             <div class="space-y-1">
-              <label class="text-[11px] text-slate-500 font-medium">日圓 (JPY ¥)</label>
+              <label class="text-[11px] text-slate-600 font-medium">日圓 (JPY ¥)</label>
               <div class="relative">
-                <input type="number" id="quickJpyInput" placeholder="例: 1000" oninput="calculateQuickExchange()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 font-mono font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
-                <span class="absolute right-2 top-2 text-slate-400">¥</span>
+                <input type="number" id="quickJpyInput" placeholder="例: 1000" oninput="calculateQuickExchange()" class="w-full bg-white/90 border border-amber-200 rounded-xl px-2.5 py-2 font-mono font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-2xs">
+                <span class="absolute right-2 top-2 text-amber-500 font-bold">¥</span>
               </div>
             </div>
 
             <div class="space-y-1">
-              <label class="text-[11px] text-slate-500 font-medium">折合新台幣 (NTD $)</label>
+              <label class="text-[11px] text-slate-600 font-medium">折合新台幣 (NTD $)</label>
               <div class="relative">
-                <input type="text" id="quickTwdOutput" readonly placeholder="0" class="w-full bg-sky-50/80 border border-sky-200 rounded-xl px-2.5 py-2 font-mono font-bold text-sky-800">
-                <span class="absolute right-2 top-2 text-sky-500">$</span>
+                <input type="text" id="quickTwdOutput" readonly placeholder="0" class="w-full bg-amber-100/70 border border-amber-200 rounded-xl px-2.5 py-2 font-mono font-bold text-amber-950 shadow-2xs">
+                <span class="absolute right-2 top-2 text-amber-700 font-bold">$</span>
               </div>
             </div>
           </div>
 
           <div class="flex flex-wrap gap-1.5 pt-1">
-            <button onclick="setQuickJpy(500)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥500</button>
-            <button onclick="setQuickJpy(1000)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥1,000</button>
-            <button onclick="setQuickJpy(3000)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥3,000</button>
-            <button onclick="setQuickJpy(5000)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥5,000</button>
-            <button onclick="setQuickJpy(10000)" class="px-2 py-1 bg-sky-100 hover:bg-sky-200 rounded-lg text-[11px] font-semibold text-sky-800">¥10,000</button>
-            <button onclick="openModal('currencyModal')" class="ml-auto text-sky-600 text-[11px] font-semibold hover:underline">更多功能 ➔</button>
+            <button onclick="setQuickJpy(500)" class="px-2 py-1 bg-white hover:bg-amber-100 border border-amber-200/80 rounded-lg text-[11px] font-semibold text-slate-700 shadow-2xs">¥500</button>
+            <button onclick="setQuickJpy(1000)" class="px-2 py-1 bg-white hover:bg-amber-100 border border-amber-200/80 rounded-lg text-[11px] font-semibold text-slate-700 shadow-2xs">¥1,000</button>
+            <button onclick="setQuickJpy(3000)" class="px-2 py-1 bg-white hover:bg-amber-100 border border-amber-200/80 rounded-lg text-[11px] font-semibold text-slate-700 shadow-2xs">¥3,000</button>
+            <button onclick="setQuickJpy(5000)" class="px-2 py-1 bg-white hover:bg-amber-100 border border-amber-200/80 rounded-lg text-[11px] font-semibold text-slate-700 shadow-2xs">¥5,000</button>
+            <button onclick="setQuickJpy(10000)" class="px-2 py-1 bg-amber-200/80 hover:bg-amber-300 border border-amber-300 rounded-lg text-[11px] font-bold text-amber-950 shadow-2xs">¥10,000</button>
+            <button onclick="openModal('currencyModal')" class="ml-auto text-amber-700 hover:text-amber-900 text-[11px] font-bold hover:underline">更多功能 ➔</button>
           </div>
         </div>
 
-        <!-- Emergency & Offline Travel Info Card -->
-        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card space-y-3 text-xs">
-          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+        <!-- Emergency & Offline Travel Info Card (Deep Sea Blue Gradient) -->
+        <div class="bg-gradient-to-br from-sky-50/95 via-cyan-50/45 to-white rounded-3xl p-4 sm:p-5 border border-sky-200/90 shadow-card space-y-3 text-xs">
+          <div class="flex items-center justify-between border-b border-sky-100 pb-2.5">
             <div class="flex items-center space-x-2">
               <span class="text-xl">🆘</span>
               <h4 class="font-bold text-slate-900 text-sm">日本旅日緊急聯絡備忘</h4>
@@ -510,7 +511,7 @@
             <!-- Injected via JavaScript -->
           </div>
 
-          <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+          <div class="pt-2 border-t border-sky-100 text-[11px] text-slate-500 flex items-center justify-between">
             <span>✈️ 支援全功能離線使用</span>
             <span class="text-emerald-600 font-semibold">PWA Ready</span>
           </div>
@@ -1147,15 +1148,18 @@
       const container = document.getElementById('dayTabsContainer');
       container.innerHTML = tripData.days.map((day, idx) => {
         const isActive = idx === currentDayIndex;
+        const activeStyle = isActive 
+          ? `background-color: ${day.themeColor}; box-shadow: 0 4px 16px ${day.themeColor}55;` 
+          : '';
         return `
-          <button onclick="switchDay(${idx})" class="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
+          <button onclick="switchDay(${idx})" style="${activeStyle}" class="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-300 ${
             isActive 
-              ? 'bg-okinawa-ocean text-white shadow-sm ring-2 ring-sky-300' 
+              ? 'text-white ring-2 ring-white/60' 
               : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
           }">
             <span class="w-2 h-2 rounded-full ${isActive ? 'bg-amber-300 animate-ping' : 'bg-slate-300'}"></span>
             <span>Day ${day.day} (${day.weekday})</span>
-            <span class="text-[10px] opacity-80 hidden md:inline">${day.title.split('＆')[0]}</span>
+            <span class="text-[10px] opacity-85 hidden md:inline">${day.title.split('＆')[0]}</span>
           </button>
         `;
       }).join('');
@@ -1249,11 +1253,26 @@
       const day = tripData.days[currentDayIndex];
       if (!day) return;
 
+      // Dynamic themeColor binding across UI
+      const timelineDayLabel = document.getElementById('timelineDayLabel');
+      if (timelineDayLabel) {
+        timelineDayLabel.textContent = `Day ${day.day}`;
+        timelineDayLabel.style.backgroundColor = day.themeColor;
+        timelineDayLabel.style.color = '#ffffff';
+        timelineDayLabel.style.boxShadow = `0 2px 8px ${day.themeColor}55`;
+      }
+
+      const timelineContainer = document.getElementById('timelineContainer');
+      if (timelineContainer) {
+        timelineContainer.style.borderColor = day.themeColor;
+      }
+
       // Update Map Header
       document.getElementById('mapTitleText').textContent = `${day.title} • 路線地圖`;
       document.getElementById('mapDayBadge').textContent = `Day ${day.day} (${day.date})`;
+      document.getElementById('mapDayBadge').style.backgroundColor = `${day.themeColor}22`;
+      document.getElementById('mapDayBadge').style.color = day.themeColor;
       document.getElementById('mapSubTitleText').textContent = day.subtitle;
-      document.getElementById('timelineDayLabel').textContent = `Day ${day.day}`;
       document.getElementById('timelineDateLabel').textContent = `${day.date} (${day.weekday})`;
       document.getElementById('addStopDaySubtitle').textContent = `將加入至 Day ${day.day} (${day.date})`;
 
@@ -1280,24 +1299,24 @@
         return;
       }
 
-      let bgClasses = 'bg-gradient-to-r from-amber-50 via-rose-50 to-amber-50 border-amber-300/80 text-amber-900';
+      let bgClasses = 'bg-gradient-to-r from-amber-50/95 via-rose-50/90 to-amber-50/95 border-amber-300 text-amber-950';
       let icon = '⚠️';
       if (notice.type === 'info') {
-        bgClasses = 'bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border-emerald-300/80 text-emerald-950';
+        bgClasses = 'bg-gradient-to-r from-emerald-50/95 via-teal-50/90 to-emerald-50/95 border-emerald-300 text-emerald-950';
         icon = '🚗';
       } else if (notice.type === 'tip') {
-        bgClasses = 'bg-gradient-to-r from-sky-50 via-indigo-50 to-sky-50 border-sky-300/80 text-sky-950';
+        bgClasses = 'bg-gradient-to-r from-sky-50/95 via-indigo-50/90 to-sky-50/95 border-sky-300 text-sky-950';
         icon = '💡';
       }
 
-      banner.className = `rounded-2xl p-4 sm:p-5 border-2 shadow-xs transition-all duration-300 ${bgClasses}`;
+      banner.className = `rounded-3xl p-4 sm:p-5 border-2 shadow-sm transition-all duration-300 ${bgClasses}`;
       banner.innerHTML = `
         <div class="flex items-start gap-3.5">
-          <div class="w-10 h-10 rounded-2xl bg-white/80 shadow-sm flex items-center justify-center text-xl shrink-0">
+          <div class="w-10 h-10 rounded-2xl bg-white/90 shadow-sm flex items-center justify-center text-xl shrink-0 border border-white">
             ${icon}
           </div>
           <div class="space-y-1 flex-grow">
-            <h3 class="text-sm sm:text-base font-bold text-slate-900">
+            <h3 class="text-sm sm:text-base font-black text-slate-900">
               ${notice.title}
             </h3>
             <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
@@ -1323,6 +1342,55 @@
       }).join('');
     }
 
+    /* Common action buttons helper for timeline cards */
+    function renderActionButtons(wp) {
+      return `
+        <div class="space-y-2 pt-1">
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+            <!-- Google Maps Link -->
+            <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 px-3.5 py-2 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs active:scale-[0.99] transition">
+              <span>🗺️</span>
+              <span>Google Maps 導航</span>
+            </a>
+
+            <!-- MapCode Copy -->
+            ${wp.mapCode ? `
+              <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！可直接在車機輸入')" class="flex-1 sm:flex-initial px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99]" title="點擊複製 MapCode">
+                <span>🚗</span>
+                <span>MC: ${wp.mapCode}</span>
+                <span class="text-[10px] text-amber-700 bg-amber-200/70 px-1.5 py-0.5 rounded font-normal">複製</span>
+              </button>
+            ` : ''}
+          </div>
+
+          <!-- Secondary Info: Phone, Parking, Delete Custom Stop -->
+          ${(wp.phone || wp.parkingInfo || wp.isCustom) ? `
+            <div class="flex flex-wrap items-center gap-2 text-xs pt-0.5">
+              ${wp.phone ? `
+                <a href="tel:${wp.phone}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-mono transition flex items-center gap-1.5">
+                  <span>📞</span>
+                  <span>${wp.phone}</span>
+                </a>
+              ` : ''}
+
+              ${wp.parkingInfo ? `
+                <span class="text-[11px] bg-slate-50 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 flex items-center gap-1 max-w-full" title="${wp.parkingInfo}">
+                  <span>🅿️</span>
+                  <span class="truncate max-w-[200px] sm:max-w-xs">${wp.parkingInfo}</span>
+                </span>
+              ` : ''}
+
+              ${wp.isCustom ? `
+                <button onclick="deleteCustomStop('${wp.id}')" class="ml-auto text-rose-500 hover:text-rose-700 text-xs font-semibold py-1">
+                  🗑️ 刪除站點
+                </button>
+              ` : ''}
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }
+
     function renderTimeline(day) {
       const container = document.getElementById('timelineContainer');
       
@@ -1330,91 +1398,186 @@
         const customNoteKey = `user_note_${wp.id}`;
         const userNote = localStorage.getItem(customNoteKey) || '';
 
+        // Category 1: 交通 / 住宿 (Transit & Lodging) -> Compact streamlined pill card
+        if (wp.category === '交通' || wp.category === '住宿') {
+          return `
+            <div class="relative group" id="timeline-card-${wp.id}">
+              <div class="absolute -left-[31px] sm:-left-[39px] top-3 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-xs z-10" style="border-color: ${wp.color || day.themeColor}">
+                <span class="text-xs">${wp.icon || (wp.category === '交通' ? '🚗' : '🏨')}</span>
+              </div>
+
+              <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-3.5 border border-slate-200/90 shadow-xs hover:shadow-md transition space-y-2">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div class="min-w-0">
+                    <div class="flex items-center gap-2">
+                      <span class="text-[10px] font-bold px-2 py-0.5 rounded-md text-white shadow-2xs" style="background-color: ${wp.color || day.themeColor}">
+                        ${wp.category}
+                      </span>
+                      <span class="text-xs font-mono font-bold text-slate-700">${wp.time}</span>
+                      ${(wp.tags || []).map(t => `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-medium">${t}</span>`).join('')}
+                    </div>
+                    <h4 class="text-sm sm:text-base font-bold text-slate-900 mt-1 truncate">${idx + 1}. ${wp.name}</h4>
+                    <p class="text-xs text-slate-500 mt-0.5 leading-snug">${wp.desc || wp.tips || ''}</p>
+                  </div>
+
+                  <div class="flex items-center gap-1.5 shrink-0 pt-1 sm:pt-0">
+                    <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs active:scale-95">
+                      <span>🗺️ 導航</span>
+                    </a>
+                    ${wp.mapCode ? `
+                      <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！')" class="px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-mono font-bold transition">
+                        MC: ${wp.mapCode}
+                      </button>
+                    ` : ''}
+                    ${wp.phone ? `
+                      <a href="tel:${wp.phone}" class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-mono transition" title="撥打電話">
+                        📞
+                      </a>
+                    ` : ''}
+                    ${wp.isCustom ? `
+                      <button onclick="deleteCustomStop('${wp.id}')" class="text-rose-500 hover:text-rose-700 text-xs font-semibold px-1">
+                        🗑️
+                      </button>
+                    ` : ''}
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        // Category 2: 美食 / 購物 (Gourmet & Shopping) -> Warm-tinted postcard card with prominent shop title
+        if (wp.category === '美食' || wp.category === '購物') {
+          const isFood = wp.category === '美食';
+          const cardBg = isFood 
+            ? 'bg-gradient-to-br from-rose-50/70 via-white to-amber-50/40 border-rose-200/80' 
+            : 'bg-gradient-to-br from-amber-50/70 via-white to-orange-50/30 border-amber-200/80';
+          const themeBadgeColor = isFood ? '#f43f5e' : '#f59e0b';
+
+          return `
+            <div class="relative group" id="timeline-card-${wp.id}">
+              <div class="absolute -left-[31px] sm:-left-[39px] top-2.5 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-sm z-10" style="border-color: ${wp.color || themeBadgeColor}">
+                <span class="w-2 h-2 rounded-full" style="background-color: ${wp.color || themeBadgeColor}"></span>
+              </div>
+
+              <div class="${cardBg} rounded-3xl p-4 sm:p-5 border shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
+                
+                <!-- Postcard Thumbnail if available -->
+                ${wp.image ? `
+                  <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
+                    <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
+                      <span class="text-[11px] font-bold bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-lg">🍽️ ${wp.name.split(' ')[0]}</span>
+                      <span class="text-[10px] ${isFood ? 'bg-rose-500 text-white' : 'bg-amber-400 text-amber-950'} font-bold px-2 py-0.5 rounded-full shadow-xs">
+                        ${isFood ? '在地必吃' : '免稅熱門'}
+                      </span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                <!-- Header: Tags & Time -->
+                <div class="flex flex-wrap items-center justify-between gap-2">
+                  <div class="flex items-center space-x-1.5 sm:space-x-2">
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style="background-color: ${wp.color || themeBadgeColor}">
+                      ${wp.icon || (isFood ? '🍜' : '🛍️')} ${wp.category}
+                    </span>
+                    ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md ${isFood ? 'bg-rose-100/70 text-rose-800' : 'bg-amber-100/70 text-amber-800'}">${t}</span>`).join('')}
+                  </div>
+                  <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-slate-800">
+                    <svg class="w-4 h-4 ${isFood ? 'text-rose-500' : 'text-amber-500'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="font-mono">${wp.time}</span>
+                  </div>
+                </div>
+
+                <!-- Title & Desc -->
+                <div>
+                  <h4 class="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+                    <span>${idx + 1}. ${wp.name}</span>
+                  </h4>
+                  <p class="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
+                    ${wp.desc || ''}
+                  </p>
+                </div>
+
+                <!-- Tips / Gourmet Warning -->
+                ${wp.tips ? `
+                  <div class="${isFood ? 'bg-rose-50/90 border-rose-200' : 'bg-amber-50/90 border-amber-200'} border rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
+                    <span class="text-base shrink-0">${isFood ? '🥢' : '🛍️'}</span>
+                    <p class="leading-relaxed"><strong>${isFood ? '老饕指南：' : '採購攻略：'}</strong>${wp.tips}</p>
+                  </div>
+                ` : ''}
+
+                <!-- Action Buttons -->
+                ${renderActionButtons(wp)}
+
+                <!-- Personal Memo Note Input -->
+                <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
+                  <span class="text-slate-400">📝 筆記：</span>
+                  <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-white border border-slate-200 focus:border-rose-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
+                </div>
+
+              </div>
+            </div>
+          `;
+        }
+
+        // Category 3: 景點 / 絕景 (Attractions) -> Full postcard style with rich image
         return `
           <div class="relative group" id="timeline-card-${wp.id}">
             <!-- Custom Pin Dot -->
-            <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-sm" style="border-color: ${wp.color || day.themeColor}">
-              <span class="w-1.5 h-1.5 rounded-full" style="background-color: ${wp.color || day.themeColor}"></span>
+            <div class="absolute -left-[31px] sm:-left-[39px] top-2.5 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-sm z-10" style="border-color: ${wp.color || day.themeColor}">
+              <span class="w-2 h-2 rounded-full" style="background-color: ${wp.color || day.themeColor}"></span>
             </div>
 
-            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card hover:shadow-md transition space-y-3">
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-sky-100 shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
               
+              <!-- Postcard Thumbnail if available -->
+              ${wp.image ? `
+                <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
+                  <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
+                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                  <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
+                    <span class="text-[11px] font-bold bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-lg">📍 ${wp.name.split(' ')[0]}</span>
+                    <span class="text-[10px] bg-amber-400 text-amber-950 font-black px-2 py-0.5 rounded-full shadow-xs">必訪景點</span>
+                  </div>
+                </div>
+              ` : ''}
+
               <!-- Header: Tags & Time -->
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center space-x-2">
-                  <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white" style="background-color: ${wp.color || day.themeColor}">
-                    ${wp.icon || '📍'} ${wp.category || '行程'}
+                <div class="flex items-center space-x-1.5 sm:space-x-2">
+                  <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style="background-color: ${wp.color || day.themeColor}">
+                    ${wp.icon || '🏖️'} ${wp.category}
                   </span>
-                  ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">${t}</span>`).join('')}
+                  ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-medium">${t}</span>`).join('')}
                 </div>
                 <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-slate-800">
                   <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                  <span>${wp.time}</span>
+                  <span class="font-mono">${wp.time}</span>
                 </div>
               </div>
 
               <!-- Title & Desc -->
               <div>
-                <h4 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                <h4 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
                   <span>${idx + 1}. ${wp.name}</span>
                 </h4>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
                   ${wp.desc || ''}
                 </p>
               </div>
 
               <!-- Tips / Practical Warning -->
               ${wp.tips ? `
-                <div class="bg-sky-50/70 border border-sky-200/80 rounded-xl p-3 text-xs text-slate-700 flex items-start gap-2">
+                <div class="bg-sky-50/80 border border-sky-200/90 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
                   <span class="text-sky-600 shrink-0 text-sm">💡</span>
                   <p class="leading-relaxed"><strong>攻略指南：</strong>${wp.tips}</p>
                 </div>
               ` : ''}
 
               <!-- Navigation & Quick Action Bar -->
-              <div class="space-y-2 pt-1">
-                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                  <!-- Google Maps Link: Full width on mobile for effortless thumb tap -->
-                  <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 px-3.5 py-2 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs active:scale-[0.99] transition">
-                    <span>🗺️</span>
-                    <span>Google Maps 導航</span>
-                  </a>
-
-                  <!-- MapCode Copy -->
-                  ${wp.mapCode ? `
-                    <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！可直接在車機輸入')" class="flex-1 sm:flex-initial px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99]" title="點擊複製 MapCode">
-                      <span>🚗</span>
-                      <span>MC: ${wp.mapCode}</span>
-                      <span class="text-[10px] text-amber-700 bg-amber-200/70 px-1.5 py-0.5 rounded font-normal">複製</span>
-                    </button>
-                  ` : ''}
-                </div>
-
-                <!-- Secondary Info: Phone, Parking, Delete Custom Stop -->
-                ${(wp.phone || wp.parkingInfo || wp.isCustom) ? `
-                  <div class="flex flex-wrap items-center gap-2 text-xs pt-0.5">
-                    ${wp.phone ? `
-                      <a href="tel:${wp.phone}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-mono transition flex items-center gap-1.5">
-                        <span>📞</span>
-                        <span>${wp.phone}</span>
-                      </a>
-                    ` : ''}
-
-                    ${wp.parkingInfo ? `
-                      <span class="text-[11px] bg-slate-50 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 flex items-center gap-1 max-w-full" title="${wp.parkingInfo}">
-                        <span>🅿️</span>
-                        <span class="truncate max-w-[200px] sm:max-w-xs">${wp.parkingInfo}</span>
-                      </span>
-                    ` : ''}
-
-                    ${wp.isCustom ? `
-                      <button onclick="deleteCustomStop('${wp.id}')" class="ml-auto text-rose-500 hover:text-rose-700 text-xs font-semibold py-1">
-                        🗑️ 刪除站點
-                      </button>
-                    ` : ''}
-                  </div>
-                ` : ''}
-              </div>
+              ${renderActionButtons(wp)}
 
               <!-- Personal Memo Note Input -->
               <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
