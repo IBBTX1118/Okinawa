@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <!-- Background Gradient: Okinawa Ocean & Lagoon -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7" />
+      <stop offset="50%" stop-color="#0891b2" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+
+    <!-- Gray Stone Shisa Head & Body Gradients -->
+    <linearGradient id="stoneHeadGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0" />
+      <stop offset="45%" stop-color="#94a3b8" />
+      <stop offset="100%" stop-color="#64748b" />
+    </linearGradient>
+    <linearGradient id="stoneManeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f1f5f9" />
+      <stop offset="60%" stop-color="#cbd5e1" />
+      <stop offset="100%" stop-color="#94a3b8" />
+    </linearGradient>
+
+    <!-- Red Cape (紅色披風) Gradients -->
+    <linearGradient id="capeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f87171" />
+      <stop offset="40%" stop-color="#ef4444" />
+      <stop offset="85%" stop-color="#dc2626" />
+      <stop offset="100%" stop-color="#991b1b" />
+    </linearGradient>
+    <linearGradient id="capeFoldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#dc2626" />
+      <stop offset="100%" stop-color="#7f1d1d" />
+    </linearGradient>
+    <linearGradient id="goldKnotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#a16207" />
+    </linearGradient>
+
+    <!-- Soft Drop Shadow -->
+    <filter id="dropShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#0f172a" flood-opacity="0.35" />
+    </filter>
+  </defs>
+
+  <!-- Base Rounded Container -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)" />
+
+  <!-- Wave Accent -->
+  <path d="M0,380 C130,350 200,430 330,390 C410,360 460,400 512,380 L512,512 L0,512 Z" fill="#ffffff" fill-opacity="0.18" />
+
+  <!-- Shisa Main Group -->
+  <g transform="translate(256, 252) scale(1.02)" filter="url(#dropShadow)">
+    
+    <!-- 1. Red Cape - Back / Wings (紅色披風後展飄帶) -->
+    <path d="M-95,45 C-170,80 -185,185 -125,215 C-65,195 -45,170 -65,100 Z" fill="url(#capeGrad)" stroke="#7f1d1d" stroke-width="6" />
+    <path d="M95,45 C170,80 185,185 125,215 C65,195 45,170 65,100 Z" fill="url(#capeGrad)" stroke="#7f1d1d" stroke-width="6" />
+    
+    <!-- Cape folds & shadows -->
+    <path d="M-150,130 C-110,165 -75,150 -70,120" stroke="url(#capeFoldGrad)" stroke-width="8" stroke-linecap="round" fill="none" />
+    <path d="M150,130 C110,165 75,150 70,120" stroke="url(#capeFoldGrad)" stroke-width="8" stroke-linecap="round" fill="none" />
+
+    <!-- 2. Mane Curls - Outer Top (灰石雕捲鬃) -->
+    <circle cx="0" cy="-145" r="32" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="6" />
+    <circle cx="-58" cy="-130" r="28" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="6" />
+    <circle cx="58" cy="-130" r="28" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="6" />
+
+    <!-- Left & Right Gray Ears (灰石耳) -->
+    <path d="M-92,-115 C-135,-155 -155,-85 -105,-65 Z" fill="url(#stoneHeadGrad)" stroke="#334155" stroke-width="6" />
+    <path d="M92,-115 C135,-155 155,-85 105,-65 Z" fill="url(#stoneHeadGrad)" stroke="#334155" stroke-width="6" />
+
+    <!-- Side Cheeks Stone Mane (臉側灰石鬃毛) -->
+    <circle cx="-112" cy="-22" r="32" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="6" />
+    <circle cx="112" cy="-22" r="32" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="6" />
+    <circle cx="-102" cy="48" r="28" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="6" />
+    <circle cx="102" cy="48" r="28" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="6" />
+
+    <!-- 3. Gray Stone Head (灰石風獅爺頭部) -->
+    <ellipse cx="0" cy="-22" rx="106" ry="96" fill="url(#stoneHeadGrad)" stroke="#334155" stroke-width="8" />
+
+    <!-- Stone Eyes (炯炯有神的守護雙眼) -->
+    <!-- Left Eye -->
+    <circle cx="-44" cy="-48" r="27" fill="#ffffff" stroke="#334155" stroke-width="7" />
+    <circle cx="-40" cy="-48" r="14" fill="#0f172a" />
+    <circle cx="-35" cy="-53" r="5.5" fill="#ffffff" />
+    <path d="M-78,-80 Q-42,-98 -12,-78" stroke="#334155" stroke-width="10" stroke-linecap="round" fill="none" />
+
+    <!-- Right Eye -->
+    <circle cx="44" cy="-48" r="27" fill="#ffffff" stroke="#334155" stroke-width="7" />
+    <circle cx="40" cy="-48" r="14" fill="#0f172a" />
+    <circle cx="45" cy="-53" r="5.5" fill="#ffffff" />
+    <path d="M12,-78 Q42,-98 78,-80" stroke="#334155" stroke-width="10" stroke-linecap="round" fill="none" />
+
+    <!-- Stone Lion Nose (石獅寬鼻) -->
+    <ellipse cx="0" cy="-12" rx="28" ry="20" fill="#cbd5e1" stroke="#334155" stroke-width="6" />
+    <circle cx="-10" cy="-10" r="5.5" fill="#334155" />
+    <circle cx="10" cy="-10" r="5.5" fill="#334155" />
+
+    <!-- Roaring Open Mouth (招福開懷大口) -->
+    <path d="M-66,16 Q0,8 66,16 Q60,94 0,96 Q-60,94 -66,16 Z" fill="#991b1b" stroke="#334155" stroke-width="8" />
+    <!-- Pink Tongue -->
+    <path d="M-30,68 Q0,38 30,68 Q0,102 -30,68 Z" fill="#fb7185" />
+    
+    <!-- White Stone Sharp Fangs (上下利齒) -->
+    <polygon points="-50,18 -40,36 -30,18" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    <polygon points="-25,18 -15,33 -5,18" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    <polygon points="5,18 15,33 25,18" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    <polygon points="30,18 40,36 50,18" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    <polygon points="-44,76 -34,58 -24,80" fill="#ffffff" stroke="#334155" stroke-width="3" />
+    <polygon points="24,80 34,58 44,76" fill="#ffffff" stroke="#334155" stroke-width="3" />
+
+    <!-- Chin Stone Curls -->
+    <circle cx="0" cy="112" r="22" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="5" />
+    <circle cx="-35" cy="106" r="18" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="5" />
+    <circle cx="35" cy="106" r="18" fill="url(#stoneManeGrad)" stroke="#334155" stroke-width="5" />
+
+    <!-- 4. Front Red Cape Collar & Golden Medallion (紅色披風前領與招財金鈴) -->
+    <!-- Front red bib / collar draping over the chest -->
+    <path d="M-80,105 C-50,150 50,150 80,105 C60,175 -60,175 -80,105 Z" fill="url(#capeGrad)" stroke="#7f1d1d" stroke-width="5" />
+    
+    <!-- Golden Rope Knot & Medallion (金色繫繩與御守金扣) -->
+    <circle cx="0" cy="138" r="16" fill="url(#goldKnotGrad)" stroke="#78350f" stroke-width="3.5" />
+    <circle cx="0" cy="138" r="7" fill="#fef08a" />
+    <!-- Golden tassel hanging down -->
+    <path d="M0,154 L0,185" stroke="#eab308" stroke-width="6" stroke-linecap="round" />
+    <circle cx="-5" cy="186" r="4" fill="#ca8a04" />
+    <circle cx="5" cy="186" r="4" fill="#ca8a04" />
+
+  </g>
+</svg>

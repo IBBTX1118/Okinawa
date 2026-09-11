@@ -1,0 +1,1712 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>煥然一新 - 沖繩動態行程表</title>
+  
+  <!-- PWA Manifest & Android Chrome Native Meta -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="icon.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+  <meta name="theme-color" content="#0284c7">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="煥然一新">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="煥然一新">
+  <link rel="apple-touch-icon" href="icon-192.png">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Leaflet Map CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <!-- Google Fonts: Inter & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  
+  <!-- Structured Itinerary Dataset -->
+  <script src="itinerary-data.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            okinawa: {
+              ocean: '#0284c7',      // 慶良間藍
+              lagoon: '#06b6d4',     // 珊瑚礁湖綠
+              coral: '#f43f5e',      // 扶桑花赤紅
+              sand: '#fef3c7',       // 暖金細沙
+              surf: '#f0f9ff',       // 浪花淺白
+              deep: '#0369a1',       // 琉球深海
+              emerald: '#059669',    // 山原亞熱帶綠
+              dark: '#0f172a'
+            }
+          },
+          boxShadow: {
+            'glow': '0 4px 20px -2px rgba(2, 132, 199, 0.25)',
+            'card': '0 2px 12px -1px rgba(15, 23, 42, 0.06)'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom scrollbars */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #f8fafc; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    
+    .wave-bg {
+      background: linear-gradient(135deg, #0284c7 0%, #0891b2 55%, #06b6d4 100%);
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    /* Leaflet custom map markers */
+    .custom-map-pin {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 800;
+      border-radius: 9999px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      border: 2.5px solid #ffffff;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .custom-map-pin:hover {
+      transform: scale(1.2) translateY(-2px);
+      box-shadow: 0 8px 18px rgba(0,0,0,0.35);
+    }
+    
+    .moving-car-icon {
+      font-size: 26px;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.35));
+      transition: all 0.2s linear;
+    }
+
+    #routeMap {
+      touch-action: pan-x pan-y;
+      height: 100%;
+      width: 100%;
+      background-color: #f1f5f9;
+    }
+    .leaflet-tile-pane {
+      will-change: transform;
+    }
+    .leaflet-container {
+      background-color: #f1f5f9 !important;
+      font-family: inherit;
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.18); opacity: 0.25; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .pulsing-dot {
+      animation: pulse-ring 2.2s infinite ease-in-out;
+    }
+
+    /* Ambient Tropical Okinawa Luxury Background */
+    .okinawa-ambient-bg {
+      background-color: #f0f7fd;
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(2, 132, 199, 0.12) 0px, transparent 48%),
+        radial-gradient(at 100% 0%, rgba(254, 240, 138, 0.35) 0px, transparent 42%),
+        radial-gradient(at 100% 45%, rgba(6, 182, 212, 0.10) 0px, transparent 45%),
+        radial-gradient(at 0% 85%, rgba(14, 165, 233, 0.14) 0px, transparent 50%),
+        radial-gradient(at 70% 95%, rgba(253, 230, 138, 0.28) 0px, transparent 45%);
+      background-attachment: fixed;
+    }
+
+    /* Header & Map Stacking Order Fix (Ensures Header ALWAYS stays above map on scroll) */
+    header.sticky-header-safe {
+      z-index: 1001 !important;
+      position: sticky;
+      top: 0;
+    }
+
+    #mapSection {
+      position: relative !important;
+      z-index: 10 !important;
+      isolation: isolate;
+    }
+
+    /* Modal slide animations */
+    .modal-backdrop {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+    }
+  </style>
+</head>
+<body class="okinawa-ambient-bg text-slate-800 font-sans min-h-screen antialiased flex flex-col selection:bg-sky-500 selection:text-white pb-24 md:pb-8">
+
+  <!-- =========================================================================
+       TOP NAVIGATION & WEATHER BAR
+       ========================================================================= -->
+  <header class="wave-bg text-white shadow-lg sticky-header-safe">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <!-- Logo & Title -->
+        <div class="flex items-center space-x-2.5 sm:space-x-3.5">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-inner shrink-0 p-1.5 overflow-hidden" title="沖繩守護神 風獅爺 (Shisa)">
+            <img src="icon.svg" class="w-full h-full object-contain filter drop-shadow" alt="風獅爺">
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <h1 class="text-lg sm:text-2xl font-black tracking-wide">煥然一新</h1>
+              <span class="text-[10px] sm:text-xs bg-amber-400 text-amber-950 font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
+                沖繩動態行程
+              </span>
+            </div>
+            <p class="text-[11px] sm:text-xs text-sky-100 font-medium tracking-wide">
+              2026/11/16 ~ 11/19 • 那霸 • 中北部水族館 • 南部海景
+            </p>
+          </div>
+        </div>
+
+        <!-- Practical Utility Quick Buttons (Desktop/Tablet) -->
+        <div class="flex items-center space-x-2 sm:space-x-3">
+          
+          <!-- Live Weather Display -->
+          <div class="bg-white/15 hover:bg-white/20 transition backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/25 flex items-center space-x-2 shadow-inner text-right cursor-pointer" onclick="toggleWeatherCity()" title="點擊切換那霸 / 名護氣溫">
+            <div id="weatherIconContainer" class="text-xl sm:text-2xl">⛅</div>
+            <div class="text-left leading-tight hidden xs:block">
+              <div class="flex items-center space-x-1">
+                <span id="weatherCityName" class="text-[10px] text-sky-100 font-medium">那霸即時</span>
+                <span id="liveWeatherTemp" class="text-xs sm:text-sm font-bold text-amber-300">連線中</span>
+              </div>
+              <div id="liveWeatherDesc" class="text-[9px] text-sky-100/90 truncate max-w-[90px]">讀取中...</div>
+            </div>
+          </div>
+
+          <!-- Quick Modals Trigger Buttons -->
+          <button onclick="openModal('currencyModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="日幣台幣即時換算">
+            <span>💴</span>
+            <span class="hidden sm:inline">匯率換算</span>
+          </button>
+
+          <button onclick="openModal('checklistModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="出國行李與購物清單">
+            <span>🎒</span>
+            <span class="hidden sm:inline">Checklist</span>
+            <span id="checklistBadge" class="bg-rose-500 text-[10px] text-white px-1.5 py-0.2 rounded-full font-bold">0</span>
+          </button>
+
+          <button onclick="openModal('drivingModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="自駕守則與MapCode導航">
+            <span>🚗</span>
+            <span class="hidden md:inline">自駕導航手冊</span>
+          </button>
+
+          <!-- PWA Android Install Button (Auto shown on Chrome) -->
+          <button id="pwaInstallBtnHeader" onclick="triggerPwaInstall()" class="pwa-install-btn hidden bg-amber-400 hover:bg-amber-300 text-amber-950 px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-md animate-bounce" title="安裝至 Android 手機主畫面">
+            <span>📲</span>
+            <span class="hidden xs:inline">安裝 App</span>
+          </button>
+
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       MAIN APPLICATION CONTAINER
+       ========================================================================= -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-5">
+    
+    <!-- Multi-Day Tabs Selector -->
+    <div class="bg-white/90 backdrop-blur-md p-2 sm:p-3 rounded-2xl border border-white/80 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0" id="dayTabsContainer">
+        <!-- Injected via JavaScript renderDayTabs() -->
+      </div>
+
+      <!-- Quick Action Buttons on Tab Bar -->
+      <div class="flex items-center justify-end gap-2 text-xs shrink-0">
+        <button onclick="openAddStopModal()" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition font-semibold flex items-center gap-1.5">
+          <span>➕</span>
+          <span>新增自訂站點</span>
+        </button>
+        <button onclick="resetDayCustomStops()" class="px-2.5 py-2 text-slate-400 hover:text-slate-600 transition text-[11px]" title="重置為預設行程">
+          重置當日
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Day Strategic Highlight Banner -->
+    <div id="dayNoticeBanner" class="rounded-2xl p-4 sm:p-5 border-2 shadow-xs transition-all duration-300">
+      <!-- Dynamically rendered based on active day's highlightNotice -->
+    </div>
+
+    <!-- =========================================================================
+         MAP SECTION & DYNAMIC ROUTE PLAYBACK
+         ========================================================================= -->
+    <section id="mapSection" class="bg-white/95 backdrop-blur-md rounded-2xl border border-white/80 p-4 sm:p-5 shadow-card space-y-3.5 relative z-10 isolate">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl" id="mapTitleIcon">🗺️</span>
+          <div>
+            <div class="flex items-center gap-2">
+              <h3 class="font-bold text-slate-900 text-base sm:text-lg" id="mapTitleText">當日動態路線地圖</h3>
+              <span id="mapDayBadge" class="text-[11px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">Day 1</span>
+            </div>
+            <p class="text-xs text-slate-500" id="mapSubTitleText">全行程精準點位、日本 MapCode 導航與即時車輛軌跡展示</p>
+          </div>
+        </div>
+
+        <!-- Route Animation & Reset Controls -->
+        <div class="flex items-center gap-2">
+          <button id="btnPlayRoute" onclick="toggleRouteAnimation()" class="px-4 py-2 bg-okinawa-ocean text-white rounded-xl text-xs font-bold hover:bg-sky-700 transition shadow-glow flex items-center gap-1.5">
+            <span id="playIcon">▶</span>
+            <span id="playText">播放移動軌跡</span>
+          </button>
+          <button onclick="resetMapView()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-xs font-medium transition">
+            全景居中
+          </button>
+        </div>
+      </div>
+
+      <!-- Leaflet Map Container -->
+      <div class="relative w-full rounded-2xl overflow-hidden border border-slate-200/90 bg-slate-100 shadow-inner" style="height: 380px;">
+        <div id="routeMap" class="w-full h-full"></div>
+        
+        <!-- Live Status Overlay -->
+        <div id="mapStatusOverlay" class="absolute bottom-3 left-3 z-[1000] bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-200 shadow-md text-xs flex items-center space-x-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 pulsing-dot"></span>
+          <span id="mapStatusText" class="font-medium text-slate-700">準備就緒：點擊景點標籤或播放鍵導覽</span>
+        </div>
+
+        <!-- Offline Status Badge -->
+        <div id="offlineIndicator" class="hidden absolute top-3 right-3 z-[1000] bg-amber-500/95 text-white px-3 py-1 rounded-xl shadow-md text-[11px] font-bold flex items-center gap-1.5">
+          <span>📡</span>
+          <span>離線模式已就緒</span>
+        </div>
+      </div>
+
+      <!-- Quick Waypoint Selector Chips (Interactive Jump) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-2 pt-1 text-xs" id="waypointChipsContainer">
+        <!-- Injected via JavaScript renderWaypointChips() -->
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SPLIT COLUMNS: TIMELINE (LEFT 7 COLS) & PRACTICAL CARDS (RIGHT 5 COLS)
+         ========================================================================= -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      
+      <!-- Left Column: Detailed Timeline Cards -->
+      <section class="lg:col-span-7 space-y-5">
+        
+        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+          <div class="flex items-center gap-2">
+            <h3 class="font-extrabold text-slate-900 text-lg flex items-center gap-2">
+              <span>⏱️ 行程時間軸與細節</span>
+            </h3>
+            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700" id="timelineDayLabel">Day 1</span>
+          </div>
+          <span class="text-xs text-slate-500 font-mono" id="timelineDateLabel">2026/11/16</span>
+        </div>
+
+        <!-- Timeline Cards Container -->
+        <div class="relative pl-6 sm:pl-8 border-l-2 border-dashed border-sky-300 space-y-6" id="timelineContainer">
+          <!-- Injected dynamically via renderTimeline() -->
+        </div>
+
+      </section>
+
+      <!-- Right Column: Recommendations & Practical Tools Sidebar -->
+      <aside class="lg:col-span-5 space-y-5">
+
+        <!-- Day-Specific Featured Guide / Recommendation Box -->
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card space-y-4" id="dayFeaturedGuideBox">
+          <!-- Dynamically populated via renderFeaturedGuide() -->
+        </div>
+
+        <!-- Quick JPY Currency Conversion Widget -->
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">💴</span>
+              <h4 class="font-bold text-slate-900 text-sm sm:text-base">日幣 ⇄ 台幣快速試算</h4>
+            </div>
+            <span class="text-[11px] text-slate-400">目前匯率約 0.215</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs">
+            <div class="space-y-1">
+              <label class="text-[11px] text-slate-500 font-medium">日圓 (JPY ¥)</label>
+              <div class="relative">
+                <input type="number" id="quickJpyInput" placeholder="例: 1000" oninput="calculateQuickExchange()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-2 font-mono font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <span class="absolute right-2 top-2 text-slate-400">¥</span>
+              </div>
+            </div>
+
+            <div class="space-y-1">
+              <label class="text-[11px] text-slate-500 font-medium">折合新台幣 (NTD $)</label>
+              <div class="relative">
+                <input type="text" id="quickTwdOutput" readonly placeholder="0" class="w-full bg-sky-50/80 border border-sky-200 rounded-xl px-2.5 py-2 font-mono font-bold text-sky-800">
+                <span class="absolute right-2 top-2 text-sky-500">$</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5 pt-1">
+            <button onclick="setQuickJpy(500)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥500</button>
+            <button onclick="setQuickJpy(1000)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥1,000</button>
+            <button onclick="setQuickJpy(3000)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥3,000</button>
+            <button onclick="setQuickJpy(5000)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg text-[11px] font-semibold text-slate-700">¥5,000</button>
+            <button onclick="setQuickJpy(10000)" class="px-2 py-1 bg-sky-100 hover:bg-sky-200 rounded-lg text-[11px] font-semibold text-sky-800">¥10,000</button>
+            <button onclick="openModal('currencyModal')" class="ml-auto text-sky-600 text-[11px] font-semibold hover:underline">更多功能 ➔</button>
+          </div>
+        </div>
+
+        <!-- Emergency & Offline Travel Info Card -->
+        <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card space-y-3 text-xs">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🆘</span>
+              <h4 class="font-bold text-slate-900 text-sm">日本旅日緊急聯絡備忘</h4>
+            </div>
+            <span class="text-[10px] bg-rose-50 text-rose-700 px-2 py-0.5 rounded-full font-bold">24H 支援</span>
+          </div>
+
+          <div class="space-y-2 text-slate-700" id="emergencyContactsList">
+            <!-- Injected via JavaScript -->
+          </div>
+
+          <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-500 flex items-center justify-between">
+            <span>✈️ 支援全功能離線使用</span>
+            <span class="text-emerald-600 font-semibold">PWA Ready</span>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- =========================================================================
+       MODALS & SLIDE-OVERS
+       ========================================================================= -->
+
+  <!-- 1. Currency Exchange Converter Modal -->
+  <div id="currencyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeModal('currencyModal')"></div>
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-md z-10 shadow-2xl space-y-4 border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">💴</span>
+          <h3 class="font-bold text-slate-900 text-base sm:text-lg">日幣 ⇄ 台幣匯率換算機</h3>
+        </div>
+        <button onclick="closeModal('currencyModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+      </div>
+
+      <!-- Rate setting -->
+      <div class="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl text-xs">
+        <span class="text-slate-600 font-medium">當前參考匯率 (1 JPY = ? TWD)：</span>
+        <input type="number" id="exchangeRateInput" step="0.001" value="0.215" onchange="updateCustomRate()" class="w-20 font-bold font-mono text-right bg-white border border-slate-300 rounded-lg px-2 py-1 focus:ring-2 focus:ring-sky-500">
+      </div>
+
+      <!-- Dual Input Fields -->
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">日幣金額 (JPY ¥)</label>
+          <div class="relative">
+            <input type="number" id="modalJpyInput" placeholder="輸入日幣金額" oninput="modalCalcFromJpy()" class="w-full text-lg font-mono font-bold bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <span class="absolute right-3 top-3 text-slate-400 font-bold">¥</span>
+          </div>
+        </div>
+
+        <div class="flex justify-center -my-1">
+          <button onclick="swapCurrencyFocus()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-xs">⇅</button>
+        </div>
+
+        <div>
+          <label class="block text-xs font-semibold text-slate-700 mb-1">台幣折合 (TWD $)</label>
+          <div class="relative">
+            <input type="number" id="modalTwdInput" placeholder="輸入台幣金額" oninput="modalCalcFromTwd()" class="w-full text-lg font-mono font-bold bg-sky-50 border border-sky-300 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500">
+            <span class="absolute right-3 top-3 text-sky-600 font-bold">$</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Amount Presets -->
+      <div class="space-y-1.5">
+        <span class="text-[11px] text-slate-400 font-medium">常用日本消費面額快速填入：</span>
+        <div class="grid grid-cols-4 gap-2 text-xs">
+          <button onclick="setModalJpy(1000)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold">¥1,000</button>
+          <button onclick="setModalJpy(3000)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold">¥3,000</button>
+          <button onclick="setModalJpy(5000)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold">¥5,000</button>
+          <button onclick="setModalJpy(10000)" class="py-2 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-xl font-bold">¥10,000</button>
+          <button onclick="setModalJpy(20000)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold">¥20,000</button>
+          <button onclick="setModalJpy(30000)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold">¥30,000</button>
+          <button onclick="setModalJpy(50000)" class="py-2 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold">¥50,000</button>
+          <button onclick="clearModalCurrency()" class="py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-xl font-semibold">清除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Checklist & Shopping List Modal -->
+  <div id="checklistModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeModal('checklistModal')"></div>
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-lg z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🎒</span>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base sm:text-lg">出國行前 ＆ 戰利品清單</h3>
+            <p class="text-[11px] text-slate-500">勾選狀態自動儲存於手機本地</p>
+          </div>
+        </div>
+        <button onclick="closeModal('checklistModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+      </div>
+
+      <!-- Checklist Tab Toggle -->
+      <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs shrink-0">
+        <button id="btnTabEssentials" onclick="switchChecklistTab('essentials')" class="flex-1 py-1.5 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs">
+          📋 行前必備清單
+        </button>
+        <button id="btnTabShopping" onclick="switchChecklistTab('shopping')" class="flex-1 py-1.5 rounded-lg font-bold transition text-slate-600">
+          🛍️ 戰利品免稅心願單
+        </button>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="space-y-1 shrink-0">
+        <div class="flex justify-between text-xs text-slate-600 font-medium">
+          <span>完成進度</span>
+          <span id="checklistProgressText" class="font-bold text-okinawa-ocean">0%</span>
+        </div>
+        <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+          <div id="checklistProgressBar" class="bg-okinawa-ocean h-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+      </div>
+
+      <!-- List Container -->
+      <div class="overflow-y-auto flex-grow space-y-2 pr-1" id="checklistItemsContainer">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <!-- Add New Custom Item Field -->
+      <div class="pt-2 border-t border-slate-100 flex items-center gap-2 shrink-0">
+        <input type="text" id="newChecklistInput" placeholder="新增自訂物品或品牌..." class="flex-grow text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500">
+        <button onclick="addNewChecklistItem()" class="px-3.5 py-2 bg-okinawa-ocean text-white rounded-xl text-xs font-bold hover:bg-sky-700 transition">
+          新增
+        </button>
+      </div>
+
+      <div class="flex items-center justify-between text-[11px] text-slate-400 pt-1 shrink-0">
+        <span>關閉後資料依然保留</span>
+        <button onclick="resetChecklistDefaults()" class="hover:text-rose-600 underline">重置回預設項目</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Driving Guide & MapCode Quick Reference Modal -->
+  <div id="drivingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeModal('drivingModal')"></div>
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-2xl z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">🚗</span>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base sm:text-lg">沖繩自駕備忘 ＆ 車機 MapCode 導航表</h3>
+            <p class="text-[11px] text-slate-500">日本汽車導航輸入專用（點擊即可一鍵複製）</p>
+          </div>
+        </div>
+        <button onclick="closeModal('drivingModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+      </div>
+
+      <!-- Driving Rules -->
+      <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3.5 space-y-2 shrink-0 text-xs">
+        <div class="font-bold text-amber-900 flex items-center gap-1.5">
+          <span>⚠️ 沖繩右駕 6 大核心守則</span>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-700">
+          <div>• <strong>右轉大彎、左轉小彎：</strong> 靠左行駛，方向燈在右側。</div>
+          <div>• <strong>行人與直行車絕對優先：</strong> 轉彎處務必停等行人。</div>
+          <div>• <strong>速限遵守：</strong> 高速公路 80 km/h，一般道路 40~50 km/h。</div>
+          <div>• <strong>ETC vs 一般車道：</strong> 無 ETC 卡走綠色「一般」領通行券。</div>
+          <div>• <strong>加油術語：</strong> Regular（紅槍）、満タン (Man-tan/滿杯)。</div>
+          <div>• <strong>事故處理：</strong> 無論多輕微碰撞，一律先打 110 報警備案。</div>
+        </div>
+      </div>
+
+      <!-- MapCode Table -->
+      <div class="overflow-y-auto flex-grow space-y-2 pr-1 text-xs">
+        <div class="font-bold text-slate-800 text-xs pb-1">📍 4天3夜全行程導航代碼速查表：</div>
+        <div class="space-y-1.5" id="drivingMapCodeList">
+          <!-- Injected via JavaScript -->
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 text-right shrink-0">
+        <button onclick="closeModal('drivingModal')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold">
+          關閉手冊
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Add Custom Waypoint Modal -->
+  <div id="addStopModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeModal('addStopModal')"></div>
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-md z-10 shadow-2xl space-y-4 border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200">
+      
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div class="flex items-center space-x-2">
+          <span class="text-2xl">➕</span>
+          <div>
+            <h3 class="font-bold text-slate-900 text-base">新增自訂站點 / 備忘</h3>
+            <p class="text-[11px] text-slate-500" id="addStopDaySubtitle">將加入至 Day 1</p>
+          </div>
+        </div>
+        <button onclick="closeModal('addStopModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+      </div>
+
+      <form id="addStopForm" onsubmit="handleSaveCustomStop(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">景點 / 店家名稱 *</label>
+          <input type="text" id="stopNameInput" required placeholder="例: 暖暮拉麵 (小祿店)" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-sky-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">停留時間區間</label>
+            <input type="text" id="stopTimeInput" placeholder="例: 13:00 ~ 14:00" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">分類</label>
+            <select id="stopCategoryInput" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2">
+              <option value="美食">🍜 美食</option>
+              <option value="景點">🏖️ 景點</option>
+              <option value="購物">🛍️ 購物</option>
+              <option value="交通">🚗 交通</option>
+              <option value="住宿">🏨 住宿</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">緯度 (Latitude)</label>
+            <input type="number" step="0.0001" id="stopLatInput" placeholder="例: 26.1925" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-mono">
+          </div>
+          <div>
+            <label class="block font-semibold text-slate-700 mb-1">經度 (Longitude)</label>
+            <input type="number" step="0.0001" id="stopLngInput" placeholder="例: 127.6710" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">MapCode (日本導航碼)</label>
+          <input type="text" id="stopMapCodeInput" placeholder="例: 33 095 241*11" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 font-mono">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">注意事項 / 必點攻略</label>
+          <textarea id="stopDescInput" rows="2" placeholder="備註餐點推薦、停車資訊或優惠券..." class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3 py-2"></textarea>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button type="button" onclick="closeModal('addStopModal')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-medium">取消</button>
+          <button type="submit" class="px-4 py-2 bg-okinawa-ocean text-white rounded-xl font-bold hover:bg-sky-700 shadow-sm">儲存站點</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       FIXED MOBILE BOTTOM NAVIGATION BAR
+       ========================================================================= -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 z-40 flex items-center justify-around text-xs shadow-lg">
+    <a href="#mapSection" class="flex flex-col items-center text-slate-600 hover:text-okinawa-ocean p-1">
+      <span class="text-lg">🗺️</span>
+      <span class="text-[10px] mt-0.5">動態地圖</span>
+    </a>
+    <button onclick="toggleRouteAnimation()" class="flex flex-col items-center text-okinawa-ocean font-bold p-1">
+      <span class="text-lg">▶️</span>
+      <span class="text-[10px] mt-0.5">播放路線</span>
+    </button>
+    <button onclick="openModal('currencyModal')" class="flex flex-col items-center text-amber-600 hover:text-amber-700 p-1">
+      <span class="text-lg">💴</span>
+      <span class="text-[10px] mt-0.5">匯率換算</span>
+    </button>
+    <button onclick="openModal('checklistModal')" class="flex flex-col items-center text-rose-600 hover:text-rose-700 p-1 relative">
+      <span class="text-lg">🎒</span>
+      <span class="text-[10px] mt-0.5">Checklist</span>
+    </button>
+    <button onclick="openModal('drivingModal')" class="flex flex-col items-center text-indigo-600 hover:text-indigo-700 p-1">
+      <span class="text-lg">🚗</span>
+      <span class="text-[10px] mt-0.5">自駕導航</span>
+    </button>
+    <button onclick="triggerPwaInstall()" class="pwa-install-btn hidden flex flex-col items-center text-amber-600 font-bold p-1">
+      <span class="text-lg animate-bounce">📲</span>
+      <span class="text-[10px] mt-0.5">安裝App</span>
+    </button>
+  </nav>
+
+  <!-- Toast Notification Pill -->
+  <div id="toastNotification" class="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md text-white px-4 py-3 rounded-2xl shadow-2xl text-xs flex items-center space-x-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 max-w-[90vw]">
+    <span id="toastIcon" class="text-lg">🌺</span>
+    <span id="toastMsg" class="font-medium">訊息通知</span>
+  </div>
+
+  <!-- =========================================================================
+       APPLICATION LOGIC & DATA CONTROLLER
+       ========================================================================= -->
+  <script>
+    // Active Application State
+    let currentDayIndex = 0; // 0 = Day 1
+    let activeWeatherCity = 'naha'; // 'naha' or 'nago'
+    let currentExchangeRate = 0.215;
+    let map = null;
+    let markersLayer = null;
+    let routePolyline = null;
+    let movingMarker = null;
+    let isPlaying = false;
+    let animFrameId = null;
+
+    // Load persisted data from localStorage or use defaults from OKINAWA_TRIP_DATA
+    let tripData = JSON.parse(localStorage.getItem('okinawa_trip_custom_data')) || OKINAWA_TRIP_DATA;
+    let checklists = JSON.parse(localStorage.getItem('okinawa_checklists')) || OKINAWA_TRIP_DATA.defaultChecklists;
+    let currentChecklistTab = 'essentials';
+
+    /* =========================================================================
+       1. INITIALIZATION ON LOAD
+       ========================================================================= */
+    window.addEventListener('DOMContentLoaded', () => {
+      initMap();
+      renderDayTabs();
+      renderActiveDay();
+      initChecklist();
+      initEmergencyContacts();
+      initDrivingModal();
+      fetchLiveWeather();
+      registerServiceWorker();
+
+      // Invalidate map layout on window resize & scroll to prevent tile tearing
+      window.addEventListener('resize', () => {
+        if (map) map.invalidateSize();
+      });
+
+      let scrollResizeTimer = null;
+      window.addEventListener('scroll', () => {
+        if (!scrollResizeTimer) {
+          scrollResizeTimer = setTimeout(() => {
+            if (map) map.invalidateSize({ pan: false });
+            scrollResizeTimer = null;
+          }, 150);
+        }
+      }, { passive: true });
+    });
+
+    /* =========================================================================
+       2. LEAFLET MAP INITIALIZATION & DAY RENDERING
+       ========================================================================= */
+    function initMap() {
+      // Centered on southern Okinawa
+      map = L.map('routeMap', {
+        center: [26.1850, 127.6650],
+        zoom: 12,
+        zoomControl: true,
+        scrollWheelZoom: false // Prevent mobile scroll capture
+      });
+
+      // High-performance OpenStreetMap standard tiles (Zero API keys required, no watermarks, pre-buffered)
+      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19,
+        keepBuffer: 8,
+        updateWhenIdle: false,
+        updateWhenZooming: false,
+        crossOrigin: true
+      }).addTo(map);
+
+      markersLayer = L.layerGroup().addTo(map);
+
+      // Moving Vehicle Marker
+      const carIcon = L.divIcon({
+        className: 'car-div-icon',
+        html: `<div class="moving-car-icon">🚗</div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16]
+      });
+      movingMarker = L.marker([26.2064, 127.6465], { icon: carIcon, zIndexOffset: 1000 }).addTo(map);
+    }
+
+    function renderMapForDay(dayObj) {
+      if (!map) return;
+      stopRouteAnimation();
+
+      markersLayer.clearLayers();
+      if (routePolyline) {
+        map.removeLayer(routePolyline);
+      }
+
+      const waypoints = dayObj.waypoints;
+      if (!waypoints || waypoints.length === 0) return;
+
+      const points = waypoints.map(w => w.coords);
+
+      // Create Route Line
+      routePolyline = L.polyline(points, {
+        color: dayObj.themeColor || '#0284c7',
+        weight: 4.5,
+        opacity: 0.85,
+        dashArray: '8, 8',
+        smoothFactor: 1
+      }).addTo(map);
+
+      // Add Pins
+      waypoints.forEach((wp, index) => {
+        const pinIcon = L.divIcon({
+          className: 'custom-map-div',
+          html: `<div class="custom-map-pin" style="background-color: ${wp.color || dayObj.themeColor}; width: 34px; height: 34px; font-size: 13px;">${index + 1}</div>`,
+          iconSize: [34, 34],
+          iconAnchor: [17, 17]
+        });
+
+        const marker = L.marker(wp.coords, { icon: pinIcon }).addTo(markersLayer);
+        
+        const popupContent = `
+          <div class="font-sans text-xs space-y-1.5 p-1 max-w-[200px]">
+            <div class="flex items-center gap-1.5">
+              <span class="text-sm">${wp.icon || '📍'}</span>
+              <strong class="text-slate-900 text-sm font-bold">${index + 1}. ${wp.name}</strong>
+            </div>
+            <div class="text-sky-600 font-semibold">${wp.time}</div>
+            <div class="text-slate-600 leading-snug">${wp.desc || ''}</div>
+            ${wp.mapCode ? `<div class="bg-amber-50 text-amber-800 text-[10px] font-mono p-1 rounded font-bold">MapCode: ${wp.mapCode}</div>` : ''}
+            <a href="${wp.googleMapsUrl}" target="_blank" class="inline-block mt-1 text-[11px] font-bold text-sky-600 hover:underline">🗺️ 在 Google Maps 中導航 ➔</a>
+          </div>
+        `;
+        marker.bindPopup(popupContent);
+      });
+
+      // Position car at first point
+      movingMarker.setLatLng(points[0]);
+
+      // Smoothly fit view to bounds of the day, ensuring all waypoints are fully visible
+      if (points.length > 1) {
+        map.flyToBounds(L.latLngBounds(points), { padding: [55, 55], maxZoom: 14, duration: 0.8 });
+      } else {
+        map.flyTo(points[0], 13, { duration: 0.8 });
+      }
+
+      document.getElementById('mapStatusText').textContent = `${dayObj.title}：已載入 ${waypoints.length} 個站點`;
+    }
+
+    function resetMapView() {
+      const dayObj = tripData.days[currentDayIndex];
+      if (!dayObj) return;
+      const points = dayObj.waypoints.map(w => w.coords);
+      if (points.length > 1) {
+        map.flyToBounds(L.latLngBounds(points), { padding: [40, 40], duration: 0.8 });
+      } else {
+        map.flyTo(points[0], 13, { duration: 0.8 });
+      }
+      document.getElementById('mapStatusText').textContent = '已重置為全日景觀';
+    }
+
+    function focusWaypoint(index) {
+      const dayObj = tripData.days[currentDayIndex];
+      const wp = dayObj.waypoints[index];
+      if (!map || !wp) return;
+
+      map.flyTo(wp.coords, 14.5, { duration: 1 });
+
+      const status = document.getElementById('mapStatusText');
+      status.innerHTML = `<strong style="color: ${wp.color || dayObj.themeColor}">第 ${index + 1} 站：</strong> ${wp.name} (${wp.time})`;
+
+      // Scroll timeline card into view with highlight
+      const card = document.getElementById(`timeline-card-${wp.id}`);
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        card.classList.add('ring-2', 'ring-okinawa-ocean');
+        setTimeout(() => card.classList.remove('ring-2', 'ring-okinawa-ocean'), 2000);
+      }
+    }
+
+    /* Route animation along waypoints */
+    function toggleRouteAnimation() {
+      if (isPlaying) {
+        stopRouteAnimation();
+        return;
+      }
+
+      const dayObj = tripData.days[currentDayIndex];
+      const points = dayObj.waypoints.map(w => w.coords);
+      if (points.length < 2) {
+        showToast('該日僅有單一站點，無需路線播放', 'ℹ️');
+        return;
+      }
+
+      isPlaying = true;
+      document.getElementById('playText').textContent = '暫停動態';
+      document.getElementById('playIcon').textContent = '⏸';
+
+      let currentSegment = 0;
+      let progress = 0;
+      const step = 0.018; // Speed factor
+
+      function animate() {
+        if (!isPlaying) return;
+
+        progress += step;
+        if (progress >= 1) {
+          progress = 0;
+          currentSegment++;
+          if (currentSegment >= points.length - 1) {
+            stopRouteAnimation();
+            document.getElementById('mapStatusText').textContent = `${dayObj.title} 路線巡迴完成！`;
+            showToast(`${dayObj.title} 軌跡導覽完畢！`, '🎉');
+            return;
+          }
+        }
+
+        const start = points[currentSegment];
+        const end = points[currentSegment + 1];
+        const lat = start[0] + (end[0] - start[0]) * progress;
+        const lng = start[1] + (end[1] - start[1]) * progress;
+
+        movingMarker.setLatLng([lat, lng]);
+
+        const nextWp = dayObj.waypoints[currentSegment + 1];
+        document.getElementById('mapStatusText').innerHTML = `動態移動中：前往 <strong>${nextWp.name}</strong> (${nextWp.time})`;
+
+        animFrameId = requestAnimationFrame(animate);
+      }
+
+      // Dynamically fit all waypoints with generous padding so ALL attractions are comfortably visible during playback
+      const dayBounds = L.latLngBounds(points);
+      map.flyToBounds(dayBounds, {
+        padding: [60, 60],
+        maxZoom: 14,
+        duration: 0.8
+      });
+      setTimeout(() => animate(), 850);
+    }
+
+    function stopRouteAnimation() {
+      isPlaying = false;
+      if (animFrameId) cancelAnimationFrame(animFrameId);
+      const playText = document.getElementById('playText');
+      const playIcon = document.getElementById('playIcon');
+      if (playText) playText.textContent = '播放移動軌跡';
+      if (playIcon) playIcon.textContent = '▶';
+    }
+
+    /* =========================================================================
+       3. DAY SELECTION & TIMELINE RENDERING
+       ========================================================================= */
+    function renderDayTabs() {
+      const container = document.getElementById('dayTabsContainer');
+      container.innerHTML = tripData.days.map((day, idx) => {
+        const isActive = idx === currentDayIndex;
+        return `
+          <button onclick="switchDay(${idx})" class="flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
+            isActive 
+              ? 'bg-okinawa-ocean text-white shadow-sm ring-2 ring-sky-300' 
+              : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+          }">
+            <span class="w-2 h-2 rounded-full ${isActive ? 'bg-amber-300 animate-ping' : 'bg-slate-300'}"></span>
+            <span>Day ${day.day} (${day.weekday})</span>
+            <span class="text-[10px] opacity-80 hidden sm:inline">${day.title.split('＆')[0]}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function switchDay(index) {
+      currentDayIndex = index;
+      renderDayTabs();
+      renderActiveDay();
+      showToast(`已切換至 Day ${tripData.days[index].day} • ${tripData.days[index].title}`, '🗓️');
+    }
+
+    function renderActiveDay() {
+      const day = tripData.days[currentDayIndex];
+      if (!day) return;
+
+      // Update Map Header
+      document.getElementById('mapTitleText').textContent = `${day.title} • 路線地圖`;
+      document.getElementById('mapDayBadge').textContent = `Day ${day.day} (${day.date})`;
+      document.getElementById('mapSubTitleText').textContent = day.subtitle;
+      document.getElementById('timelineDayLabel').textContent = `Day ${day.day}`;
+      document.getElementById('timelineDateLabel').textContent = `${day.date} (${day.weekday})`;
+      document.getElementById('addStopDaySubtitle').textContent = `將加入至 Day ${day.day} (${day.date})`;
+
+      // Render Strategic Highlight Banner
+      renderHighlightBanner(day);
+
+      // Render Map & Waypoint Chips
+      renderMapForDay(day);
+      renderWaypointChips(day);
+
+      // Render Timeline Cards
+      renderTimeline(day);
+
+      // Render Right-side Featured Guide
+      renderFeaturedGuide(day);
+    }
+
+    function renderHighlightBanner(day) {
+      const banner = document.getElementById('dayNoticeBanner');
+      const notice = day.highlightNotice;
+
+      if (!notice) {
+        banner.className = 'hidden';
+        return;
+      }
+
+      let bgClasses = 'bg-gradient-to-r from-amber-50 via-rose-50 to-amber-50 border-amber-300/80 text-amber-900';
+      let icon = '⚠️';
+      if (notice.type === 'info') {
+        bgClasses = 'bg-gradient-to-r from-emerald-50 via-teal-50 to-emerald-50 border-emerald-300/80 text-emerald-950';
+        icon = '🚗';
+      } else if (notice.type === 'tip') {
+        bgClasses = 'bg-gradient-to-r from-sky-50 via-indigo-50 to-sky-50 border-sky-300/80 text-sky-950';
+        icon = '💡';
+      }
+
+      banner.className = `rounded-2xl p-4 sm:p-5 border-2 shadow-xs transition-all duration-300 ${bgClasses}`;
+      banner.innerHTML = `
+        <div class="flex items-start gap-3.5">
+          <div class="w-10 h-10 rounded-2xl bg-white/80 shadow-sm flex items-center justify-center text-xl shrink-0">
+            ${icon}
+          </div>
+          <div class="space-y-1 flex-grow">
+            <h3 class="text-sm sm:text-base font-bold text-slate-900">
+              ${notice.title}
+            </h3>
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+              ${notice.content}
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderWaypointChips(day) {
+      const container = document.getElementById('waypointChipsContainer');
+      container.innerHTML = day.waypoints.map((wp, idx) => {
+        return `
+          <button onclick="focusWaypoint(${idx})" class="p-2 rounded-xl border border-slate-200 bg-slate-50 hover:bg-sky-50 hover:border-sky-300 text-left transition group">
+            <div class="text-[10px] text-sky-600 font-bold truncate">站點 ${idx + 1} • ${wp.time.split('~')[0]}</div>
+            <div class="font-semibold text-slate-800 truncate text-[11px] sm:text-xs flex items-center gap-1 mt-0.5">
+              <span>${wp.icon || '📍'}</span>
+              <span class="group-hover:text-okinawa-ocean">${wp.name}</span>
+            </div>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderTimeline(day) {
+      const container = document.getElementById('timelineContainer');
+      
+      container.innerHTML = day.waypoints.map((wp, idx) => {
+        const customNoteKey = `user_note_${wp.id}`;
+        const userNote = localStorage.getItem(customNoteKey) || '';
+
+        return `
+          <div class="relative group" id="timeline-card-${wp.id}">
+            <!-- Custom Pin Dot -->
+            <div class="absolute -left-[31px] sm:-left-[39px] top-1.5 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-sm" style="border-color: ${wp.color || day.themeColor}">
+              <span class="w-1.5 h-1.5 rounded-full" style="background-color: ${wp.color || day.themeColor}"></span>
+            </div>
+
+            <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card hover:shadow-md transition space-y-3">
+              
+              <!-- Header: Tags & Time -->
+              <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center space-x-2">
+                  <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white" style="background-color: ${wp.color || day.themeColor}">
+                    ${wp.icon || '📍'} ${wp.category || '行程'}
+                  </span>
+                  ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">${t}</span>`).join('')}
+                </div>
+                <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-slate-800">
+                  <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <span>${wp.time}</span>
+                </div>
+              </div>
+
+              <!-- Title & Desc -->
+              <div>
+                <h4 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
+                  <span>${idx + 1}. ${wp.name}</span>
+                </h4>
+                <p class="text-xs sm:text-sm text-slate-600 mt-1.5 leading-relaxed">
+                  ${wp.desc || ''}
+                </p>
+              </div>
+
+              <!-- Tips / Practical Warning -->
+              ${wp.tips ? `
+                <div class="bg-sky-50/70 border border-sky-200/80 rounded-xl p-3 text-xs text-slate-700 flex items-start gap-2">
+                  <span class="text-sky-600 shrink-0 text-sm">💡</span>
+                  <p class="leading-relaxed"><strong>攻略指南：</strong>${wp.tips}</p>
+                </div>
+              ` : ''}
+
+              <!-- Navigation & Quick Action Bar -->
+              <div class="flex flex-wrap items-center gap-2 pt-1">
+                <!-- Google Maps Link -->
+                <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition">
+                  <span>🗺️</span>
+                  <span>Google Maps 導航</span>
+                </a>
+
+                <!-- MapCode Copy -->
+                ${wp.mapCode ? `
+                  <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！可直接在車機輸入')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition">
+                    <span>🚗</span>
+                    <span>MC: ${wp.mapCode}</span>
+                    <span class="text-[10px] text-amber-600 font-normal">複製</span>
+                  </button>
+                ` : ''}
+
+                <!-- Phone Dial -->
+                ${wp.phone ? `
+                  <a href="tel:${wp.phone}" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-mono transition flex items-center gap-1">
+                    <span>📞</span>
+                    <span>${wp.phone}</span>
+                  </a>
+                ` : ''}
+
+                <!-- Parking Badge -->
+                ${wp.parkingInfo ? `
+                  <span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200 flex items-center gap-1" title="${wp.parkingInfo}">
+                    <span>🅿️</span>
+                    <span class="truncate max-w-[150px]">${wp.parkingInfo}</span>
+                  </span>
+                ` : ''}
+
+                <!-- Delete if custom -->
+                ${wp.isCustom ? `
+                  <button onclick="deleteCustomStop('${wp.id}')" class="ml-auto text-rose-500 hover:text-rose-700 text-xs font-semibold">
+                    🗑️ 刪除站點
+                  </button>
+                ` : ''}
+              </div>
+
+              <!-- Personal Memo Note Input -->
+              <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
+                <span class="text-slate-400">📝 筆記：</span>
+                <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-slate-50 hover:bg-white focus:bg-white border border-transparent focus:border-sky-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
+              </div>
+
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderFeaturedGuide(day) {
+      const box = document.getElementById('dayFeaturedGuideBox');
+      
+      if (day.day === 1) {
+        box.innerHTML = `
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🛍️</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base">ASHIBINAA 必逛專櫃推薦</h4>
+                <p class="text-xs text-slate-500">20:00 閉店前 50 分鐘快攻清單</p>
+              </div>
+            </div>
+            <span class="text-[11px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">精選熱門</span>
+          </div>
+
+          <div class="space-y-2 text-xs">
+            <div class="p-2.5 bg-rose-50 rounded-xl border border-rose-200">
+              <div class="flex items-center justify-between font-bold text-rose-900">
+                <span>⭐ Vivienne Westwood (2100區)</span>
+                <span class="text-[10px] bg-rose-600 text-white px-1.5 py-0.2 rounded">第一優先</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-0.5">經典土星飾品、皮夾與開襟衫，普遍為定價 5~7 折。</p>
+            </div>
+
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex items-center justify-between font-bold text-slate-800">
+                <span>Montbell (戶外登山裝備)</span>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded">極大價差</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-0.5">超輕防風雨外套、羽絨保暖衣，性價比極高。</p>
+            </div>
+
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+              <div class="flex items-center justify-between font-bold text-slate-800">
+                <span>BEAMS / United Arrows</span>
+                <span class="text-[10px] text-sky-700 bg-sky-50 px-1.5 py-0.2 rounded">日系剪裁</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-0.5">日本質感選物店代表，秋冬大衣與休閒單品。</p>
+            </div>
+          </div>
+        `;
+      } else if (day.day === 2) {
+        box.innerHTML = `
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🐋</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base">美麗海水族館 ＆ 北部精華</h4>
+                <p class="text-xs text-slate-500">餵食秀、古宇利蝦蝦飯與停車指南</p>
+              </div>
+            </div>
+            <span class="text-[11px] bg-sky-50 text-sky-700 font-bold px-2 py-0.5 rounded-full">中北部亮點</span>
+          </div>
+
+          <div class="space-y-2 text-xs text-slate-700">
+            <div class="p-2.5 bg-sky-50 rounded-xl border border-sky-200">
+              <strong class="text-sky-900 block">🐋 鯨鯊餵食直立進食秀：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">下午 <strong>15:00</strong> 與 <strong>17:00</strong> 兩場，建議提早 15 分鐘至黑潮之海大水槽前階梯卡位！</p>
+            </div>
+            <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200">
+              <strong class="text-amber-900 block">🍤 古宇利蝦蝦飯點餐秘訣：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">點選蒜香奶油原味或辣味，頂樓露台能飽覽整座古宇利大橋的蔚藍海景。</p>
+            </div>
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+              <strong class="text-slate-800 block">🅿️ 水族館最佳停車位：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">直接導航 <strong>P7 (北停車場)</strong>，有立體遮陽且直通水族館入口電梯。</p>
+            </div>
+          </div>
+        `;
+      } else if (day.day === 3) {
+        box.innerHTML = `
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🥞</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base">南部海景 ＆ 國際通採買攻略</h4>
+                <p class="text-xs text-slate-500">幸福鬆餅、知念岬與免稅退稅重點</p>
+              </div>
+            </div>
+            <span class="text-[11px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">南部與市區</span>
+          </div>
+
+          <div class="space-y-2 text-xs text-slate-700">
+            <div class="p-2.5 bg-purple-50 rounded-xl border border-purple-200">
+              <strong class="text-purple-900 block">🥞 瀨長島幸福鬆餅：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">現場平板抽號後，可在白色階梯商城拍照散步，露台每幾分鐘就有飛機由海面掠過！</p>
+            </div>
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+              <strong class="text-slate-800 block">⛩️ 波上宮特色御守：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">推薦入手超可愛的黑色/紅色「小書包交通安全御守」，送禮自用兩相宜。</p>
+            </div>
+            <div class="p-2.5 bg-rose-50 rounded-xl border border-rose-200">
+              <strong class="text-rose-900 block">🏮 國際通屋台村氛圍：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">20家特色排檔齊聚，推薦點一份阿古豬煎餃與一杯 Orion 生啤酒。</p>
+            </div>
+          </div>
+        `;
+      } else {
+        box.innerHTML = `
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🎁</span>
+              <div>
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base">那霸機場伴手禮必買清單</h4>
+                <p class="text-xs text-slate-500">國內線 2F 伴手禮街精選推薦</p>
+              </div>
+            </div>
+            <span class="text-[11px] bg-amber-50 text-amber-700 font-bold px-2 py-0.5 rounded-full">返程特選</span>
+          </div>
+
+          <div class="space-y-2 text-xs text-slate-700">
+            <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200">
+              <strong class="text-amber-900 block">1. Fukugiya 蜂蜜年輪蛋糕：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">沖繩產黑糖與蜂蜜烘焙，香氣濃郁外皮微脆。</p>
+            </div>
+            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
+              <strong class="text-slate-800 block">2. Royce' 石垣島黑糖生巧克力：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">沖繩限定版，可加購保冷袋托運。</p>
+            </div>
+            <div class="p-2.5 bg-sky-50 rounded-xl border border-sky-200">
+              <strong class="text-sky-900 block">3. oHacorté 水果塔夾心餅：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">文青風包裝，精選沖繩檸檬與莓果夾心。</p>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    /* =========================================================================
+       4. CUSTOM STOP ADDITION & LOCAL PERSISTENCE
+       ========================================================================= */
+    function openAddStopModal() {
+      const day = tripData.days[currentDayIndex];
+      document.getElementById('addStopDaySubtitle').textContent = `將加入至 Day ${day.day} (${day.date})`;
+      document.getElementById('addStopForm').reset();
+      openModal('addStopModal');
+    }
+
+    function handleSaveCustomStop(e) {
+      e.preventDefault();
+      const day = tripData.days[currentDayIndex];
+
+      const name = document.getElementById('stopNameInput').value.trim();
+      const time = document.getElementById('stopTimeInput').value.trim() || '彈性時段';
+      const category = document.getElementById('stopCategoryInput').value;
+      const lat = parseFloat(document.getElementById('stopLatInput').value) || (day.waypoints[0] ? day.waypoints[0].coords[0] : 26.2124);
+      const lng = parseFloat(document.getElementById('stopLngInput').value) || (day.waypoints[0] ? day.waypoints[0].coords[1] : 127.6809);
+      const mapCode = document.getElementById('stopMapCodeInput').value.trim();
+      const desc = document.getElementById('stopDescInput').value.trim();
+
+      const newWaypoint = {
+        id: `custom-${Date.now()}`,
+        name: name,
+        category: category,
+        time: time,
+        coords: [lat, lng],
+        mapCode: mapCode,
+        googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' Okinawa')}`,
+        color: '#06b6d4',
+        icon: category === '美食' ? '🍜' : category === '購物' ? '🛍️' : '📍',
+        parkingInfo: '自訂地點',
+        tags: ['自訂新增', category],
+        desc: desc || '由使用者現場新增之彈性站點。',
+        isCustom: true
+      };
+
+      day.waypoints.push(newWaypoint);
+      saveCustomDataToStorage();
+
+      closeModal('addStopModal');
+      renderActiveDay();
+      showToast(`已成功新增站點：「${name}」！`, '✅');
+    }
+
+    function deleteCustomStop(id) {
+      const day = tripData.days[currentDayIndex];
+      day.waypoints = day.waypoints.filter(w => w.id !== id);
+      saveCustomDataToStorage();
+      renderActiveDay();
+      showToast('已刪除該自訂站點', '🗑️');
+    }
+
+    function resetDayCustomStops() {
+      if (confirm('確定要將當日行程還原至預設規劃嗎？')) {
+        tripData.days[currentDayIndex].waypoints = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA.days[currentDayIndex].waypoints));
+        saveCustomDataToStorage();
+        renderActiveDay();
+        showToast('已還原為預設行程', '🔄');
+      }
+    }
+
+    function saveCustomDataToStorage() {
+      localStorage.setItem('okinawa_trip_custom_data', JSON.stringify(tripData));
+    }
+
+    function saveStopNote(stopId, value) {
+      localStorage.setItem(`user_note_${stopId}`, value);
+      showToast('筆記已儲存', '📝');
+    }
+
+    /* =========================================================================
+       5. CHECKLIST & TO-BUY MANAGER
+       ========================================================================= */
+    function initChecklist() {
+      renderChecklistItems();
+      updateChecklistProgress();
+    }
+
+    function switchChecklistTab(tabKey) {
+      currentChecklistTab = tabKey;
+      const btnEssentials = document.getElementById('btnTabEssentials');
+      const btnShopping = document.getElementById('btnTabShopping');
+
+      if (tabKey === 'essentials') {
+        btnEssentials.className = 'flex-1 py-1.5 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs';
+        btnShopping.className = 'flex-1 py-1.5 rounded-lg font-bold transition text-slate-600';
+      } else {
+        btnShopping.className = 'flex-1 py-1.5 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs';
+        btnEssentials.className = 'flex-1 py-1.5 rounded-lg font-bold transition text-slate-600';
+      }
+
+      renderChecklistItems();
+      updateChecklistProgress();
+    }
+
+    function renderChecklistItems() {
+      const container = document.getElementById('checklistItemsContainer');
+      const items = checklists[currentChecklistTab] || [];
+
+      if (items.length === 0) {
+        container.innerHTML = '<div class="text-center py-8 text-slate-400 text-xs">目前清單內無項目，可於下方輸入新增！</div>';
+        return;
+      }
+
+      container.innerHTML = items.map((item, idx) => {
+        return `
+          <div class="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition text-xs">
+            <label class="flex items-center space-x-2.5 cursor-pointer flex-grow">
+              <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${item.id}')" class="w-4 h-4 rounded text-okinawa-ocean focus:ring-sky-500">
+              <span class="${item.checked ? 'line-through text-slate-400 font-normal' : 'text-slate-800 font-semibold'} transition">
+                ${item.text}
+              </span>
+            </label>
+            <button onclick="deleteChecklistItem('${item.id}')" class="text-slate-300 hover:text-rose-500 p-1 text-xs">✕</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleChecklistItem(id) {
+      const items = checklists[currentChecklistTab];
+      const item = items.find(it => it.id === id);
+      if (item) {
+        item.checked = !item.checked;
+        saveChecklists();
+        renderChecklistItems();
+        updateChecklistProgress();
+      }
+    }
+
+    function addNewChecklistItem() {
+      const input = document.getElementById('newChecklistInput');
+      const text = input.value.trim();
+      if (!text) return;
+
+      if (!checklists[currentChecklistTab]) {
+        checklists[currentChecklistTab] = [];
+      }
+
+      checklists[currentChecklistTab].push({
+        id: `chk-custom-${Date.now()}`,
+        text: text,
+        checked: false
+      });
+
+      input.value = '';
+      saveChecklists();
+      renderChecklistItems();
+      updateChecklistProgress();
+      showToast(`已新增清單項目：「${text}」`, '🎒');
+    }
+
+    function deleteChecklistItem(id) {
+      checklists[currentChecklistTab] = checklists[currentChecklistTab].filter(it => it.id !== id);
+      saveChecklists();
+      renderChecklistItems();
+      updateChecklistProgress();
+    }
+
+    function updateChecklistProgress() {
+      const allItems = [...(checklists.essentials || []), ...(checklists.shopping || [])];
+      const completed = allItems.filter(it => it.checked).length;
+      const total = allItems.length;
+      const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
+
+      const badge = document.getElementById('checklistBadge');
+      if (badge) badge.textContent = `${completed}/${total}`;
+
+      const progressText = document.getElementById('checklistProgressText');
+      if (progressText) progressText.textContent = `${completed} / ${total} (${percentage}%)`;
+
+      const progressBar = document.getElementById('checklistProgressBar');
+      if (progressBar) progressBar.style.width = `${percentage}%`;
+    }
+
+    function resetChecklistDefaults() {
+      if (confirm('確定重置回系統預設清單嗎？')) {
+        checklists = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA.defaultChecklists));
+        saveChecklists();
+        renderChecklistItems();
+        updateChecklistProgress();
+        showToast('已重置為預設 Checklist', '🔄');
+      }
+    }
+
+    function saveChecklists() {
+      localStorage.setItem('okinawa_checklists', JSON.stringify(checklists));
+    }
+
+    /* =========================================================================
+       6. CURRENCY CONVERSION TOOLS
+       ========================================================================= */
+    function calculateQuickExchange() {
+      const input = document.getElementById('quickJpyInput');
+      const output = document.getElementById('quickTwdOutput');
+      const jpy = parseFloat(input.value);
+      if (isNaN(jpy) || jpy <= 0) {
+        output.value = '';
+        return;
+      }
+      output.value = Math.round(jpy * currentExchangeRate).toLocaleString();
+    }
+
+    function setQuickJpy(amount) {
+      document.getElementById('quickJpyInput').value = amount;
+      calculateQuickExchange();
+    }
+
+    function modalCalcFromJpy() {
+      const jpy = parseFloat(document.getElementById('modalJpyInput').value);
+      const twdInput = document.getElementById('modalTwdInput');
+      if (isNaN(jpy)) {
+        twdInput.value = '';
+        return;
+      }
+      twdInput.value = Math.round(jpy * currentExchangeRate);
+    }
+
+    function modalCalcFromTwd() {
+      const twd = parseFloat(document.getElementById('modalTwdInput').value);
+      const jpyInput = document.getElementById('modalJpyInput');
+      if (isNaN(twd) || currentExchangeRate <= 0) {
+        jpyInput.value = '';
+        return;
+      }
+      jpyInput.value = Math.round(twd / currentExchangeRate);
+    }
+
+    function setModalJpy(amount) {
+      document.getElementById('modalJpyInput').value = amount;
+      modalCalcFromJpy();
+    }
+
+    function clearModalCurrency() {
+      document.getElementById('modalJpyInput').value = '';
+      document.getElementById('modalTwdInput').value = '';
+    }
+
+    function updateCustomRate() {
+      const rate = parseFloat(document.getElementById('exchangeRateInput').value);
+      if (rate > 0) {
+        currentExchangeRate = rate;
+        modalCalcFromJpy();
+        calculateQuickExchange();
+        showToast(`匯率已更新為 1 JPY = ${rate} TWD`, '💴');
+      }
+    }
+
+    function swapCurrencyFocus() {
+      document.getElementById('modalTwdInput').focus();
+    }
+
+    /* =========================================================================
+       7. DRIVING GUIDE & EMERGENCY MODAL HELPERS
+       ========================================================================= */
+    function initEmergencyContacts() {
+      const list = document.getElementById('emergencyContactsList');
+      list.innerHTML = OKINAWA_TRIP_DATA.meta.emergencyContacts.map(c => `
+        <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200">
+          <span class="font-semibold text-slate-800 text-xs">${c.label}</span>
+          <a href="tel:${c.tel}" class="font-mono font-bold text-okinawa-ocean bg-white px-2 py-0.5 rounded-lg border border-sky-200 text-xs">
+            ${c.tel}
+          </a>
+        </div>
+      `).join('');
+    }
+
+    function initDrivingModal() {
+      const list = document.getElementById('drivingMapCodeList');
+      const allWaypoints = [];
+      tripData.days.forEach(d => {
+        d.waypoints.forEach(w => {
+          if (w.mapCode) allWaypoints.push({ ...w, dayNum: d.day });
+        });
+      });
+
+      list.innerHTML = allWaypoints.map(w => `
+        <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50 border border-slate-200 hover:bg-white transition">
+          <div>
+            <div class="font-bold text-slate-800 text-xs">Day ${w.dayNum} • ${w.name}</div>
+            <div class="text-[10px] text-slate-500 font-mono">MapCode: <strong class="text-amber-700">${w.mapCode}</strong> ${w.phone ? `| TEL: ${w.phone}` : ''}</div>
+          </div>
+          <button onclick="copyToClipboard('${w.mapCode}', '已複製 ${w.name} MapCode！')" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-[10px] font-bold">
+            複製 MC
+          </button>
+        </div>
+      `).join('');
+    }
+
+    /* =========================================================================
+       8. REAL-TIME OKINAWA WEATHER INTEGRATION (Open-Meteo API)
+       ========================================================================= */
+    async function fetchLiveWeather() {
+      const tempEl = document.getElementById('liveWeatherTemp');
+      const descEl = document.getElementById('liveWeatherDesc');
+      const iconEl = document.getElementById('weatherIconContainer');
+      const cityEl = document.getElementById('weatherCityName');
+
+      const isNago = activeWeatherCity === 'nago';
+      const lat = isNago ? 26.5915 : 26.2124;
+      const lon = isNago ? 127.9773 : 127.6809;
+      cityEl.textContent = isNago ? '名護(北部)' : '那霸即時';
+
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code&timezone=Asia%2FTokyo`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('Weather API error');
+
+        const data = await response.json();
+        const current = data.current;
+        const temp = Math.round(current.temperature_2m);
+        const wCode = current.weather_code;
+        const weatherInfo = parseWmoCode(wCode);
+
+        tempEl.textContent = `${temp}°C`;
+        descEl.textContent = `${weatherInfo.desc} • 濕度 ${current.relative_humidity_2m}%`;
+        iconEl.textContent = weatherInfo.icon;
+
+      } catch (err) {
+        console.warn('Weather fallback used:', err);
+        tempEl.textContent = '23°C';
+        descEl.textContent = '舒適微風 (離線備用)';
+        iconEl.textContent = '⛅';
+      }
+    }
+
+    function toggleWeatherCity() {
+      activeWeatherCity = activeWeatherCity === 'naha' ? 'nago' : 'naha';
+      fetchLiveWeather();
+      showToast(`已切換氣象區域：${activeWeatherCity === 'naha' ? '那霸市區' : '名護市 (北部水族館周邊)'}`, '🌤️');
+    }
+
+    function parseWmoCode(code) {
+      if (code === 0) return { desc: '晴朗無雲', icon: '☀️' };
+      if (code === 1 || code === 2) return { desc: '多雲時晴', icon: '⛅' };
+      if (code === 3) return { desc: '陰天舒適', icon: '☁️' };
+      if (code >= 45 && code <= 48) return { desc: '海霧微風', icon: '🌫️' };
+      if (code >= 51 && code <= 67) return { desc: '偶有小雨', icon: '🌦️' };
+      if (code >= 80 && code <= 82) return { desc: '短暫陣雨', icon: '🌧️' };
+      return { desc: '氣候宜人', icon: '🌺' };
+    }
+
+    /* =========================================================================
+       9. MODAL & UTILITY HELPERS
+       ========================================================================= */
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
+    function copyToClipboard(text, successMsg = '已複製到剪貼簿！') {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg, '📋');
+        }).catch(() => fallbackCopy(text, successMsg));
+      } else {
+        fallbackCopy(text, successMsg);
+      }
+    }
+
+    function fallbackCopy(text, successMsg) {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.opacity = '0';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg, '📋');
+      } catch (err) {
+        showToast(`複製失敗，請手動複製: ${text}`, '⚠️');
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(message, icon = '🌺') {
+      const toast = document.getElementById('toastNotification');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+      
+      toastMsg.textContent = message;
+      toastIcon.textContent = icon;
+      
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3000);
+    }
+
+    /* =========================================================================
+       10. SERVICE WORKER REGISTRATION & PWA INSTALL (ANDROID CHROME)
+       ========================================================================= */
+    let deferredPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      console.log('[PWA] Android Chrome beforeinstallprompt ready');
+      document.querySelectorAll('.pwa-install-btn').forEach(btn => btn.classList.remove('hidden'));
+    });
+
+    function triggerPwaInstall() {
+      if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then((choice) => {
+          if (choice.outcome === 'accepted') {
+            showToast('感謝安裝！已加入手機桌面，享受全螢幕原生體驗 📱', '🎉');
+          }
+          deferredPrompt = null;
+          document.querySelectorAll('.pwa-install-btn').forEach(btn => btn.classList.add('hidden'));
+        });
+      } else {
+        showToast('請點選 Android Chrome 右上角選單 (⋮) ➔ 選擇「安裝應用程式」或「加到主螢幕」即可全螢幕使用！', '📱');
+      }
+    }
+
+    function registerServiceWorker() {
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js')
+          .then((reg) => {
+            console.log('[PWA] Service Worker registered successfully:', reg.scope);
+            const indicator = document.getElementById('offlineIndicator');
+            if (indicator) indicator.classList.remove('hidden');
+          })
+          .catch((err) => {
+            console.warn('[PWA] Service Worker registration skipped:', err);
+          });
+      }
+    }
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 mt-10 py-6 text-center text-xs text-slate-400">
+    <div class="max-w-7xl mx-auto px-4 space-y-1">
+      <p class="font-medium text-slate-600">沖繩動態行程表 • 4天3夜離線旗艦版</p>
+      <p>結合 PWA 離線快取、Leaflet 互動軌跡、Google Maps 一鍵導航、日本 MapCode 與日圓匯率換算</p>
+    </div>
+  </footer>
+
+</body>
+</html>
