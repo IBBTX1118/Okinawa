@@ -161,62 +161,60 @@
        ========================================================================= -->
   <header class="wave-bg text-white shadow-lg sticky-header-safe">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 sm:h-20">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-2">
         
-        <!-- Logo & Title -->
-        <div class="flex items-center space-x-2.5 sm:space-x-3.5">
-          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/30 shadow-inner shrink-0 p-1.5 overflow-hidden" title="沖繩守護神 風獅爺 (Shisa)">
-            <img src="icon.svg" class="w-full h-full object-contain filter drop-shadow" alt="風獅爺">
+        <!-- Logo & Title with Shisa Artwork Avatar -->
+        <div class="flex items-center space-x-2.5 sm:space-x-3.5 min-w-0">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-md shrink-0 p-0.5 overflow-hidden ring-2 ring-amber-300/80" title="沖繩守護神 風獅爺">
+            <img src="avatar.png" class="w-full h-full object-cover rounded-xl" alt="風獅爺">
           </div>
-          <div>
-            <div class="flex items-center space-x-2">
-              <h1 class="text-lg sm:text-2xl font-black tracking-wide">煥然一新</h1>
-              <span class="text-[10px] sm:text-xs bg-amber-400 text-amber-950 font-extrabold px-2 py-0.5 rounded-full uppercase tracking-wider">
-                沖繩動態行程
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center space-x-1.5 sm:space-x-2">
+              <h1 class="text-base sm:text-xl md:text-2xl font-black tracking-wide text-white whitespace-nowrap drop-shadow-sm">煥然一新</h1>
+              <span class="text-[10px] bg-amber-400 text-amber-950 font-black px-1.5 py-0.5 rounded-full uppercase tracking-wider shrink-0 shadow-xs">
+                沖繩行
               </span>
             </div>
-            <p class="text-[11px] sm:text-xs text-sky-100 font-medium tracking-wide">
-              2026/11/16 ~ 11/19 • 那霸 • 中北部水族館 • 南部海景
+            <p class="text-[10px] sm:text-xs text-sky-100 font-medium tracking-wide truncate max-w-[180px] sm:max-w-none">
+              2026/11/16 ~ 11/19 • 4天3夜動態導航
             </p>
           </div>
         </div>
 
-        <!-- Practical Utility Quick Buttons (Desktop/Tablet) -->
-        <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Quick Controls: Compact on Mobile (Z Flip 6), Expanded on Tablet (Tab S10 FE) -->
+        <div class="flex items-center space-x-1.5 sm:space-x-2.5 shrink-0">
           
-          <!-- Live Weather Display -->
-          <div class="bg-white/15 hover:bg-white/20 transition backdrop-blur-md px-3 py-1.5 rounded-xl border border-white/25 flex items-center space-x-2 shadow-inner text-right cursor-pointer" onclick="toggleWeatherCity()" title="點擊切換那霸 / 名護氣溫">
-            <div id="weatherIconContainer" class="text-xl sm:text-2xl">⛅</div>
-            <div class="text-left leading-tight hidden xs:block">
-              <div class="flex items-center space-x-1">
-                <span id="weatherCityName" class="text-[10px] text-sky-100 font-medium">那霸即時</span>
-                <span id="liveWeatherTemp" class="text-xs sm:text-sm font-bold text-amber-300">連線中</span>
-              </div>
-              <div id="liveWeatherDesc" class="text-[9px] text-sky-100/90 truncate max-w-[90px]">讀取中...</div>
+          <!-- Live Weather Pill (Compact on Mobile) -->
+          <div class="bg-white/15 hover:bg-white/20 transition backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1.5 shadow-inner cursor-pointer" onclick="toggleWeatherCity()" title="點擊切換那霸 / 名護氣溫">
+            <div id="weatherIconContainer" class="text-lg sm:text-xl">⛅</div>
+            <div class="text-left leading-tight">
+              <span id="liveWeatherTemp" class="text-xs sm:text-sm font-bold text-amber-300">23°C</span>
             </div>
           </div>
 
-          <!-- Quick Modals Trigger Buttons -->
-          <button onclick="openModal('currencyModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="日幣台幣即時換算">
-            <span>💴</span>
-            <span class="hidden sm:inline">匯率換算</span>
-          </button>
+          <!-- Desktop / Tablet Quick Modal Buttons (Hidden on small mobile to avoid crowding) -->
+          <div class="hidden md:flex items-center space-x-2">
+            <button onclick="openModal('currencyModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="日幣台幣即時換算">
+              <span>💴</span>
+              <span>匯率換算</span>
+            </button>
 
-          <button onclick="openModal('checklistModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="出國行李與購物清單">
-            <span>🎒</span>
-            <span class="hidden sm:inline">Checklist</span>
-            <span id="checklistBadge" class="bg-rose-500 text-[10px] text-white px-1.5 py-0.2 rounded-full font-bold">0</span>
-          </button>
+            <button onclick="openModal('checklistModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="出國行李與購物清單">
+              <span>🎒</span>
+              <span>Checklist</span>
+              <span id="checklistBadge" class="bg-rose-500 text-[10px] text-white px-1.5 py-0.2 rounded-full font-bold">0</span>
+            </button>
 
-          <button onclick="openModal('drivingModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="自駕守則與MapCode導航">
-            <span>🚗</span>
-            <span class="hidden md:inline">自駕導航手冊</span>
-          </button>
+            <button onclick="openModal('drivingModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 sm:px-3 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition shadow-sm" title="自駕守則與MapCode導航">
+              <span>🚗</span>
+              <span class="hidden lg:inline">自駕導航手冊</span>
+            </button>
+          </div>
 
           <!-- PWA Android Install Button (Auto shown on Chrome) -->
-          <button id="pwaInstallBtnHeader" onclick="triggerPwaInstall()" class="pwa-install-btn hidden bg-amber-400 hover:bg-amber-300 text-amber-950 px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 transition shadow-md animate-bounce" title="安裝至 Android 手機主畫面">
+          <button id="pwaInstallBtnHeader" onclick="triggerPwaInstall()" class="pwa-install-btn hidden bg-amber-400 hover:bg-amber-300 text-amber-950 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition shadow-md animate-bounce" title="安裝至 Android 手機主畫面">
             <span>📲</span>
-            <span class="hidden xs:inline">安裝 App</span>
+            <span class="hidden xs:inline">安裝</span>
           </button>
 
         </div>
@@ -228,21 +226,21 @@
   <!-- =========================================================================
        MAIN APPLICATION CONTAINER
        ========================================================================= -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-5">
+  <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 space-y-4 sm:space-y-5">
     
-    <!-- Multi-Day Tabs Selector -->
-    <div class="bg-white/90 backdrop-blur-md p-2 sm:p-3 rounded-2xl border border-white/80 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-      <div class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0" id="dayTabsContainer">
+    <!-- Multi-Day Tabs Selector & Mobile-Responsive Action Bar -->
+    <div class="bg-white/90 backdrop-blur-md p-2.5 sm:p-3 rounded-2xl border border-white/80 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scroll-smooth" id="dayTabsContainer" style="scrollbar-width: none;">
         <!-- Injected via JavaScript renderDayTabs() -->
       </div>
 
       <!-- Quick Action Buttons on Tab Bar -->
-      <div class="flex items-center justify-end gap-2 text-xs shrink-0">
-        <button onclick="openAddStopModal()" class="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition font-semibold flex items-center gap-1.5">
+      <div class="flex items-center justify-between sm:justify-end gap-2 text-xs shrink-0 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+        <button onclick="openAddStopModal()" class="flex-1 sm:flex-initial px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition font-bold flex items-center justify-center gap-1.5 shadow-xs">
           <span>➕</span>
-          <span>新增自訂站點</span>
+          <span>自訂站點</span>
         </button>
-        <button onclick="resetDayCustomStops()" class="px-2.5 py-2 text-slate-400 hover:text-slate-600 transition text-[11px]" title="重置為預設行程">
+        <button onclick="resetDayCustomStops()" class="px-2.5 py-1.5 text-slate-400 hover:text-slate-600 transition text-[11px]" title="重置為預設行程">
           重置當日
         </button>
       </div>
@@ -312,25 +310,38 @@
       <!-- Left Column: Detailed Timeline Cards -->
       <section class="lg:col-span-7 space-y-5">
         
-        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-          <div class="flex items-center gap-2">
-            <h3 class="font-extrabold text-slate-900 text-lg flex items-center gap-2">
-              <span>⏱️ 行程時間軸與細節</span>
+        <div class="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-200/80 pb-2">
+          <div class="flex items-center gap-2 min-w-0">
+            <h3 class="font-extrabold text-slate-900 text-base sm:text-lg whitespace-nowrap flex items-center gap-1.5">
+              <span>⏱️ 行程時間軸</span>
             </h3>
-            <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700" id="timelineDayLabel">Day 1</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 shrink-0" id="timelineDayLabel">Day 1</span>
           </div>
-          <span class="text-xs text-slate-500 font-mono" id="timelineDateLabel">2026/11/16</span>
+          <span class="text-xs text-slate-500 font-mono shrink-0" id="timelineDateLabel">2026/11/16</span>
         </div>
 
         <!-- Timeline Cards Container -->
-        <div class="relative pl-6 sm:pl-8 border-l-2 border-dashed border-sky-300 space-y-6" id="timelineContainer">
+        <div class="relative pl-6 sm:pl-8 border-l-2 border-dashed border-sky-300 space-y-5 sm:space-y-6" id="timelineContainer">
           <!-- Injected dynamically via renderTimeline() -->
         </div>
 
       </section>
 
       <!-- Right Column: Recommendations & Practical Tools Sidebar -->
-      <aside class="lg:col-span-5 space-y-5">
+      <aside class="lg:col-span-5 space-y-4 sm:space-y-5">
+
+        <!-- Shisa Artwork Hero Showcase Card -->
+        <div class="rounded-2xl sm:rounded-3xl overflow-hidden shadow-card border border-white/80 bg-white/95 backdrop-blur-md relative group">
+          <div class="relative h-40 sm:h-52 w-full overflow-hidden">
+            <img src="shisa-art.jpg" class="w-full h-full object-cover object-center group-hover:scale-105 transition duration-500" alt="沖繩風獅爺">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/30 to-transparent"></div>
+            <div class="absolute bottom-3 left-3.5 right-3.5 text-white">
+              <span class="text-[10px] bg-amber-400 text-amber-950 font-black px-2 py-0.5 rounded-full uppercase tracking-wider">めんそーれ！</span>
+              <h4 class="text-base sm:text-lg font-black tracking-wide mt-1">琉球風獅爺隨行指南</h4>
+              <p class="text-[11px] text-sky-100/95 font-medium leading-snug">首里紅瓦・扶桑花開 • 護佑您的沖繩自在行</p>
+            </div>
+          </div>
+        </div>
 
         <!-- Day-Specific Featured Guide / Recommendation Box -->
         <div class="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-card space-y-4" id="dayFeaturedGuideBox">
@@ -638,30 +649,30 @@
   <!-- =========================================================================
        FIXED MOBILE BOTTOM NAVIGATION BAR
        ========================================================================= -->
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 px-2 py-1.5 z-40 flex items-center justify-around text-xs shadow-lg">
-    <a href="#mapSection" class="flex flex-col items-center text-slate-600 hover:text-okinawa-ocean p-1">
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/80 px-1 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] z-40 flex items-center justify-around text-xs shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+    <a href="#mapSection" class="flex-1 flex flex-col items-center justify-center text-slate-600 hover:text-okinawa-ocean py-1 active:scale-95 transition">
       <span class="text-lg">🗺️</span>
-      <span class="text-[10px] mt-0.5">動態地圖</span>
+      <span class="text-[10px] font-semibold mt-0.5 whitespace-nowrap">地圖</span>
     </a>
-    <button onclick="toggleRouteAnimation()" class="flex flex-col items-center text-okinawa-ocean font-bold p-1">
+    <button onclick="toggleRouteAnimation()" class="flex-1 flex flex-col items-center justify-center text-okinawa-ocean font-bold py-1 active:scale-95 transition">
       <span class="text-lg">▶️</span>
-      <span class="text-[10px] mt-0.5">播放路線</span>
+      <span class="text-[10px] font-bold mt-0.5 whitespace-nowrap">路線</span>
     </button>
-    <button onclick="openModal('currencyModal')" class="flex flex-col items-center text-amber-600 hover:text-amber-700 p-1">
+    <button onclick="openModal('currencyModal')" class="flex-1 flex flex-col items-center justify-center text-amber-700 hover:text-amber-800 py-1 active:scale-95 transition">
       <span class="text-lg">💴</span>
-      <span class="text-[10px] mt-0.5">匯率換算</span>
+      <span class="text-[10px] font-semibold mt-0.5 whitespace-nowrap">匯率</span>
     </button>
-    <button onclick="openModal('checklistModal')" class="flex flex-col items-center text-rose-600 hover:text-rose-700 p-1 relative">
+    <button onclick="openModal('checklistModal')" class="flex-1 flex flex-col items-center justify-center text-rose-600 hover:text-rose-700 py-1 relative active:scale-95 transition">
       <span class="text-lg">🎒</span>
-      <span class="text-[10px] mt-0.5">Checklist</span>
+      <span class="text-[10px] font-semibold mt-0.5 whitespace-nowrap">清單</span>
     </button>
-    <button onclick="openModal('drivingModal')" class="flex flex-col items-center text-indigo-600 hover:text-indigo-700 p-1">
+    <button onclick="openModal('drivingModal')" class="flex-1 flex flex-col items-center justify-center text-indigo-600 hover:text-indigo-700 py-1 active:scale-95 transition">
       <span class="text-lg">🚗</span>
-      <span class="text-[10px] mt-0.5">自駕導航</span>
+      <span class="text-[10px] font-semibold mt-0.5 whitespace-nowrap">自駕</span>
     </button>
-    <button onclick="triggerPwaInstall()" class="pwa-install-btn hidden flex flex-col items-center text-amber-600 font-bold p-1">
-      <span class="text-lg animate-bounce">📲</span>
-      <span class="text-[10px] mt-0.5">安裝App</span>
+    <button onclick="triggerPwaInstall()" class="pwa-install-btn hidden flex-1 flex flex-col items-center justify-center text-amber-600 font-bold py-1 active:scale-95 transition animate-bounce">
+      <span class="text-lg">📲</span>
+      <span class="text-[10px] font-bold mt-0.5 whitespace-nowrap">安裝</span>
     </button>
   </nav>
 
@@ -924,14 +935,14 @@
       container.innerHTML = tripData.days.map((day, idx) => {
         const isActive = idx === currentDayIndex;
         return `
-          <button onclick="switchDay(${idx})" class="flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
+          <button onclick="switchDay(${idx})" class="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 ${
             isActive 
               ? 'bg-okinawa-ocean text-white shadow-sm ring-2 ring-sky-300' 
               : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
           }">
             <span class="w-2 h-2 rounded-full ${isActive ? 'bg-amber-300 animate-ping' : 'bg-slate-300'}"></span>
             <span>Day ${day.day} (${day.weekday})</span>
-            <span class="text-[10px] opacity-80 hidden sm:inline">${day.title.split('＆')[0]}</span>
+            <span class="text-[10px] opacity-80 hidden md:inline">${day.title.split('＆')[0]}</span>
           </button>
         `;
       }).join('');
@@ -1071,43 +1082,47 @@
               ` : ''}
 
               <!-- Navigation & Quick Action Bar -->
-              <div class="flex flex-wrap items-center gap-2 pt-1">
-                <!-- Google Maps Link -->
-                <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-semibold flex items-center gap-1.5 shadow-sm transition">
-                  <span>🗺️</span>
-                  <span>Google Maps 導航</span>
-                </a>
-
-                <!-- MapCode Copy -->
-                ${wp.mapCode ? `
-                  <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！可直接在車機輸入')" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 rounded-xl text-xs font-mono font-bold flex items-center gap-1.5 transition">
-                    <span>🚗</span>
-                    <span>MC: ${wp.mapCode}</span>
-                    <span class="text-[10px] text-amber-600 font-normal">複製</span>
-                  </button>
-                ` : ''}
-
-                <!-- Phone Dial -->
-                ${wp.phone ? `
-                  <a href="tel:${wp.phone}" class="px-2.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-mono transition flex items-center gap-1">
-                    <span>📞</span>
-                    <span>${wp.phone}</span>
+              <div class="space-y-2 pt-1">
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                  <!-- Google Maps Link: Full width on mobile for effortless thumb tap -->
+                  <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="flex-1 px-3.5 py-2 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-2 shadow-xs active:scale-[0.99] transition">
+                    <span>🗺️</span>
+                    <span>Google Maps 導航</span>
                   </a>
-                ` : ''}
 
-                <!-- Parking Badge -->
-                ${wp.parkingInfo ? `
-                  <span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200 flex items-center gap-1" title="${wp.parkingInfo}">
-                    <span>🅿️</span>
-                    <span class="truncate max-w-[150px]">${wp.parkingInfo}</span>
-                  </span>
-                ` : ''}
+                  <!-- MapCode Copy -->
+                  ${wp.mapCode ? `
+                    <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！可直接在車機輸入')" class="flex-1 sm:flex-initial px-3 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 rounded-xl text-xs font-mono font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99]" title="點擊複製 MapCode">
+                      <span>🚗</span>
+                      <span>MC: ${wp.mapCode}</span>
+                      <span class="text-[10px] text-amber-700 bg-amber-200/70 px-1.5 py-0.5 rounded font-normal">複製</span>
+                    </button>
+                  ` : ''}
+                </div>
 
-                <!-- Delete if custom -->
-                ${wp.isCustom ? `
-                  <button onclick="deleteCustomStop('${wp.id}')" class="ml-auto text-rose-500 hover:text-rose-700 text-xs font-semibold">
-                    🗑️ 刪除站點
-                  </button>
+                <!-- Secondary Info: Phone, Parking, Delete Custom Stop -->
+                ${(wp.phone || wp.parkingInfo || wp.isCustom) ? `
+                  <div class="flex flex-wrap items-center gap-2 text-xs pt-0.5">
+                    ${wp.phone ? `
+                      <a href="tel:${wp.phone}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-mono transition flex items-center gap-1.5">
+                        <span>📞</span>
+                        <span>${wp.phone}</span>
+                      </a>
+                    ` : ''}
+
+                    ${wp.parkingInfo ? `
+                      <span class="text-[11px] bg-slate-50 text-slate-600 px-2.5 py-1 rounded-lg border border-slate-200/80 flex items-center gap-1 max-w-full" title="${wp.parkingInfo}">
+                        <span>🅿️</span>
+                        <span class="truncate max-w-[200px] sm:max-w-xs">${wp.parkingInfo}</span>
+                      </span>
+                    ` : ''}
+
+                    ${wp.isCustom ? `
+                      <button onclick="deleteCustomStop('${wp.id}')" class="ml-auto text-rose-500 hover:text-rose-700 text-xs font-semibold py-1">
+                        🗑️ 刪除站點
+                      </button>
+                    ` : ''}
+                  </div>
                 ` : ''}
               </div>
 
