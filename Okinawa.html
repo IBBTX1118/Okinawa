@@ -911,9 +911,22 @@
     let isPlaying = false;
     let animFrameId = null;
 
-    // Load persisted data from localStorage or use defaults from OKINAWA_TRIP_DATA
-    let tripData = JSON.parse(localStorage.getItem('okinawa_trip_custom_data')) || OKINAWA_TRIP_DATA;
-    let checklists = JSON.parse(localStorage.getItem('okinawa_checklists')) || OKINAWA_TRIP_DATA.defaultChecklists;
+    // Load persisted data with version check to auto-sync upstream itinerary changes
+    const CURRENT_DATA_VERSION = (typeof OKINAWA_TRIP_DATA !== 'undefined' && OKINAWA_TRIP_DATA.meta && OKINAWA_TRIP_DATA.meta.version) ? OKINAWA_TRIP_DATA.meta.version : '20261117-v2.0';
+    const savedVersion = localStorage.getItem('okinawa_trip_data_version');
+    let tripData;
+    if (typeof OKINAWA_TRIP_DATA !== 'undefined' && savedVersion !== CURRENT_DATA_VERSION) {
+      tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+      try {
+        localStorage.setItem('okinawa_trip_custom_data', JSON.stringify(tripData));
+        localStorage.setItem('okinawa_trip_data_version', CURRENT_DATA_VERSION);
+      } catch (e) {
+        console.warn('LocalStorage save failed:', e);
+      }
+    } else {
+      tripData = JSON.parse(localStorage.getItem('okinawa_trip_custom_data')) || (typeof OKINAWA_TRIP_DATA !== 'undefined' ? OKINAWA_TRIP_DATA : null);
+    }
+    let checklists = JSON.parse(localStorage.getItem('okinawa_checklists')) || (OKINAWA_TRIP_DATA ? OKINAWA_TRIP_DATA.defaultChecklists : null);
     let currentChecklistTab = 'essentials';
 
     /* =========================================================================
@@ -1776,7 +1789,7 @@
 
     function resetDayCustomStops() {
       if (confirm('確定要將當日行程還原至預設規劃嗎？')) {
-        tripData.days[currentDayIndex].waypoints = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA.days[currentDayIndex].waypoints));
+        tripData.days[currentDayIndex] = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA.days[currentDayIndex]));
         saveCustomDataToStorage();
         renderActiveDay();
         showToast('已還原為預設行程', '🔄');
