@@ -2054,7 +2054,8 @@
       const isNago = activeWeatherCity === 'nago';
       const lat = isNago ? 26.5915 : 26.2124;
       const lon = isNago ? 127.9773 : 127.6809;
-      cityEl.textContent = isNago ? '名護(北部)' : '那霸即時';
+      if (!tempEl && !descEl && !cityEl) return;
+      if (cityEl) cityEl.textContent = isNago ? '名護(北部)' : '那霸即時';
 
       try {
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code&timezone=Asia%2FTokyo`;
@@ -2067,15 +2068,15 @@
         const wCode = current.weather_code;
         const weatherInfo = parseWmoCode(wCode);
 
-        tempEl.textContent = `${temp}°C`;
-        descEl.textContent = `${weatherInfo.desc} • 濕度 ${current.relative_humidity_2m}%`;
-        iconEl.textContent = weatherInfo.icon;
+        if (tempEl) tempEl.textContent = `${temp}°C`;
+        if (descEl) descEl.textContent = `${weatherInfo.desc} • 濕度 ${current.relative_humidity_2m}%`;
+        if (iconEl) iconEl.textContent = weatherInfo.icon;
 
       } catch (err) {
         console.warn('Weather fallback used:', err);
-        tempEl.textContent = '23°C';
-        descEl.textContent = '舒適微風 (離線備用)';
-        iconEl.textContent = '⛅';
+        if (tempEl) tempEl.textContent = '23°C';
+        if (descEl) descEl.textContent = '舒適微風 (離線備用)';
+        if (iconEl) iconEl.textContent = '⛅';
       }
     }
 
