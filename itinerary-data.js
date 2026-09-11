@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v2.1",
+    version: "20261117-v2.2",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -119,12 +119,12 @@ const OKINAWA_TRIP_DATA = {
       date: "2026/11/17",
       weekday: "週二",
       title: "中北部奔馳 ＆ 跑車海岸極致巡禮",
-      subtitle: "波上宮 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • PARCO CITY",
+      subtitle: "波上宮 • 道の駅許田 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • PARCO CITY",
       themeColor: "#059669",
       highlightNotice: {
         type: "info",
-        title: "自駕長途日：許田IC高速公路、15:00鯨鯊餵食秀與萬座毛夕陽",
-        content: "本日自駕里程約 180 公里，已依據實時速限與路況優化時間軸：11:25抵達古宇利大橋與蝦蝦飯、14:45直擊水族館 15:00 鯨鯊垂直餵食秀、17:40 捕捉萬座毛黃金夕陽、晚間暢逛營業至 22:00 的 PARCO CITY UNIQLO！"
+        title: "自駕長途日：冠軍許田休息站、15:00鯨鯊餵食秀與萬座毛夕陽",
+        content: "本日自駕里程約 180 公里：10:45 於日本第一「許田休息站」品嚐現炸三矢本舖開口笑與漫步海景天橋、11:30 馳騁古宇利大橋與蝦蝦飯、14:45 直擊水族館 15:00 鯨鯊垂直餵食秀、17:40 捕捉萬座毛黃金夕陽、晚間暢逛 PARCO CITY UNIQLO！"
       },
       waypoints: [
         {
@@ -178,10 +178,27 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-4",
+          name: "道の駅 許田 (名護海景休息站 ＆ 三矢本舖沙翁)",
+          category: "美食",
+          image: "thumb-kyoda.jpg",
+          time: "10:45 ~ 11:10",
+          coords: [26.5414, 127.9682],
+          mapCode: "206 476 706*66",
+          phone: "098-054-0880",
+          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Michi-no-Eki+Kyoda",
+          color: "#10b981",
+          icon: "🏪",
+          parkingInfo: "休息站專屬超大型免費停車場 (約 150 台)",
+          tags: ["日本第一休息站", "三矢本舖開口笑", "三矢球", "水族館優惠票", "海景天橋"],
+          desc: "全日本公路休息站冠軍！沖繩高速公路終點許田交流道必經地標。必吃「三矢本舖」現炸黑糖開口笑沙翁與每日限量 QQ 三矢球，走上海景天橋眺望名護灣，並可在服務台購入最划算的水族館特惠門票！",
+          tips: "停留約 25 分鐘。下車上洗手間、伸展筋骨，買熱騰騰開口笑當自駕點心，若需水族館實體折扣票可在此順手購入。"
+        },
+        {
+          id: "d2-5",
           name: "古宇利大橋 (海上馳騁 ＆ 翡翠藍海)",
           category: "景點",
           image: "thumb-kouri.jpg",
-          time: "09:45 ~ 11:25",
+          time: "11:30 ~ 11:45",
           coords: [26.6967, 128.0242],
           mapCode: "485 693 485*03",
           phone: "098-056-1242",
@@ -190,15 +207,15 @@ const OKINAWA_TRIP_DATA = {
           icon: "🌉",
           parkingInfo: "橋南端南詰觀景停車場 (免費) / 古宇利島側海灘停車場",
           tags: ["跨海長橋", "古宇利藍", "海上馳騁", "跑車打卡"],
-          desc: "由那霸走沖繩高速公路直奔終點許田IC，經 Route 58 接屋我地島來到全長 1,960 公尺的古宇利跨海大橋。開敞篷車奔馳在透明漸層古宇利藍海面上，無比震撼！",
-          tips: "車程約 85-95 分鐘。過橋前可在南詰停車場短暫停車，以跨海長橋與跑車為背景拍下經典紀念照。"
+          desc: "從許田沿 Route 58 接屋我地島來到全長 1,960 公尺的古宇利跨海大橋。開敞篷跑車奔馳在透明漸層古宇利藍海面上，無比震撼！",
+          tips: "過橋前可在南詰停車場短暫停車，以跨海長橋與跑車為背景拍下經典紀念照。"
         },
         {
-          id: "d2-5",
+          id: "d2-6",
           name: "古宇利蝦蝦飯 (KOURI SHRIMP)",
           category: "美食",
           image: "thumb-kouri.jpg",
-          time: "11:25 ~ 12:10",
+          time: "11:45 ~ 12:25",
           coords: [26.7022, 128.0233],
           mapCode: "485 692 126*55",
           phone: "098-056-1242",
@@ -211,11 +228,11 @@ const OKINAWA_TRIP_DATA = {
           tips: "支援觸控螢幕自助點餐機（可刷卡/現金）。份量剛好不會過飽，為下一站阿古豬料理保留完美食慾！"
         },
         {
-          id: "d2-6",
+          id: "d2-7",
           name: "古宇利島ハート岩 (心形岩 ＆ 恋守寺社)",
           category: "景點",
           image: "thumb-heartrock.jpg",
-          time: "12:15 ~ 12:55",
+          time: "12:30 ~ 13:05",
           coords: [26.7126, 128.0287],
           mapCode: "485 751 179*22",
           phone: "098-056-2256",
@@ -225,14 +242,14 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "心形岩入口處民營停車場 (計次約 ¥100~¥300)",
           tags: ["嵐廣告聖地", "天然心形礁石", "Tinu海灘", "戀愛守護寺社"],
           desc: "位於古宇利島北端 Tinu Beach 的天然雙心奇岩，日本天團「嵐」在此拍攝 JAL 廣告而爆紅。沿著小徑走向海灘，並造訪恋守寺社打卡祈求幸福美滿。",
-          tips: "前往沙灘的小石坡路稍微傾斜，建議換穿好走的平底鞋或涼鞋；停留約 40 分鐘後驅車啟程。"
+          tips: "前往沙灘的小石坡路稍微傾斜，建議換穿好走的平底鞋或涼鞋；停留約 35 分鐘後驅車啟程。"
         },
         {
-          id: "d2-7",
+          id: "d2-8",
           name: "百年古家 大家 阿古豬 (百年琉球古民家)",
           category: "美食",
           image: "thumb-ufuya.jpg",
-          time: "13:25 ~ 14:20",
+          time: "13:30 ~ 14:20",
           coords: [26.6234, 127.9715],
           mapCode: "206 745 056*66",
           phone: "098-053-0280",
@@ -242,10 +259,10 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "專用超大型免費停車場 (含電動高爾夫球接駁車)",
           tags: ["阿古豬肉麵", "百年古民家", "森林流水庭園", "人氣泡芙"],
           desc: "名護山林間由百年安里家古民宅修復而成的名店。伴著庭院潺潺流水聲，品嚐極致鮮美的阿古豬（Agu）沖繩蕎麥麵與特製泡芙，意境悠遠迷人。",
-          tips: "從古宇利開車約 28 分鐘。平日下午 13:25 已過最巔峰午餐人潮，候位較快。午餐供應至 15:00。"
+          tips: "從古宇利開車約 25 分鐘。平日下午 13:30 已過最巔峰午餐人潮，入座較快。午餐供應至 15:00。"
         },
         {
-          id: "d2-8",
+          id: "d2-9",
           name: "沖繩美麗海水族館 (直擊 15:00 鯨鯊餵食秀)",
           category: "景點",
           image: "thumb-churaumi.jpg",
@@ -262,7 +279,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "入館直奔「黑潮之海」大水槽卡位看 15:00 餵食解說，隨後漫步深海區與紀念品專賣店。"
         },
         {
-          id: "d2-9",
+          id: "d2-10",
           name: "星巴克 沖繩本部町店 (Hanasaki Marche 海景門市)",
           category: "美食",
           image: "thumb-starbucks.jpg",
@@ -279,7 +296,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "點杯沖繩限定飲品或抹茶星冰樂，在二樓戶外木平台吹風打卡，身心徹底充飽電。"
         },
         {
-          id: "d2-10",
+          id: "d2-11",
           name: "萬座毛海岸絕景 (落日象鼻岩黃金海岸)",
           category: "景點",
           image: "thumb-manzamo.jpg",
@@ -296,7 +313,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "參觀步道門票每人 ¥100。日落後可在全新遊客中心購買特色伴手禮或上洗手間，準備返程往南。"
         },
         {
-          id: "d2-11",
+          id: "d2-12",
           name: "A&W 牧港旗艦店 (Makiminato 復古美式漢堡)",
           category: "美食",
           image: "thumb-aw.jpg",
@@ -313,7 +330,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "必點 The A&W 漢堡配炸洋蔥圈、金黃捲捲薯條（Curly Fries），以及裝在冰鎮厚玻璃杯中的麥根沙士（Root Beer，內用可免費續杯）！"
         },
         {
-          id: "d2-12",
+          id: "d2-13",
           name: "UNIQLO 沖繩浦添 PARCO CITY 店 (夜間免稅血拚)",
           category: "購物",
           image: "thumb-parcocity.jpg",
@@ -330,7 +347,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "全館空調舒適好逛，UNIQLO 櫃位可直接出示護照辦理免稅結帳；同層還有 GU、無印良品與多家海景雜貨店。"
         },
         {
-          id: "d2-13",
+          id: "d2-14",
           name: "返抵那霸飯店休息 ＆ 戰利品整理",
           category: "住宿",
           time: "21:35 ~ 22:00",

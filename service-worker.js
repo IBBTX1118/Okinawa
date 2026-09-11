@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v9';
+const CACHE_NAME = 'okinawa-trip-v10';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -14,6 +14,7 @@ const STATIC_ASSETS = [
   './hero-art.jpg',
   './thumb-ashibinaa.jpg',
   './thumb-jacksteak.jpg',
+  './thumb-kyoda.jpg',
   './thumb-manzamo.jpg',
   './thumb-kouri.jpg',
   './thumb-heartrock.jpg',
