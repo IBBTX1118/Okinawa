@@ -804,78 +804,186 @@ const OKINAWA_TRIP_DATA = {
       day: 4,
       date: "2026/11/19",
       weekday: "週四",
-      title: "那霸最後採買 ＆ 滿載返程",
-      subtitle: "牧志公設市場 • 豬肉蛋飯糰 • 那霸機場國內線 • 賦歸",
+      title: "那霸最後採買 ＆ 16:50 滿載返程",
+      subtitle: "牧志公設市場 • 豬肉蛋飯糰 • 國際通Calbee+ • 新都心Main Place & DFS • 機場國內線",
       themeColor: "#ea580c",
       highlightNotice: {
         type: "warning",
-        title: "返程提醒：起飛前 2.5 小時抵達機場 ＆ 國內線航廈最後挖寶",
-        content: "那霸機場國內線航廈（2F伴手禮大街）比國際線豐富數倍！辦理完報到託運後，請務必保留時間前往國內線選購沖繩限定甜點與銘酒。"
+        title: "16:50 返程航班死線提醒：14:10 抵達機場 ＆ 14:40 前完成行李託運",
+        content: "班機於 16:50 起飛、16:20 開始登機。已無租車，今日搭乘單軌電車（Yui Rail）精準避開塞車！14:10 抵達機場後，先逛國內線 2F 伴手禮街，14:40 前抵達國際線 3F 櫃台完成託運報到。"
       },
       waypoints: [
         {
           id: "d4-1",
-          name: "第一牧志公設市場 ＆ 豬肉蛋飯糰 (本店)",
-          category: "美食",
-          time: "08:30 ~ 10:30",
-          coords: [26.2144, 127.6883],
-          mapCode: "33 157 264*82",
-          phone: "098-867-6560",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Makishi+Public+Market",
-          color: "#ea580c",
-          icon: "🍙",
-          parkingInfo: "徒步前往 / 周邊投幣停車場",
-          tags: ["沖繩人的廚房", "波士頓龍蝦二樓代煮", "炸蝦明太子飯糰"],
-          desc: "改建完成的全新現代化公設市場。一樓挑選生猛石斑、夜光貝或龍蝦，直接送二樓食堂代客料理；對街即是超人氣 Potama 豬肉蛋飯糰牧志本店。",
-          tips: "Potama 飯糰早晨常大排長龍，推薦使用官方 App (FastPick) 提早線上下單免排隊外帶。"
-        },
-        {
-          id: "d4-2",
-          name: "那霸市區飯店退房 ＆ 整理行李",
+          name: "THE NEST 那霸 辦理退房 ＆ 行李免費寄放",
           category: "住宿",
-          time: "10:45 ~ 11:30",
+          period: "早晨整裝",
+          image: "thumb-nesthotel.jpg",
+          time: "08:30 ~ 09:00",
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
           googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nest+Hotel+Naha",
           color: "#6366f1",
-          icon: "🧳",
-          parkingInfo: "飯店大廳裝箱",
-          tags: ["秤重打包", "戰利品封箱", "搭車前往機場"],
-          desc: "返回飯店將所有免稅液體、藥妝與重物分裝妥當，完成退房。搭乘計程車（約 12 分鐘，¥1,500）或單軌電車直達那霸機場。",
-          tips: "注意免稅品密封袋不可拆封，液體類（如泡盛、雪鹽凝膠、化妝水）必須放入托運行李！"
+          icon: "🏨",
+          parkingInfo: "飯店櫃台免費寄物 / 旭橋站投幣置物櫃",
+          tags: ["退房手續", "行李寄放", "輕裝出發", "單軌一日券"],
+          desc: "早晨於 Nest Hotel 辦理退房手續，將大件行李箱免費寄放於飯店櫃台。隨後前往旭橋單軌電車站購買『單軌電車一日券 (¥800)』，今日搭乘 3 趟以上即回本，進出站刷 QR Code 輕鬆暢遊！",
+          tips: "隨身僅攜帶護照、錢包與手機小包，讓市區徒步與搭車毫無負擔。"
+        },
+        {
+          id: "d4-2",
+          name: "第一牧志公設市場 ＆ Pork Tamago Onigiri (Potama 牧志本店)",
+          category: "美食",
+          period: "早晨美食",
+          image: "thumb-makishi.jpg",
+          time: "09:15 ~ 10:30",
+          coords: [26.2146, 127.6883],
+          mapCode: "33 157 264*82",
+          phone: "098-867-9550",
+          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Pork+Tamago+Onigiri+Makishi+Market",
+          color: "#ea580c",
+          icon: "🍙",
+          parkingInfo: "單軌美榮橋站步行 8 分鐘 / 牧志站步行 9 分鐘",
+          tags: ["沖繩人的廚房", "元祖豬肉蛋飯糰", "炸蝦明太子", "清單必吃", "在地市場巡禮"],
+          desc: "走進全新現代化改建的「第一牧志公設市場」，一樓活海鮮水族箱林立，五彩斑斕的夜光貝與石斑魚令人目不暇給。市場對面即是全沖繩最強人氣早點「Potama 豬肉蛋飯糰牧志本店」，厚切午餐肉搭配軟嫩玉子燒與現炸酥脆海老，香氣撲鼻！",
+          tips: "【排隊避雷密技】：Potama 早晨現場人潮眾多，強烈建議出發前使用官方 FastPick App 線上點餐付款，指定 09:30 取餐即可免排隊直接提領！",
+          reservationInfo: "無桌位預約，但支援官方 FastPick App 提前 30~60 分鐘線上下單，到店直接取餐外帶免排隊。",
+          branchTip: "【分店比較】：除了牧志市場本店外，那霸機場國內線 1F 也有分店，但機場店排隊人龍極長（常需等 40~60 分鐘），因此在牧志本店提早取餐最為從容！",
+          backupOptions: [
+            {
+              name: "JEF Sunrise Naha (JEF サンライズ那覇店)",
+              tag: "清單名店 / 沖繩限定苦瓜漢堡",
+              desc: "Google My Maps 清單名店！全日本僅沖繩才有的連鎖速食店，距離牧志市場步行 3 分鐘。招牌現點現煎『苦瓜歐姆蛋漢堡』與苦瓜香檬汁，風味獨特清爽！",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=JEF+Sunrise+Naha"
+            },
+            {
+              name: "第一牧志公設市場 2F 燕鄉亭食堂",
+              tag: "市場現炒 / 鮮魚刺身",
+              desc: "位於公設市場 2 樓，可在 1 樓挑選鮮魚直接上樓代客料理，或直接單點海葡萄、沖繩炒苦瓜與生魚片丼飯。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Makishi+Public+Market+2F"
+            }
+          ]
         },
         {
           id: "d4-3",
-          name: "那霸機場國內線 2F 伴手禮名店街",
+          name: "那霸國際通商店街散策 ＆ Calbee+ 現炸沖繩紅芋條",
           category: "購物",
-          time: "12:00 ~ 13:30",
+          period: "上午散策",
+          image: "thumb-calbee.jpg",
+          time: "10:30 ~ 11:20",
+          coords: [26.2164, 127.6891],
+          mapCode: "33 157 414*55",
+          phone: "098-867-6254",
+          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Calbee%2B+Okinawa+Kokusai+Street",
+          color: "#f59e0b",
+          icon: "🍟",
+          parkingInfo: "單軌牧志站步行 5 分鐘 / 美榮橋站步行 6 分鐘",
+          tags: ["奇蹟的一哩", "現炸紅芋波浪薯條", "ポテりこ", "黑糖洋芋片", "散步美食"],
+          desc: "漫步在沖繩最繁華的「奇蹟的一哩」國際通。不可錯過 Calbee+ 專賣店限定現炸熱點心——招牌「ポテりこ 紅芋薯條」，剛起鍋外皮酥脆滾燙、內餡如泥般綿密香甜，搭配沖繩黑糖洋芋片，邊走邊吃極度過癮！",
+          tips: "Calbee+ 店內亦有販售限定包裝的石垣島辣油洋芋片與紅芋薯條伴手禮盒，適合隨手送禮。",
+          reservationInfo: "現場點單現炸，製作約需 3~5 分鐘，免預約。",
+          backupOptions: [
+            {
+              name: "Ice Oasis (雪花冰專門店)",
+              tag: "清單名店 / 消暑冰品",
+              desc: "Google My Maps 清單名店！平和通商店街內，主打濃郁芒果雪花冰與黑糖豆花，逛累了可進店吹冷氣歇腳。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ice+Oasis+Naha"
+            },
+            {
+              name: "唐吉訶德 國際通店",
+              tag: "免稅地標 / 24小時營業",
+              desc: "國際通正中心地標，B1 至 4F 囊括沖繩限定零食、面膜藥妝與紀念品，可迅速補齊清單漏買的小物。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Don+Quijote+Kokusai+Dori"
+            }
+          ]
+        },
+        {
+          id: "d4-4",
+          name: "單軌歌町站：San-A Naha Main Place 採買 ＆ 美食午餐 ＆ 迪斐世 DFS 免稅店",
+          category: "購物",
+          period: "中午採買",
+          image: "thumb-mainplace.jpg",
+          time: "11:30 ~ 13:30",
+          coords: [26.2253, 127.6949],
+          mapCode: "33 188 559*22",
+          phone: "098-951-3300",
+          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=San-A+Naha+Main+Place",
+          color: "#10b981",
+          icon: "🛍️",
+          parkingInfo: "單軌電車『おもろまち站（歌町站）』步行 5 分鐘（空橋直通 DFS）",
+          tags: ["在地人最愛商場", "生鮮食品超市", "Loft生活雜貨", "免稅精品", "美食午餐"],
+          desc: "搭乘單軌直達新都心歌町站！【San-A Naha Main Place】是沖繩在地人最推崇的旗艦級商場，一樓大型超級市場售價比觀光區更親民，沖繩泡盛、黑糖、伴手禮盒品項齊全；同棟還有 Loft、無印良品與日系服飾。旁邊空橋直連【迪斐世 DFS 沖繩那霸店 (T Galleria)】，全日本唯一市區免稅店，採購精品後直接於那霸機場管制區輕鬆提貨！商場內亦設有和風洋食、壽司與美食街，可在此從容享用登機前的豐盛午餐。",
+          tips: "【退稅提醒】：Main Place 設有專屬退稅櫃台，滿 ¥5,000 即可直接退消費稅；DFS 精品購買後請妥善保留提貨單，於機場出境管制區憑護照提領。",
+          reservationInfo: "商場美食街及 1F/2F 餐廳現場候位（和風亭、大阪王將、星乃咖啡等），午間 11:30~12:15 人潮較少無需排隊。",
+          backupOptions: [
+            {
+              name: "和風亭 那霸 Main Place 店",
+              tag: "商場內人氣日式定食",
+              desc: "位於 Main Place 1 樓，提供頂級天婦羅、鰻魚飯、蕎麥麵與花籃握壽司套餐，環境舒適寬敞，長輩喜愛。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Wafutei+Naha+Main+Place"
+            },
+            {
+              name: "沖繩麵 EIBUN",
+              tag: "清單名店 / 若提早至市區用餐",
+              desc: "Google My Maps 清單名店！那霸頂級文青沖繩麵，特製炙燒軟骨與清爽高湯無懈可擊，若喜愛文青小店可於離開國際通時順道朝聖。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Soba+EIBUN"
+            }
+          ]
+        },
+        {
+          id: "d4-5",
+          name: "返回飯店提領行李 ➔ 單軌電車直奔那霸機場",
+          category: "交通",
+          period: "午後移動",
+          image: "thumb-nesthotel.jpg",
+          time: "13:30 ~ 14:10",
+          coords: [26.2127, 127.6745],
+          mapCode: "33 156 363*88",
+          phone: "098-868-1118",
+          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nest+Hotel+Naha",
+          color: "#0284c7",
+          icon: "🚝",
+          parkingInfo: "單軌旭橋站 ➔ 那霸機場站（車程約 12 分鐘）",
+          tags: ["領取行李", "單軌直達", "準時不塞車", "安全抵達機場"],
+          desc: "自歌町站搭乘單軌回到旭橋站，於 Nest Hotel 提領寄存的大行李箱。推行李進入旭橋站，搭乘單軌電車直達終點「那霸機場站」（車程僅 12 分鐘，單軌高架月台設有室內無障礙電梯與空橋，無風無雨直通航廈 2 樓）。",
+          tips: "單軌電車準點率 100%，完全避開午後進入機場路段的地面公車塞車風險！"
+        },
+        {
+          id: "d4-6",
+          name: "那霸機場國內線 2F 伴手禮名店街最後狂掃",
+          category: "購物",
+          period: "最後掃貨",
+          image: "thumb-airport.jpg",
+          time: "14:10 ~ 14:50",
           coords: [26.2064, 127.6465],
           mapCode: "33 123 279*00",
           phone: "098-840-1179",
           googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Naha+Airport+Domestic+Terminal",
           color: "#f59e0b",
           icon: "🛍️",
-          parkingInfo: "機場立體停車場",
-          tags: ["Fukugiya年輪蛋糕", "Royce石垣黑糖生巧", "紅芋蛋撻"],
-          desc: "沖繩伴手禮的終極寶庫！國內線二樓名店街齊聚所有沖繩知名伴手禮品牌（Fukugiya現烤蜂蜜年輪、Royce石垣島黑糖生巧克力、oHacorté 水果塔）。",
-          tips: "國內線與國際線二樓有聯通走廊相通，推著推車可自由穿梭，買齊後再步行 3 分鐘回國際線辦理報到。"
+          parkingInfo: "航廈 2 樓室內空橋連通",
+          tags: ["Fukugiya蜂蜜年輪", "Royce黑糖生巧克力", "oHacorté水果塔", "伴手禮終極寶庫"],
+          desc: "沖繩伴手禮最精彩的終極寶庫！國內線 2F 名店街規模為國際線數倍，齊聚各大知名甜品名店：【Fukugiya 現烤蜂蜜年輪蛋糕 (Fukugi)】香氣四溢、【Royce' 石垣島黑糖生巧克力】入口即化、【oHacorté 珠寶水果塔】酥脆精緻。推著手推車一口氣買齊所有限定伴手禮！",
+          tips: "【動線小提醒】：國內線 2F 與國際線 2F 設有寬敞明亮的室內連通道，全程推行李車僅需步行 3 分鐘即可抵達國際線出發大廳！"
         },
         {
-          id: "d4-4",
-          name: "國際線出發登機 ＆ 賦歸",
+          id: "d4-7",
+          name: "國際線出發大廳報到 ＆ 託運 ＆ 安檢通關 ＆ 16:50 班機賦歸",
           category: "交通",
-          time: "13:30 ~ 班機起飛",
+          period: "出境登機",
+          image: "thumb-airport.jpg",
+          time: "14:50 ~ 16:50 (16:20 登機 / 16:50 起飛)",
           coords: [26.2064, 127.6465],
           mapCode: "33 123 279*00",
           phone: "098-840-1179",
           googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Naha+Airport+International+Terminal",
           color: "#0284c7",
           icon: "🛫",
-          parkingInfo: "出境管制區",
-          tags: ["安檢通關", "免稅菸酒", "平安返台"],
-          desc: "提早 2 小時完成航空櫃台 Check-in 與安檢手續，進入出境免稅店最後巡禮，滿載美好回憶返台。",
-          tips: "管制區內有飲水機與免稅煙酒化妝品專櫃，放鬆心情登機。"
+          parkingInfo: "國際線出境管制區",
+          tags: ["起飛前2小時報到", "行李託運", "DFS免稅提貨", "16:20登機", "平安返台"],
+          desc: "14:50 前抵達國際線 3 樓航空公司櫃台辦理 Check-in 報到手續與大件行李託運（起飛前 60 分鐘關櫃截止）。完成安檢查驗通關後，進入管制區：若在 DFS 購買精品，可至專屬免稅提貨處出示提貨單領取；管制區內亦有最後的免稅煙酒專櫃。16:20 抵達登機門登機，滿載 4 天 3 夜美好回憶與戰利品平安返台！",
+          tips: "【提醒事項】：保溫袋裝生巧克力或布丁等凝膠類食品若未放入託運行李，單件容量超過 100ml 者會於隨身安檢時被海關攔查沒收，請務必在 14:50 托運前將其妥善收納於托運行李箱內！"
         }
       ]
     }
