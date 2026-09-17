@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v11';
+const CACHE_NAME = 'okinawa-trip-v12';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -8,7 +8,6 @@ const STATIC_ASSETS = [
   './icon.svg',
   './icon-192.png',
   './icon-512.png',
-  './icon-v2.png',
   './avatar.png',
   './shisa-art.jpg',
   './hero-art.jpg',
@@ -103,7 +102,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Fallback to offline home page if HTML navigation fails
         if (event.request.mode === 'navigate') {
-          return caches.match('./Okinawa.html');
+          return caches.match('./index.html');
         }
       });
     })

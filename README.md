@@ -59,8 +59,8 @@ git push -u origin main
 
 | 檔案 | 用途 |
 | :--- | :--- |
-| `index.html` | GitHub Pages 預設首頁入口（同 `Okinawa.html`） |
-| `Okinawa.html` | 完整主應用介面 |
+| `index.html` | 唯一正本：GitHub Pages 預設首頁入口，也是完整主應用介面 |
+| `Okinawa.html` | 轉址備用頁（自動導向 `index.html`），僅為相容舊書籤 / 舊連結保留 |
 | `itinerary-data.js` | 4天3夜完整景點結構化資料庫（座標、MapCode、電話、詳細攻略） |
 | `manifest.json` | Web App Manifest（定義 PWA 獨立視窗與圖示） |
 | `service-worker.js` | 離線快取引擎（快取地圖腳本、圖磚、字型與靜態資源） |

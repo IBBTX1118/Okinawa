@@ -2,7 +2,7 @@
 <html lang="zh-TW">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <title>煥然一新 - 沖繩動態行程表</title>
   
   <!-- PWA Manifest & Android Chrome Native Meta -->
@@ -104,6 +104,15 @@
       height: 100%;
       width: 100%;
       background-color: #f1f5f9;
+      background-image: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 37%, #f1f5f9 63%);
+      background-size: 400% 100%;
+      animation: map-skeleton-sweep 1.8s ease-in-out infinite;
+    }
+    /* Leaflet paints opaque tiles over this once the map loads, so the shimmer
+       is only ever visible during the brief window before initMap() finishes. */
+    @keyframes map-skeleton-sweep {
+      0% { background-position: 100% 0; }
+      100% { background-position: 0 0; }
     }
     .leaflet-tile-pane {
       will-change: transform;
@@ -155,10 +164,12 @@
     }
   </style>
 </head>
-<body class="okinawa-ambient-bg text-slate-800 font-sans min-h-screen antialiased flex flex-col selection:bg-sky-500 selection:text-white pb-24 md:pb-8">
+<body class="okinawa-ambient-bg text-slate-800 font-sans min-h-screen antialiased flex flex-col selection:bg-sky-500 selection:text-white pb-24 lg:pb-8">
 
   <!-- =========================================================================
-       TOP NAVIGATI  <header class="wave-bg text-white shadow-lg sticky-header-safe">
+       TOP NAVIGATION
+       ========================================================================= -->
+  <header class="wave-bg text-white shadow-lg sticky-header-safe">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-15 sm:h-18 gap-2">
         
@@ -182,23 +193,23 @@
         <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
           
           <!-- Live Weather Pill -->
-          <button onclick="toggleWeatherCity()" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md px-2 sm:px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1 shadow-inner text-xs" title="切換那霸 / 名護氣溫">
+          <button onclick="toggleWeatherCity()" aria-label="切換那霸／名護氣溫顯示" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md px-2 sm:px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1 shadow-inner text-xs min-h-[44px]" title="切換那霸 / 名護氣溫">
             <span id="weatherIconContainer">⛅</span>
             <span id="liveWeatherTemp" class="font-bold text-amber-300">23°C</span>
           </button>
 
           <!-- Search Button (🔍) -->
-          <button onclick="openModal('searchModal')" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center" title="搜尋景點、美食與代碼">
+          <button onclick="openModal('searchModal')" aria-label="搜尋景點、美食與代碼" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center min-w-[44px] min-h-[44px]" title="搜尋景點、美食與代碼">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
           </button>
 
           <!-- Map Shortcut Button (🗺️) -->
-          <a href="#mapSection" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center" title="跳轉至動態地圖">
+          <a href="#mapSection" aria-label="跳轉至當日動態地圖" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center min-w-[44px] min-h-[44px]" title="跳轉至動態地圖">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
           </a>
 
           <!-- Menu Hamburger Button (☰) -->
-          <button onclick="openModal('menuModal')" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center" title="所有行程與旅行工具選單">
+          <button onclick="openModal('menuModal')" aria-label="開啟所有行程與旅行工具選單" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center min-w-[44px] min-h-[44px]" title="所有行程與旅行工具選單">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
           </button>
 
@@ -220,7 +231,7 @@
           </div>
 
           <!-- PWA Android Install Button -->
-          <button id="pwaInstallBtnHeader" onclick="triggerPwaInstall()" class="pwa-install-btn hidden bg-amber-400 hover:bg-amber-300 text-amber-950 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition shadow-md animate-bounce" title="安裝至 Android 手機主畫面">
+          <button id="pwaInstallBtnHeader" onclick="triggerPwaInstall()" aria-label="安裝至 Android 手機主畫面" class="pwa-install-btn hidden bg-amber-400 hover:bg-amber-300 text-amber-950 px-2.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1 transition shadow-md animate-bounce min-h-[44px]" title="安裝至 Android 手機主畫面">
             <span>📲</span>
             <span class="hidden sm:inline">安裝</span>
           </button>
@@ -433,7 +444,18 @@
 
         <!-- Timeline Cards Container -->
         <div class="relative pl-6 sm:pl-8 border-l-2 border-dashed border-sky-300 space-y-5 sm:space-y-6" id="timelineContainer">
-          <!-- Injected dynamically via renderTimeline() -->
+          <!-- Static skeleton shown until renderTimeline() replaces this with real cards -->
+          <div class="bg-white/80 rounded-3xl p-4 sm:p-5 border border-slate-200/90 space-y-3 animate-pulse" aria-hidden="true">
+            <div class="h-40 sm:h-48 w-full rounded-2xl bg-slate-200"></div>
+            <div class="h-3 w-24 rounded bg-slate-200"></div>
+            <div class="h-4 w-2/3 rounded bg-slate-200"></div>
+            <div class="h-3 w-full rounded bg-slate-100"></div>
+          </div>
+          <div class="bg-white/80 rounded-2xl p-3.5 border border-slate-200/90 space-y-2.5 animate-pulse" aria-hidden="true">
+            <div class="h-3 w-20 rounded bg-slate-200"></div>
+            <div class="h-4 w-1/2 rounded bg-slate-200"></div>
+            <div class="h-3 w-3/4 rounded bg-slate-100"></div>
+          </div>
         </div>
 
       </section>
@@ -535,7 +557,7 @@
           <span class="text-2xl">💴</span>
           <h3 class="font-bold text-slate-900 text-base sm:text-lg">日幣 ⇄ 台幣匯率換算機</h3>
         </div>
-        <button onclick="closeModal('currencyModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+        <button onclick="closeModal('currencyModal')" aria-label="關閉匯率換算視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
       </div>
 
       <!-- Rate setting -->
@@ -555,7 +577,7 @@
         </div>
 
         <div class="flex justify-center -my-1">
-          <button onclick="swapCurrencyFocus()" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-xs">⇅</button>
+          <button onclick="swapCurrencyFocus()" aria-label="交換日幣與台幣輸入欄位" class="w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center text-xs">⇅</button>
         </div>
 
         <div>
@@ -597,7 +619,7 @@
             <p class="text-[11px] text-slate-500">勾選狀態自動儲存於手機本地</p>
           </div>
         </div>
-        <button onclick="closeModal('checklistModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+        <button onclick="closeModal('checklistModal')" aria-label="關閉清單視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
       </div>
 
       <!-- Checklist Tab Toggle -->
@@ -654,7 +676,7 @@
             <p class="text-[11px] text-slate-500">日本汽車導航輸入專用（點擊即可一鍵複製）</p>
           </div>
         </div>
-        <button onclick="closeModal('drivingModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+        <button onclick="closeModal('drivingModal')" aria-label="關閉自駕守則視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
       </div>
 
       <!-- Driving Rules -->
@@ -701,7 +723,7 @@
             <p class="text-[11px] text-slate-500" id="addStopDaySubtitle">將加入至 Day 1</p>
           </div>
         </div>
-        <button onclick="closeModal('addStopModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+        <button onclick="closeModal('addStopModal')" aria-label="關閉新增站點視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
       </div>
 
       <form id="addStopForm" onsubmit="handleSaveCustomStop(event)" class="space-y-3 text-xs">
@@ -766,7 +788,7 @@
       <div class="flex items-center gap-2 border-b border-slate-100 pb-3">
         <span class="text-xl text-sky-600">🔍</span>
         <input type="text" id="spotSearchInput" placeholder="搜尋景點、拉麵、牛排、MapCode、代碼..." oninput="handleSpotSearch(this.value)" class="flex-grow text-sm sm:text-base bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-sky-500 font-medium text-slate-800">
-        <button onclick="closeModal('searchModal')" class="text-slate-400 hover:text-slate-600 text-base font-bold p-1.5 rounded-lg">✕</button>
+        <button onclick="closeModal('searchModal')" aria-label="關閉搜尋視窗" class="text-slate-400 hover:text-slate-600 text-base font-bold p-2.5 -m-1 rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
       </div>
 
       <!-- Quick Category Suggestions -->
@@ -802,51 +824,19 @@
           <span class="text-2xl">🌺</span>
           <div>
             <h3 class="font-black text-slate-900 text-base">沖繩旅行工具箱</h3>
-            <p class="text-[11px] text-slate-500">快速導航 ＆ 實用小幫手</p>
+            <p class="text-[11px] text-slate-500">匯率／清單／自駕守則請點下方導覽列或頁首快捷鍵</p>
           </div>
         </div>
-        <button onclick="closeModal('menuModal')" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-1">✕</button>
+        <button onclick="closeModal('menuModal')" aria-label="關閉選單視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
       </div>
 
       <div class="space-y-2 text-xs">
-        <button onclick="closeModal('menuModal'); openModal('currencyModal');" class="w-full flex items-center justify-between p-3 bg-amber-50 hover:bg-amber-100 text-amber-900 rounded-2xl font-bold transition">
-          <div class="flex items-center gap-2.5">
-            <span class="text-lg">💴</span>
-            <span>即時匯率換算 (JPY / TWD)</span>
-          </div>
-          <span class="text-xs text-amber-600">開啟 →</span>
-        </button>
-
-        <button onclick="closeModal('menuModal'); openModal('checklistModal');" class="w-full flex items-center justify-between p-3 bg-rose-50 hover:bg-rose-100 text-rose-900 rounded-2xl font-bold transition">
-          <div class="flex items-center gap-2.5">
-            <span class="text-lg">🎒</span>
-            <span>出國 Checklist 行李清單</span>
-          </div>
-          <span class="text-xs text-rose-600">檢視 →</span>
-        </button>
-
-        <button onclick="closeModal('menuModal'); openModal('drivingModal');" class="w-full flex items-center justify-between p-3 bg-indigo-50 hover:bg-indigo-100 text-indigo-900 rounded-2xl font-bold transition">
-          <div class="flex items-center gap-2.5">
-            <span class="text-lg">🚗</span>
-            <span>自駕守則 ＆ MapCode 速查</span>
-          </div>
-          <span class="text-xs text-indigo-600">查閱 →</span>
-        </button>
-
         <button onclick="closeModal('menuModal'); openAddStopModal();" class="w-full flex items-center justify-between p-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 rounded-2xl font-bold transition">
           <div class="flex items-center gap-2.5">
             <span class="text-lg">➕</span>
             <span>新增自訂站點 / 美食備忘</span>
           </div>
           <span class="text-xs text-emerald-600">新增 →</span>
-        </button>
-
-        <button onclick="closeModal('menuModal'); triggerPwaInstall();" class="w-full flex items-center justify-between p-3 bg-sky-50 hover:bg-sky-100 text-sky-900 rounded-2xl font-bold transition">
-          <div class="flex items-center gap-2.5">
-            <span class="text-lg">📲</span>
-            <span>安裝至 Android 手機主畫面 (PWA)</span>
-          </div>
-          <span class="text-xs text-sky-600">安裝 →</span>
         </button>
       </div>
 
@@ -863,7 +853,7 @@
   <!-- =========================================================================
        FIXED MOBILE BOTTOM NAVIGATION BAR
        ========================================================================= -->
-  <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/80 px-1 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] z-40 flex items-center justify-around text-xs shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
+  <nav class="lg:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-slate-200/80 px-1 pt-1.5 pb-[max(0.6rem,env(safe-area-inset-bottom))] z-40 flex items-center justify-around text-xs shadow-[0_-4px_20px_rgba(0,0,0,0.06)]">
     <a href="#mapSection" class="flex-1 flex flex-col items-center justify-center text-slate-600 hover:text-okinawa-ocean py-1 active:scale-95 transition">
       <span class="text-lg">🗺️</span>
       <span class="text-[10px] font-semibold mt-0.5 whitespace-nowrap">地圖</span>
@@ -891,7 +881,7 @@
   </nav>
 
   <!-- Toast Notification Pill -->
-  <div id="toastNotification" class="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md text-white px-4 py-3 rounded-2xl shadow-2xl text-xs flex items-center space-x-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 max-w-[90vw]">
+  <div id="toastNotification" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md text-white px-4 py-3 rounded-2xl shadow-2xl text-xs flex items-center space-x-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 max-w-[90vw]">
     <span id="toastIcon" class="text-lg">🌺</span>
     <span id="toastMsg" class="font-medium">訊息通知</span>
   </div>
@@ -1239,7 +1229,7 @@
       }
 
       container.innerHTML = results.map(item => `
-        <div onclick="closeModal('searchModal'); jumpToSpot(${item.dIdx}, '${item.wp.id}');" class="p-3 bg-slate-50 hover:bg-sky-50/80 border border-slate-200 hover:border-sky-300 rounded-2xl cursor-pointer transition flex items-center justify-between gap-2 group">
+        <button type="button" onclick="closeModal('searchModal'); jumpToSpot(${item.dIdx}, '${item.wp.id}');" class="w-full text-left p-3 bg-slate-50 hover:bg-sky-50/80 border border-slate-200 hover:border-sky-300 rounded-2xl cursor-pointer transition flex items-center justify-between gap-2 group">
           <div class="min-w-0">
             <div class="flex items-center gap-1.5 mb-1">
               <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full">Day ${item.day.day} (${item.day.weekday})</span>
@@ -1250,7 +1240,7 @@
             <p class="text-[11px] text-slate-500 truncate mt-0.5">${item.wp.desc || item.wp.tips || ''}</p>
           </div>
           <span class="text-xs text-sky-600 font-semibold shrink-0 group-hover:translate-x-0.5 transition">前往 →</span>
-        </div>
+        </button>
       `).join('');
     }
 
@@ -1388,8 +1378,8 @@
           ${(wp.phone || wp.parkingInfo || wp.isCustom) ? `
             <div class="flex flex-wrap items-center gap-2 text-xs pt-0.5">
               ${wp.phone ? `
-                <a href="tel:${wp.phone}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-mono transition flex items-center gap-1.5">
-                  <span>📞</span>
+                <a href="tel:${wp.phone}" aria-label="撥打電話 ${wp.phone}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-mono transition flex items-center gap-1.5">
+                  <span aria-hidden="true">📞</span>
                   <span>${wp.phone}</span>
                 </a>
               ` : ''}
@@ -1414,15 +1404,35 @@
 
     function renderTimeline(day) {
       const container = document.getElementById('timelineContainer');
-      
-      container.innerHTML = day.waypoints.map((wp, idx) => {
+      const showProgress = day.waypoints.length > 8;
+      let lastPeriod = null;
+      const cards = [];
+
+      day.waypoints.forEach((wp, idx) => {
         const customNoteKey = `user_note_${wp.id}`;
         const userNote = localStorage.getItem(customNoteKey) || '';
         const parkingSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(wp.name + ' 停車場 駐車場 parking')}`;
+        const progressBadge = showProgress
+          ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-mono">第 ${idx + 1}／${day.waypoints.length} 站</span>`
+          : '';
+
+        // Time-block divider: only appears when the data assigns a `period` (currently used on
+        // longer days like Day 2) and it changes from the previous waypoint.
+        if (wp.period && wp.period !== lastPeriod) {
+          lastPeriod = wp.period;
+          cards.push(`
+            <div class="pt-1 pb-0.5">
+              <div class="inline-flex items-center gap-2 bg-slate-900 text-white text-[11px] font-bold px-3 py-1.5 rounded-full shadow-md">
+                <span aria-hidden="true">🧭</span>
+                <span>${wp.period}</span>
+              </div>
+            </div>
+          `);
+        }
 
         // Category 1: 交通 / 住宿 (Transit & Lodging) -> Compact streamlined pill card
         if (wp.category === '交通' || wp.category === '住宿') {
-          return `
+          cards.push(`
             <div class="relative group" id="timeline-card-${wp.id}">
               <div class="absolute -left-[31px] sm:-left-[39px] top-3 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-xs z-10" style="border-color: ${wp.color || day.themeColor}">
                 <span class="text-xs">${wp.icon || (wp.category === '交通' ? '🚗' : '🏨')}</span>
@@ -1434,8 +1444,8 @@
                     <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
                     <div class="absolute bottom-2 left-3 right-3 flex items-center justify-between text-white">
-                      <span class="text-[11px] font-bold bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-lg">${wp.name.split(' ')[0]}</span>
-                      <span class="text-[10px] ${wp.category === '交通' ? 'bg-sky-600' : 'bg-indigo-600'} text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
+                      <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">${wp.name.split(' ')[0]}</span>
+                      <span class="text-[10px] bg-black/50 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
                         ${wp.category === '交通' ? '交通門戶' : '舒適住宿'}
                       </span>
                     </div>
@@ -1443,18 +1453,19 @@
                 ` : ''}
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   <div class="min-w-0">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 flex-wrap">
                       <span class="text-[10px] font-bold px-2 py-0.5 rounded-md text-white shadow-2xs" style="background-color: ${wp.color || day.themeColor}">
                         ${wp.category}
                       </span>
                       <span class="text-xs font-mono font-bold text-slate-700">${wp.time}</span>
+                      ${progressBadge}
                       ${(wp.tags || []).map(t => `<span class="text-[10px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-600 font-medium">${t}</span>`).join('')}
                     </div>
                     <h4 class="text-sm sm:text-base font-bold text-slate-900 mt-1 truncate">${idx + 1}. ${wp.name}</h4>
                     <p class="text-xs text-slate-500 mt-0.5 leading-snug">${wp.desc || wp.tips || ''}</p>
                     ${wp.parkingInfo ? `
                       <div class="mt-1 text-[11px] text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-md inline-flex items-center gap-1 border border-emerald-200/60">
-                        <span>🅿️</span>
+                        <span aria-hidden="true">🅿️</span>
                         <span>${wp.parkingInfo}</span>
                       </div>
                     ` : ''}
@@ -1473,46 +1484,44 @@
                       </button>
                     ` : ''}
                     ${wp.phone ? `
-                      <a href="tel:${wp.phone}" class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-mono transition" title="撥打電話">
-                        📞
+                      <a href="tel:${wp.phone}" aria-label="撥打電話 ${wp.phone}" class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-mono transition min-w-[44px] min-h-[44px] flex items-center justify-center" title="撥打電話">
+                        <span aria-hidden="true">📞</span>
                       </a>
                     ` : ''}
                     ${wp.isCustom ? `
-                      <button onclick="deleteCustomStop('${wp.id}')" class="text-rose-500 hover:text-rose-700 text-xs font-semibold px-1">
-                        🗑️
+                      <button onclick="deleteCustomStop('${wp.id}')" aria-label="刪除此自訂站點" class="text-rose-500 hover:text-rose-700 text-xs font-semibold px-1 min-w-[44px] min-h-[44px] flex items-center justify-center">
+                        <span aria-hidden="true">🗑️</span>
                       </button>
                     ` : ''}
                   </div>
                 </div>
               </div>
             </div>
-          `;
+          `);
+          return;
         }
 
-        // Category 2: 美食 / 購物 (Gourmet & Shopping) -> Warm-tinted postcard card with prominent shop title
+        // Category 2: 美食 / 購物 (Gourmet & Shopping)
         if (wp.category === '美食' || wp.category === '購物') {
           const isFood = wp.category === '美食';
-          const cardBg = isFood 
-            ? 'bg-gradient-to-br from-rose-50/70 via-white to-amber-50/40 border-rose-200/80' 
-            : 'bg-gradient-to-br from-amber-50/70 via-white to-orange-50/30 border-amber-200/80';
-          const themeBadgeColor = isFood ? '#f43f5e' : '#f59e0b';
+          const badgeColor = isFood ? '#f43f5e' : '#f59e0b';
 
-          return `
+          cards.push(`
             <div class="relative group" id="timeline-card-${wp.id}">
-              <div class="absolute -left-[31px] sm:-left-[39px] top-2.5 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-sm z-10" style="border-color: ${wp.color || themeBadgeColor}">
-                <span class="w-2 h-2 rounded-full" style="background-color: ${wp.color || themeBadgeColor}"></span>
+              <div class="absolute -left-[31px] sm:-left-[39px] top-2.5 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-sm z-10" style="border-color: ${wp.color || badgeColor}">
+                <span class="w-2 h-2 rounded-full" style="background-color: ${wp.color || badgeColor}"></span>
               </div>
 
-              <div class="${cardBg} rounded-3xl p-4 sm:p-5 border shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
-                
+              <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
+
                 <!-- Postcard Thumbnail if available -->
                 ${wp.image ? `
                   <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
                     <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
                     <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
                     <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
-                      <span class="text-[11px] font-bold bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-lg">🍽️ ${wp.name.split(' ')[0]}</span>
-                      <span class="text-[10px] ${isFood ? 'bg-rose-500 text-white' : 'bg-amber-400 text-amber-950'} font-bold px-2 py-0.5 rounded-full shadow-xs">
+                      <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">${isFood ? '🍽️' : '🛍️'} ${wp.name.split(' ')[0]}</span>
+                      <span class="text-[10px] bg-black/50 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
                         ${isFood ? '在地必吃' : '免稅熱門'}
                       </span>
                     </div>
@@ -1521,14 +1530,15 @@
 
                 <!-- Header: Tags & Time -->
                 <div class="flex flex-wrap items-center justify-between gap-2">
-                  <div class="flex items-center space-x-1.5 sm:space-x-2">
-                    <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style="background-color: ${wp.color || themeBadgeColor}">
+                  <div class="flex items-center space-x-1.5 sm:space-x-2 flex-wrap gap-y-1">
+                    <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style="background-color: ${wp.color || badgeColor}">
                       ${wp.icon || (isFood ? '🍜' : '🛍️')} ${wp.category}
                     </span>
-                    ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md ${isFood ? 'bg-rose-100/70 text-rose-800' : 'bg-amber-100/70 text-amber-800'}">${t}</span>`).join('')}
+                    ${progressBadge}
+                    ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">${t}</span>`).join('')}
                   </div>
                   <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-slate-800">
-                    <svg class="w-4 h-4 ${isFood ? 'text-rose-500' : 'text-amber-500'}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="font-mono">${wp.time}</span>
                   </div>
                 </div>
@@ -1545,8 +1555,8 @@
 
                 <!-- Tips / Gourmet Warning -->
                 ${wp.tips ? `
-                  <div class="${isFood ? 'bg-rose-50/90 border-rose-200' : 'bg-amber-50/90 border-amber-200'} border rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
-                    <span class="text-base shrink-0">${isFood ? '🥢' : '🛍️'}</span>
+                  <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
+                    <span class="text-base shrink-0" aria-hidden="true">${isFood ? '🥢' : '🛍️'}</span>
                     <p class="leading-relaxed"><strong>${isFood ? '老饕指南：' : '採購攻略：'}</strong>${wp.tips}</p>
                   </div>
                 ` : ''}
@@ -1556,47 +1566,49 @@
 
                 <!-- Personal Memo Note Input -->
                 <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
-                  <span class="text-slate-400">📝 筆記：</span>
-                  <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-white border border-slate-200 focus:border-rose-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
+                  <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
+                  <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-white border border-slate-200 focus:border-slate-400 rounded-lg px-2.5 py-1 text-slate-700 transition">
                 </div>
 
               </div>
             </div>
-          `;
+          `);
+          return;
         }
 
         // Category 3: 景點 / 絕景 (Attractions) -> Full postcard style with rich image
-        return `
+        cards.push(`
           <div class="relative group" id="timeline-card-${wp.id}">
             <!-- Custom Pin Dot -->
             <div class="absolute -left-[31px] sm:-left-[39px] top-2.5 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-sm z-10" style="border-color: ${wp.color || day.themeColor}">
               <span class="w-2 h-2 rounded-full" style="background-color: ${wp.color || day.themeColor}"></span>
             </div>
 
-            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-sky-100 shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
-              
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
+
               <!-- Postcard Thumbnail if available -->
               ${wp.image ? `
                 <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
                   <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
                   <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
                   <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
-                    <span class="text-[11px] font-bold bg-black/40 backdrop-blur-md px-2 py-0.5 rounded-lg">📍 ${wp.name.split(' ')[0]}</span>
-                    <span class="text-[10px] bg-amber-400 text-amber-950 font-black px-2 py-0.5 rounded-full shadow-xs">必訪景點</span>
+                    <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">📍 ${wp.name.split(' ')[0]}</span>
+                    <span class="text-[10px] bg-accent-gold text-on-gold font-black px-2 py-0.5 rounded-full shadow-xs" style="background-color:#fbbf24; color:#451a03;">必訪景點</span>
                   </div>
                 </div>
               ` : ''}
 
               <!-- Header: Tags & Time -->
               <div class="flex flex-wrap items-center justify-between gap-2">
-                <div class="flex items-center space-x-1.5 sm:space-x-2">
+                <div class="flex items-center space-x-1.5 sm:space-x-2 flex-wrap gap-y-1">
                   <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style="background-color: ${wp.color || day.themeColor}">
                     ${wp.icon || '🏖️'} ${wp.category}
                   </span>
+                  ${progressBadge}
                   ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-medium">${t}</span>`).join('')}
                 </div>
                 <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-slate-800">
-                  <svg class="w-4 h-4 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                   <span class="font-mono">${wp.time}</span>
                 </div>
               </div>
@@ -1613,8 +1625,8 @@
 
               <!-- Tips / Practical Warning -->
               ${wp.tips ? `
-                <div class="bg-sky-50/80 border border-sky-200/90 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
-                  <span class="text-sky-600 shrink-0 text-sm">💡</span>
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
+                  <span class="text-slate-400 shrink-0 text-sm" aria-hidden="true">💡</span>
                   <p class="leading-relaxed"><strong>攻略指南：</strong>${wp.tips}</p>
                 </div>
               ` : ''}
@@ -1624,14 +1636,16 @@
 
               <!-- Personal Memo Note Input -->
               <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
-                <span class="text-slate-400">📝 筆記：</span>
-                <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-slate-50 hover:bg-white focus:bg-white border border-transparent focus:border-sky-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
+                <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
+                <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-slate-50 hover:bg-white focus:bg-white border border-transparent focus:border-slate-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
               </div>
 
             </div>
           </div>
-        `;
-      }).join('');
+        `);
+      });
+
+      container.innerHTML = cards.join('');
     }
 
     function renderFeaturedGuide(day) {
