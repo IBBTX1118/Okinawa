@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v2.3",
+    version: "20261117-v3.0",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -29,6 +29,12 @@ const OKINAWA_TRIP_DATA = {
         title: "17:50 班機落地出境推算 ＆ ASHIBINAA 20:00 打烊應變",
         content: "國際線出關約需 45-55 分，出境預估 18:35~18:45。強烈建議出航廈直接搭乘 Uber 或排班計程車（約 ¥2,000，車程 15 分），爭取在 19:05 前抵達 Outlet 鎖定 Vivienne 等目標快攻！"
       },
+      transitSummary: {
+        totalDrivingTime: "約 45 分",
+        totalDistance: "約 16 km",
+        mode: "計程車 ＆ 步行",
+        tips: "那霸機場 ➔ Outlet ➔ 飯店短程移動，建議出航廈搭計程車爭取 Outlet 採買時間"
+      },,
       waypoints: [
         {
           id: "d1-1",
@@ -39,7 +45,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2064, 127.6465],
           mapCode: "33 123 279*00",
           phone: "098-840-1179",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Naha+Airport",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2064,127.6465&travelmode=driving",
           color: "#0284c7",
           icon: "✈️",
           parkingInfo: "機場立體停車場 P1-P3（計程收費）",
@@ -49,6 +55,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d1-2",
+          transitFromPrev: {
+            mode: "taxi",
+            duration: "約 18 分",
+            distance: "約 7.2 km",
+            route: "經國道 331 號豐見城道路直達",
+            toll: "無料",
+            tips: "航廈外搭乘排班計程車或叫車，車資約 ¥2,000~2,300，最快抵達 Outlet"
+          },
           name: "沖繩 ASHIBINAA Outlet",
           category: "購物",
           image: "thumb-ashibinaa.jpg",
@@ -56,7 +70,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.1593, 127.6582],
           mapCode: "232 544 452*22",
           phone: "098-891-6000",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Outlet+Mall+Ashibinaa",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.1593,127.6582&travelmode=driving",
           color: "#f59e0b",
           icon: "🛍️",
           parkingInfo: "園區免費大型停車場 (約1000台)",
@@ -66,6 +80,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d1-3",
+          transitFromPrev: {
+            mode: "taxi",
+            duration: "約 22 分",
+            distance: "約 8.5 km",
+            route: "沿國道 331 號往那霸市區久茂地",
+            toll: "無料",
+            tips: "提行李搭計程車直接進飯店辦理 Check-in（約 ¥2,500）"
+          },
           name: "THE NEST 那霸 (飯店 Check-in)",
           category: "住宿",
           image: "thumb-nesthotel.jpg",
@@ -73,7 +95,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nest+Hotel+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=driving",
           color: "#6366f1",
           icon: "🏨",
           parkingInfo: "高CP推薦：步行2分「ザ・パーク西町第3 (夜間最大¥400)」或「タイムズ西1丁目 (夜間最大¥500)」",
@@ -83,6 +105,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d1-4",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 5 分",
+            distance: "約 350 m",
+            route: "步行穿過久茂地西側街區",
+            toll: "無料",
+            tips: "距離飯店僅 350 公尺，步行即可抵達，先至門口抽號碼牌"
+          },
           name: "傑克牛排館 (Jack's Steak House)",
           category: "美食",
           image: "thumb-jacksteak.jpg",
@@ -91,7 +121,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2163, 127.6710],
           mapCode: "33 155 087*50",
           phone: "098-868-2408",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Jack%27s+Steak+House+Okinawa",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2163,127.6710&travelmode=driving",
           color: "#f43f5e",
           icon: "🥩",
           parkingInfo: "專用停車場（約12台，用餐免費用）",
@@ -105,18 +135,26 @@ const OKINAWA_TRIP_DATA = {
               name: "Agu Pork Shabu-shabu Miruku Naha (みるく 阿古豬涮涮鍋)",
               tag: "可訂位 / 步行6分",
               desc: "Google My Maps 清單名店！主打極品阿古豬涮涮鍋，營業至 23:00。離 Nest Hotel 僅步行 6 分鐘，可提早電話/官網訂位！",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Agu+Pork+Shabu-shabu+Miruku+Naha"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Agu+Pork+Shabu-shabu+Miruku+Naha&travelmode=driving"
             },
             {
               name: "Buchi 久茂地店 (沖繩炭火燒肉居酒屋)",
               tag: "清單名店 / 步行10分",
               desc: "Google My Maps 清單名店！深夜微醺首選，提供厚切牛舌與炭火直烤和牛內臟，營業至深夜，氣氛放鬆。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Buchi+Kumoji+Naha"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Buchi+Kumoji+Naha&travelmode=driving"
             }
           ]
         },
         {
           id: "d1-5",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 8 分",
+            distance: "約 600 m",
+            route: "步行沿久茂地方向進入國際通商圈",
+            toll: "無料",
+            tips: "晚餐後消食散策，唐吉訶德24小時營業"
+          },
           name: "首夜待定漫步 (國際通唐吉訶德 / 居酒屋)",
           category: "放鬆",
           image: "thumb-kokusaidori-night.jpg",
@@ -124,7 +162,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2155, 127.6853],
           mapCode: "33 157 382*41",
           phone: "098-951-2311",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Don+Quijote+Kokusai+Dori",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2155,127.6853&travelmode=driving",
           color: "#a855f7",
           icon: "🌙",
           parkingInfo: "周邊收費停車場（夜間最高收費約 ¥600~¥800）",
@@ -146,6 +184,12 @@ const OKINAWA_TRIP_DATA = {
         title: "自駕長途日：09:30取車、許田休息站、鯨鯊餵食秀、萬座毛夕陽、BLUE SEAL ＆ PARCO UTme!",
         content: "租車時程自 11/17 09:30 至 11/18 19:30（整整 34 小時！）。10:55 於第一名「許田休息站」品嚐現炸三矢沙翁、11:40 馳騁古宇利藍大橋、14:45 直擊水族館 15:00 鯨鯊餵食秀、17:40 捕捉萬座毛夕陽。晚間接連造訪 A&W 與 BLUE SEAL 牧港旗艦雙名店，並於 PARCO CITY 預留 75 分鐘現場客製 UTme! 專屬紀念 T 恤！"
       },
+      transitSummary: {
+        totalDrivingTime: "約 3.5 小時",
+        totalDistance: "約 170 km",
+        mode: "自駕 (ETC 高速＋國道58)",
+        tips: "全日自駕核心！西原 IC ➔ 許田 IC 高速路段 (ETC ¥1,040)，北上名護、古宇利、美ら海與萬座毛"
+      },,
       waypoints: [
         {
           id: "d2-1",
@@ -157,7 +201,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2207, 127.6713],
           mapCode: "33 185 022*41",
           phone: "098-868-3697",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Naminoue+Shrine",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2207,127.6713&travelmode=driving",
           color: "#8b5cf6",
           icon: "⛩️",
           parkingInfo: "波上宮境內免費小型停車場 / 若狹海濱付費停車場",
@@ -167,6 +211,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-2",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 4 分",
+            distance: "約 280 m",
+            route: "沿若狹大通向南步行",
+            toll: "無料",
+            tips: "若狹靜巷步行外帶晨光手沖咖啡"
+          },
           name: "TURNER COFFEE (若狹晨光外帶咖啡)",
           category: "美食",
           period: "晨間出發",
@@ -175,7 +227,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2198, 127.6725],
           mapCode: "33 185 053*44",
           phone: "098-861-5511",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=TURNER+COFFEE+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2198,127.6725&travelmode=driving",
           color: "#f59e0b",
           icon: "☕",
           parkingInfo: "步行即達（自波上宮步行僅 2 分鐘）",
@@ -185,6 +237,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-3",
+          transitFromPrev: {
+            mode: "monorail",
+            duration: "約 20 分",
+            distance: "約 5.2 km",
+            route: "單軌旭橋站 → 赤嶺站步行 2 分",
+            toll: "單軌車票 ¥270",
+            tips: "準時 09:30 前往赤嶺取車，出示台灣駕照日文譯本與正本"
+          },
           name: "Heat Sports Car Rental (赤嶺取車點檢)",
           category: "交通",
           period: "晨間出發",
@@ -193,7 +253,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.1928, 127.6603],
           mapCode: "33 064 748*88",
           phone: "098-857-0819",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Heat+Sports+Car+Rental+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.1928,127.6603&travelmode=driving",
           color: "#dc2626",
           icon: "🏎️",
           parkingInfo: "租車站出發（赤嶺站旁步行 5 分鐘）",
@@ -203,6 +263,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-4",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 55 分",
+            distance: "約 68 km",
+            route: "沖繩自動車道：西原 IC → 許田 IC",
+            toll: "ETC ¥1,040",
+            tips: "自駕正式啟程！走高速公路直奔名護，進休息站買三矢沙翁"
+          },
           name: "道の駅 許田 (名護海景休息站 ＆ 三矢本舖沙翁)",
           category: "美食",
           period: "古宇利跳島",
@@ -211,7 +279,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.5414, 127.9682],
           mapCode: "206 476 706*66",
           phone: "098-054-0880",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Michi-no-Eki+Kyoda",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.5414,127.9682&travelmode=driving",
           color: "#10b981",
           icon: "🏪",
           parkingInfo: "休息站專屬超大型免費停車場 (約 150 台)",
@@ -225,12 +293,20 @@ const OKINAWA_TRIP_DATA = {
               name: "伊芸服務區 (Igei Service Area 下行)",
               tag: "高速公路中途",
               desc: "若許田休息站車位客滿，高速公路中途的伊芸 SA 亦有海景展望台、沖繩蕎麥麵與藍海霜淇淋。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Igei+Service+Area+Down"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Igei+Service+Area+Down&travelmode=driving"
             }
           ]
         },
         {
           id: "d2-5",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 35 分",
+            distance: "約 25 km",
+            route: "國道 58 號 → 屋我地島 → 縣道 110 號",
+            toll: "無料",
+            tips: "兩側碧藍海天一線，過橋前南端有觀景展望台"
+          },
           name: "古宇利大橋 (海上馳騁 ＆ 翡翠藍海)",
           category: "景點",
           period: "古宇利跳島",
@@ -239,7 +315,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.6967, 128.0242],
           mapCode: "485 693 485*03",
           phone: "098-056-1242",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Kouri+Bridge",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.6967,128.0242&travelmode=driving",
           color: "#0284c7",
           icon: "🌉",
           parkingInfo: "橋南端南詰觀景停車場 (免費) / 古宇利島側海灘停車場",
@@ -249,6 +325,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-6",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 3 分",
+            distance: "約 1.2 km",
+            route: "古宇利大橋北端上山坡",
+            toll: "無料",
+            tips: "島上人氣最高排隊美食，店附免費停車場"
+          },
           name: "古宇利蝦蝦飯 (KOURI SHRIMP)",
           category: "美食",
           period: "古宇利跳島",
@@ -258,7 +342,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.7022, 128.0233],
           mapCode: "485 692 126*55",
           phone: "098-056-1242",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=KOURI+SHRIMP",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.7022,128.0233&travelmode=driving",
           color: "#ea580c",
           icon: "🍤",
           parkingInfo: "店內專屬停車場 (約 30 台)",
@@ -272,18 +356,26 @@ const OKINAWA_TRIP_DATA = {
               name: "5910 sa-ta-cafe (古宇利沙翁咖啡)",
               tag: "清單名店 / 開車2分",
               desc: "Google My Maps 清單名店！心形岩旁人氣小店，提供現烤沙翁、塔可飯與冷萃咖啡，環境清幽免排隊。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=5910+sa-ta-cafe+Kouri"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=5910+sa-ta-cafe+Kouri&travelmode=driving"
             },
             {
               name: "錦屋 (にしきや 古宇利海鮮食堂)",
               tag: "跨海大橋旁",
               desc: "大橋南詰老牌海鮮定食，提供鮮甜海膽丼、海葡萄蓋飯與沖繩麵，翻桌速度快。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nishikiya+Kouri"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Nishikiya+Kouri&travelmode=driving"
             }
           ]
         },
         {
           id: "d2-7",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 6 分",
+            distance: "約 2.8 km",
+            route: "古宇利環島公路至北側 Tinu 浜",
+            toll: "停車 ¥100~300",
+            tips: "退潮時心形岩石最清晰，步道多珊瑚礁石建議穿好走便鞋"
+          },
           name: "古宇利島ハート岩 (心形岩 ＆ 恋守寺社)",
           category: "景點",
           period: "古宇利跳島",
@@ -292,7 +384,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.7126, 128.0287],
           mapCode: "485 751 179*22",
           phone: "098-056-2256",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Heart+Rock+Kouri+Island",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.7126,128.0287&travelmode=driving",
           color: "#ec4899",
           icon: "💖",
           parkingInfo: "心形岩入口處民營停車場 (計次約 ¥100~¥300)",
@@ -302,6 +394,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-8",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 25 分",
+            distance: "約 17 km",
+            route: "縣道 72 號 → 名護山間聚落",
+            toll: "無料",
+            tips: "百年古民家森林庭園，享用阿古豬火鍋午餐"
+          },
           name: "百年古家 大家 阿古豬 (百年琉球古民家)",
           category: "美食",
           period: "美麗海水族館",
@@ -311,7 +411,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.6234, 127.9715],
           mapCode: "206 745 056*66",
           phone: "098-053-0280",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ufuya+Okinawa",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.6234,127.9715&travelmode=driving",
           color: "#b45309",
           icon: "🥢",
           parkingInfo: "專用超大型免費停車場 (含電動高爾夫球接駁車)",
@@ -325,18 +425,26 @@ const OKINAWA_TRIP_DATA = {
               name: "幸ちゃんそば (Satchan Soba)",
               tag: "清單名店 / 開車12分",
               desc: "Google My Maps 清單名店！名護在地排隊老店，特製伊平屋島水雲沖繩麵與軟嫩軟骨肉，湯頭甘醇清爽。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Satchan+Soba+Nago"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Satchan+Soba+Nago&travelmode=driving"
             },
             {
               name: "元祖海葡萄總店 (萬座毛旁)",
               tag: "清單名店 / 順路往南",
               desc: "Google My Maps 清單名店！若在名護節省時間直接往南，可在萬座毛旁品嚐元祖海葡萄阿古豬蓋飯。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ganso+Umibudo+Honten"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ganso+Umibudo+Honten&travelmode=driving"
             }
           ]
         },
         {
           id: "d2-9",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 28 分",
+            distance: "約 18 km",
+            route: "國道 449 號 → 海洋博公園 P7 立體停車場",
+            toll: "公園停車無料",
+            tips: "導航 P7 北停車場，離水族館入口最近，直奔 15:00 鯨鯊餵食秀"
+          },
           name: "沖繩美麗海水族館 (直擊 15:00 鯨鯊餵食秀)",
           category: "景點",
           period: "美麗海水族館",
@@ -345,7 +453,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.6943, 127.8779],
           mapCode: "553 075 797*77",
           phone: "098-048-3748",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Churaumi+Aquarium",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.6943,127.8779&travelmode=driving",
           color: "#0284c7",
           icon: "🐋",
           parkingInfo: "導航至「P7北停車場 (立體停車場)」(離水族館最近且遮陽防曬)",
@@ -355,6 +463,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-10",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 8 分",
+            distance: "約 3.5 km",
+            route: "海洋博公園往本部港方向 Hanasaki Marche",
+            toll: "園區免費停車",
+            tips: "2樓戶外木平台遠眺瀨底島，稍作休憩喝咖啡"
+          },
           name: "星巴克 沖繩本部町店 (Hanasaki Marche 海景門市)",
           category: "美食",
           period: "西岸夕陽",
@@ -363,7 +479,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.6853, 127.8847],
           mapCode: "553 046 422*00",
           phone: "098-043-9865",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Starbucks+Coffee+Okinawa+Motobu",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.6853,127.8847&travelmode=driving",
           color: "#059669",
           icon: "☕",
           parkingInfo: "Ala Mahaina / Hanasaki Marche 商場大型免費停車場",
@@ -373,6 +489,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-11",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 60 分",
+            distance: "約 46 km",
+            route: "沿國道 58 號南下恩納村海岬",
+            toll: "門票 ¥100 / 停車無料",
+            tips: "傍晚日落時段象鼻岩與東海夕照最美"
+          },
           name: "萬座毛海岸絕景 (落日象鼻岩黃金海岸)",
           category: "景點",
           period: "西岸夕陽",
@@ -381,7 +505,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.5049, 127.8502],
           mapCode: "206 312 038*55",
           phone: "098-966-8086",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Cape+Manzamo",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.5049,127.8502&travelmode=driving",
           color: "#e11d48",
           icon: "🌅",
           parkingInfo: "萬座毛遊客中心專用大型免費停車場 (約 300 台)",
@@ -391,6 +515,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-12",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 45 分",
+            distance: "約 36 km",
+            route: "國道 58 號南下至浦添牧港",
+            toll: "無料",
+            tips: "沖繩歷史最悠久復古美式 Drive-in 漢堡名店"
+          },
           name: "A&W 牧港旗艦店 (Makiminato 復古美式漢堡)",
           category: "美食",
           period: "晚間返程",
@@ -400,7 +532,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2625, 127.7144],
           mapCode: "33 342 546*22",
           phone: "098-876-6081",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=A%26W+Makiminato",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2625,127.7144&travelmode=driving",
           color: "#b45309",
           icon: "🍔",
           parkingInfo: "店前專用 Drive-in 美式停車場 (約 50 台，免費)",
@@ -414,12 +546,20 @@ const OKINAWA_TRIP_DATA = {
               name: "暖暮拉麵 牧港店",
               tag: "國道58號旁 / 開車2分",
               desc: "九州拉麵冠軍，牧港店附專屬停車場，比起國際通排隊 1 小時的分店，牧港店等候時間短得多。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Danbo+Ramen+Makiminato"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Danbo+Ramen+Makiminato&travelmode=driving"
             }
           ]
         },
         {
           id: "d2-13",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 2 分",
+            distance: "約 650 m",
+            route: "國道 58 號對向 (浦添牧港)",
+            toll: "無料",
+            tips: "牧港本店霓虹燈招牌夜景超好拍，品嚐鹽金楚糕冰淇淋"
+          },
           name: "BLUE SEAL 牧港本店 (Ice Park 美式冰淇淋旗艦)",
           category: "美食",
           period: "晚間返程",
@@ -429,7 +569,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2673, 127.7214],
           mapCode: "33 342 635*44",
           phone: "098-877-5241",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Blue+Seal+Makiminato+Honten",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2673,127.7214&travelmode=driving",
           color: "#06b6d4",
           icon: "🍨",
           parkingInfo: "門市前專用免費停車場 (約 40 台)",
@@ -443,12 +583,20 @@ const OKINAWA_TRIP_DATA = {
               name: "BLUE SEAL 浦添 PARCO CITY 店",
               tag: "商場2F順路",
               desc: "若牧港外帶人潮稍多，可直接在下一站 PARCO CITY 館內 2F 門市購買邊逛邊吃。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Blue+Seal+PARCO+CITY"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Blue+Seal+PARCO+CITY&travelmode=driving"
             }
           ]
         },
         {
           id: "d2-14",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 10 分",
+            distance: "約 4.8 km",
+            route: "西海岸道路向西至 PARCO CITY",
+            toll: "商場免費停車 (4000台)",
+            tips: "全沖繩最大店！營業至 22:00，UTme! 印製約需 40~60 分"
+          },
           name: "UNIQLO 沖繩浦添 PARCO CITY 店 (UTme! 客製化 T 恤 ＆ 夜間免稅)",
           category: "購物",
           period: "晚間返程",
@@ -457,7 +605,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2618, 127.6975],
           mapCode: "33 339 054*88",
           phone: "098-871-1120",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=SAN-A+Urasoe+West+Coast+PARCO+CITY",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2618,127.6975&travelmode=driving",
           color: "#dc2626",
           icon: "🛍️",
           parkingInfo: "PARCO CITY 超大型室內立體免費停車場 (約 4000 台)",
@@ -467,6 +615,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d2-15",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 18 分",
+            distance: "約 8.5 km",
+            route: "經西海岸道路南下進入那霸市區",
+            toll: "無料",
+            tips: "車停周邊收費停車場（夜間最大 ¥400~¥500）"
+          },
           name: "返抵那霸飯店休息 ＆ 戰利品整理",
           category: "住宿",
           period: "晚間返程",
@@ -475,7 +631,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nest+Hotel+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=driving",
           color: "#6366f1",
           icon: "🏨",
           parkingInfo: "高CP首選：步行2分「ザ・パーク西町第3 (夜間最大¥400)」或「タイムズ西1丁目 (夜間¥500)」",
@@ -497,6 +653,12 @@ const OKINAWA_TRIP_DATA = {
         title: "還車提醒：19:30 前赤嶺門市還車 ＆ 18:15 前自美國村啟程南下",
         content: "本日為自駕最後一日（租期至 19:30）。上午探索首里城與達摩寺祈願，中午駛上海天一色的海中道路；下午漫步北谷美國村、品嚐 Hanon 舒芙蕾海景鬆餅並欣賞日落海灘金色霞光與異國點燈！請務必於 18:15 啟程南下，加滿油後於 19:30 前在赤嶺門市交車，隨後搭單軌前往久茂地享用頂級「琉球的牛」黑毛和牛慶功宴！"
       },
+      transitSummary: {
+        totalDrivingTime: "約 2.5 小時",
+        totalDistance: "約 85 km",
+        mode: "自駕 (19:30前還車) ＋ 單軌",
+        tips: "橫跨東岸海中道路與西岸北谷美國村落日煙火，19:30 赤嶺門市還車後轉單軌至久茂地燒肉"
+      },,
       waypoints: [
         {
           id: "d3-1",
@@ -508,7 +670,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2109, 127.6934],
           mapCode: "33 158 202*44",
           phone: "098-833-2882",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=McDonald%27s+Himeyuri-dori+Tsuboya",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2109,127.6934&travelmode=driving",
           color: "#f59e0b",
           icon: "🍔",
           parkingInfo: "門市專用免費停車場 (約 25 台，附設得來速)",
@@ -522,18 +684,26 @@ const OKINAWA_TRIP_DATA = {
               name: "Pork Tamago Onigiri (Potama 豬肉蛋飯糰 牧志市場本店)",
               tag: "清單名店 / 開車6分",
               desc: "Google My Maps 清單名店！沖繩最知名早餐飯糰，提供炸蝦塔塔與明太子厚蛋，推薦使用官方 FastPick App 提早線上下單外帶免排隊。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Pork+Tamago+Onigiri+Makishi+Market"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Pork+Tamago+Onigiri+Makishi+Market&travelmode=driving"
             },
             {
               name: "鳥與卵專門店 鳥玉 泉崎店",
               tag: "清單名店 / 開車4分",
               desc: "Google My Maps 清單名店！主打超嫩厚玉子燒、黃金親子丼與炸雞定食，早午餐營養滿分。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Toritama+Izumizaki+Naha"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Toritama+Izumizaki+Naha&travelmode=driving"
             }
           ]
         },
         {
           id: "d3-2",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 15 分",
+            distance: "約 3.8 km",
+            route: "經縣道 29 號上山至首里杜館地下停車場",
+            toll: "停車 ¥320",
+            tips: "首里杜館地下停車場直通遊客中心與守禮門"
+          },
           name: "首里城公園 (守禮門 ＆ 2026正殿木造復興見學)",
           category: "景點",
           period: "晨間出發",
@@ -542,7 +712,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2170, 127.7195],
           mapCode: "33 161 526*71",
           phone: "098-886-2020",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Shurijo+Castle+Park",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2170,127.7195&travelmode=driving",
           color: "#dc2626",
           icon: "🏯",
           parkingInfo: "首里城公園地下收費停車場 (2小時以內 ¥320，平整好停)",
@@ -552,6 +722,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d3-3",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 4 分",
+            distance: "約 850 m",
+            route: "首里城北側赤田町巷道",
+            toll: "境內免費停車",
+            tips: "路程極近，境內附設參拜車位，體驗達摩不倒翁開運祈願"
+          },
           name: "西來院 達磨寺 (祈願開運不倒翁 ＆ 交通安產祈福)",
           category: "景點",
           period: "晨間出發",
@@ -560,7 +738,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2177, 127.7226],
           mapCode: "33 162 478*22",
           phone: "098-884-1077",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Sairai-in+Daruma+Temple",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2177,127.7226&travelmode=driving",
           color: "#8b5cf6",
           icon: "⛩️",
           parkingInfo: "寺廟山門旁小型免費停車場 (約 6 台)",
@@ -570,6 +748,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d3-4",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 50 分",
+            distance: "約 32 km",
+            route: "沖繩自動車道：西原 IC → 沖繩北 IC 轉縣道 10 號",
+            toll: "ETC ¥360",
+            tips: "4.7 公里海上公路，兩側碧藍太平洋絕景"
+          },
           name: "宇流麻市海中道路 (海上長虹 ＆ 太平洋跨海兜風)",
           category: "景點",
           period: "海中跳島",
@@ -578,7 +764,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3320, 127.9254],
           mapCode: "499 576 380*44",
           phone: "098-978-0077",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Kaichu-dori+Causeway+Uruma",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3320,127.9254&travelmode=driving",
           color: "#0284c7",
           icon: "🌊",
           parkingInfo: "道路中段「海の駅 あやはし館」大型免費停車場",
@@ -588,6 +774,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d3-5",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 8 分",
+            distance: "約 4.5 km",
+            route: "經濱比嘉大橋進入神之島比嘉聚落",
+            toll: "無料",
+            tips: "神之島百年古民家食堂，享用沖繩傳統定食"
+          },
           name: "濱比嘉島 てぃーらぶい (Tirabui 百年古民家食堂)",
           category: "美食",
           period: "海中跳島",
@@ -596,7 +790,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3195, 127.9575],
           mapCode: "499 519 559*55",
           phone: "098-977-7688",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Tirabui+Hamahiga+Island",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3195,127.9575&travelmode=driving",
           color: "#10b981",
           icon: "🍱",
           parkingInfo: "勝連濱集落共同利用免費停車場（步行 2 分鐘穿過石牆巷弄）",
@@ -610,24 +804,32 @@ const OKINAWA_TRIP_DATA = {
               name: "海の駅 あやはし館 2F 海景餐廳",
               tag: "海中道路正中央 / 免排隊",
               desc: "海中道路跨海大橋正中間，座位多免排隊，坐擁 360 度海景，提供宇流麻阿古豬排丼、海鮮拉麵與沖繩麵定食。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ayahashikan+Kaichu-dori"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ayahashikan+Kaichu-dori&travelmode=driving"
             },
             {
               name: "丸吉食品 (濱比嘉漁港旁)",
               tag: "在地排隊天婦羅 / 開車2分",
               desc: "濱比嘉島老字號漁港炸物，招牌現炸帶殼小螃蟹（香酥多汁）、炸白身魚塊與海蘊天婦羅，銅板價外帶在海堤吃超享受！",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Maruyoshi+Foods+Hamahiga"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Maruyoshi+Foods+Hamahiga&travelmode=driving"
             },
             {
               name: "King Tacos 与勝店 (キングタコス)",
               tag: "清單名店 / 跨海大橋入口前",
               desc: "沖繩塔可飯創始元祖老店！起司肉醬如小山般爆棚，份量巨大極度過癮。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=King+Tacos+Yokatsu"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=King+Tacos+Yokatsu&travelmode=driving"
             }
           ]
         },
         {
           id: "d3-6",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 6 分",
+            distance: "約 3.8 km",
+            route: "海中道路中央堤防道路",
+            toll: "休息站免費停車",
+            tips: "海之驛二樓有跨海觀景台與特產館，下樓即是細白沙灘"
+          },
           name: "海中道路沙灘 ＆ 海之驛 Ayahashi 館 (踏浪漫步)",
           category: "景點",
           period: "海中跳島",
@@ -636,7 +838,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3315, 127.9262],
           mapCode: "499 576 380*44",
           phone: "098-978-0077",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ayahashikan+Kaichu-dori",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3315,127.9262&travelmode=driving",
           color: "#06b6d4",
           icon: "🏖️",
           parkingInfo: "Ayahashi 館專屬免費大型停車場 (約 200 台)",
@@ -646,6 +848,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d3-7",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 45 分",
+            distance: "約 26 km",
+            route: "橫跨沖繩中部幹道至西海岸北谷町",
+            toll: "北谷町公共停車場無料",
+            tips: "建議停放美國村中央免費大停車場或 Sunset Beach 停車場"
+          },
           name: "北谷美濱美國村 Depot Island (異國街區 ＆ 濱海木棧步道)",
           category: "景點",
           period: "西岸美式",
@@ -654,7 +864,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3158, 127.7540],
           mapCode: "33 526 450*55",
           phone: "098-926-5678",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Mihama+American+Village",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3158,127.7540&travelmode=driving",
           color: "#ea580c",
           icon: "🎡",
           parkingInfo: "Depot Island 海岸專用免費大型停車場 / 美國村公共停車場 (約 1500 台)",
@@ -664,6 +874,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d3-8",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 4 分",
+            distance: "約 260 m",
+            route: "沿 Depot Island 濱海木棧步道漫步前往",
+            toll: "無料",
+            tips: "濱海二樓海景第一排，享受微風與現烤舒芙蕾鬆餅"
+          },
           name: "Seaside Cafe Hanon (波浪海景舒芙蕾鬆餅午茶)",
           category: "美食",
           period: "西岸美式",
@@ -673,7 +891,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3168, 127.7543],
           mapCode: "33 525 892*11",
           phone: "098-989-5788",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Seaside+Cafe+Hanon",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3168,127.7543&travelmode=driving",
           color: "#f59e0b",
           icon: "🥞",
           parkingInfo: "停放於美國村 Depot Island 免費停車場，步行 3 分鐘",
@@ -687,24 +905,32 @@ const OKINAWA_TRIP_DATA = {
               name: "Taco Rice Cafe Kijimuna (美國村店)",
               tag: "清單名店 / Depot Island 2F",
               desc: "Google My Maps 清單名店！若不想吃甜點鬆餅想吃鹹食，首推這家滑嫩歐姆蛋塔可飯（Omutaco），可自選中辣或照燒醬汁。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Taco+Rice+Cafe+Kijimuna+Depot+Island"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Taco+Rice+Cafe+Kijimuna+Depot+Island&travelmode=driving"
             },
             {
               name: "Gourmet 迴轉壽司市場 美濱店",
               tag: "清單名店 / 開車2分",
               desc: "Google My Maps 清單名店！排隊人氣名店，傍晚 16:30 剛開門入內免排隊，品嚐新鮮生魚片、炙燒鮭魚與海膽壽司。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gourmet+Conveyor+Belt+Sushi+Ichiba+Mihama"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Gourmet+Conveyor+Belt+Sushi+Ichiba+Mihama&travelmode=driving"
             },
             {
               name: "ZHYVAGO COFFEE WORKS OKINAWA",
               tag: "濱海步道旁",
               desc: "美式西海岸工業風海景咖啡館，外帶一杯冰滴拿鐵坐在防波堤邊吹風等日落極度愜意。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=ZHYVAGO+COFFEE+WORKS+OKINAWA"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=ZHYVAGO+COFFEE+WORKS+OKINAWA&travelmode=driving"
             }
           ]
         },
         {
           id: "d3-9",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 5 分",
+            distance: "約 320 m",
+            route: "沿海灘防波堤步道前往 Sunset Beach",
+            toll: "無料",
+            tips: "每週六 20:00 準時施放 3 分鐘海上煙火，海灘視野震撼"
+          },
           name: "日落海灘 (Sunset Beach 夕陽霞光 ＆ 美國村璀璨霓虹夜景)",
           category: "景點",
           period: "西岸美式",
@@ -713,7 +939,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3159, 127.7532],
           mapCode: "33 525 803*77",
           phone: "098-936-8273",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Chatan+Park+Sunset+Beach",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3159,127.7532&travelmode=driving",
           color: "#e11d48",
           icon: "🌅",
           parkingInfo: "美國村 Sunset Beach 專用停車場 (免費)",
@@ -723,6 +949,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d3-10",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 35 分",
+            distance: "約 21 km",
+            route: "國道 58 號南下至赤嶺門市，還車前先至斜對面加油站加滿油",
+            toll: "無料",
+            tips: "租車預約至 19:30 還車！請出示加油收據並點檢外觀交車"
+          },
           name: "Heat Sports Car Rental (赤嶺加滿油 ＆ 完美還車交車)",
           category: "交通",
           period: "傍晚還車",
@@ -731,7 +965,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.1928, 127.6603],
           mapCode: "33 064 748*88",
           phone: "098-857-0819",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Heat+Sports+Car+Rental+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.1928,127.6603&travelmode=driving",
           color: "#dc2626",
           icon: "🏎️",
           parkingInfo: "門市專用還車點檢車位",
@@ -741,6 +975,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d3-11",
+          transitFromPrev: {
+            mode: "monorail",
+            duration: "約 12 分",
+            distance: "約 3.6 km",
+            route: "赤嶺站搭乘單軌電車至縣廳前站，步行 3 分抵達",
+            toll: "單軌車票 ¥270",
+            tips: "全自駕順利完成！慶功享用頂級和牛炭火燒肉"
+          },
           name: "燒肉 琉球的牛 那霸久茂地 (極上炙燒黑毛和牛慶功宴)",
           category: "美食",
           period: "晚間慶功",
@@ -750,7 +992,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2154, 127.6820],
           mapCode: "33 156 673*88",
           phone: "098-988-3409",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ryukyu+no+Ushi+Naha+Kumoji",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2154,127.6820&travelmode=driving",
           color: "#b91c1c",
           icon: "🥩",
           parkingInfo: "單軌電車縣廳前站步行 5 分鐘 / 美榮橋站步行 6 分鐘（已還車，可暢飲啤酒！）",
@@ -764,24 +1006,32 @@ const OKINAWA_TRIP_DATA = {
               name: "WAGYU SUKIYAKI 極~GOKU~ 那霸國際通店",
               tag: "清單名店 / 支援線上預約",
               desc: "Google My Maps 清單名店！國際通頂級黑毛和牛壽喜燒，支援 Google / 官網線上訂位，霜降和牛沾蛋液入口即化，氣氛奢華。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=WAGYU+SUKIYAKI+GOKU+Naha"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=WAGYU+SUKIYAKI+GOKU+Naha&travelmode=driving"
             },
             {
               name: "沖繩麵 EIBUN",
               tag: "清單名店 / 文青排隊首選",
               desc: "Google My Maps 清單名店！那霸最具話題性的文青沖繩麵，營業至 21:00。招牌特製軟骨三枚肉麵與柚子胡椒冷麵風味絕佳。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Soba+EIBUN"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Okinawa+Soba+EIBUN&travelmode=driving"
             },
             {
               name: "Buchi 久茂地店 (炭火內臟燒肉)",
               tag: "清單名店 / 步行3分",
               desc: "Google My Maps 清單名店！就在琉球的牛隔壁街角，高人氣沖繩炭火直烤燒肉居酒屋，氣氛熱鬧，若沒訂到琉球的牛可無縫轉場。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Buchi+Kumoji+Naha"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Buchi+Kumoji+Naha&travelmode=driving"
             }
           ]
         },
         {
           id: "d3-12",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 6 分",
+            distance: "約 450 m",
+            route: "久茂地街道慢行返回飯店",
+            toll: "無料",
+            tips: "步行回飯店，整理 3 天所有戰利品裝箱打包"
+          },
           name: "返回 THE NEST 那霸 ＆ 戰利品裝箱打包",
           category: "住宿",
           period: "晚間慶功",
@@ -790,7 +1040,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nest+Hotel+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=driving",
           color: "#6366f1",
           icon: "🏨",
           parkingInfo: "飯店客房（自燒肉店散步回飯店僅 10 分鐘）",
@@ -812,6 +1062,12 @@ const OKINAWA_TRIP_DATA = {
         title: "16:50 返程航班死線提醒：14:10 抵達機場 ＆ 14:40 前完成行李託運",
         content: "班機於 16:50 起飛、16:20 開始登機。已無租車，今日搭乘單軌電車（Yui Rail）精準避開塞車！14:10 抵達機場後，先逛國內線 2F 伴手禮街，14:40 前抵達國際線 3F 櫃台完成託運報到。"
       },
+      transitSummary: {
+        totalDrivingTime: "無自駕 (市區無車日)",
+        totalDistance: "步行約 3.5 km ｜ 單軌 3 趟",
+        mode: "單軌電車 ＆ 悠閒徒步",
+        tips: "全日單軌＋徒步漫遊！牧志市場 ➔ 國際通 ➔ 新都心 Main Place ➔ 旭橋取行李 ➔ 機場"
+      },,
       waypoints: [
         {
           id: "d4-1",
@@ -823,7 +1079,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nest+Hotel+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=walking",
           color: "#6366f1",
           icon: "🏨",
           parkingInfo: "飯店櫃台免費寄物 / 旭橋站投幣置物櫃",
@@ -833,6 +1089,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d4-2",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 14 分",
+            distance: "約 1.1 km",
+            route: "飯店出門沿久茂地方向穿過國際通中央巷道",
+            toll: "無料",
+            tips: "晨間漫步至市場，先至 Potama 抽號碼牌點餐"
+          },
           name: "第一牧志公設市場 ＆ Pork Tamago Onigiri (Potama 牧志本店)",
           category: "美食",
           period: "早晨美食",
@@ -841,7 +1105,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2146, 127.6883],
           mapCode: "33 157 264*82",
           phone: "098-867-9550",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Pork+Tamago+Onigiri+Makishi+Market",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2146,127.6883&travelmode=walking",
           color: "#ea580c",
           icon: "🍙",
           parkingInfo: "單軌美榮橋站步行 8 分鐘 / 牧志站步行 9 分鐘",
@@ -855,18 +1119,26 @@ const OKINAWA_TRIP_DATA = {
               name: "JEF Sunrise Naha (JEF サンライズ那覇店)",
               tag: "清單名店 / 沖繩限定苦瓜漢堡",
               desc: "Google My Maps 清單名店！全日本僅沖繩才有的連鎖速食店，距離牧志市場步行 3 分鐘。招牌現點現煎『苦瓜歐姆蛋漢堡』與苦瓜香檬汁，風味獨特清爽！",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=JEF+Sunrise+Naha"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=JEF+Sunrise+Naha&travelmode=driving"
             },
             {
               name: "第一牧志公設市場 2F 燕鄉亭食堂",
               tag: "市場現炒 / 鮮魚刺身",
               desc: "位於公設市場 2 樓，可在 1 樓挑選鮮魚直接上樓代客料理，或直接單點海葡萄、沖繩炒苦瓜與生魚片丼飯。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Makishi+Public+Market+2F"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Makishi+Public+Market+2F&travelmode=driving"
             }
           ]
         },
         {
           id: "d4-3",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 5 分",
+            distance: "約 320 m",
+            route: "市場街步道直通國際通大道",
+            toll: "無料",
+            tips: "採買紅芋塔、伴手禮，在 Calbee+ 享受現炸紅芋薯條"
+          },
           name: "那霸國際通商店街散策 ＆ Calbee+ 現炸沖繩紅芋條",
           category: "購物",
           period: "上午散策",
@@ -875,7 +1147,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2164, 127.6891],
           mapCode: "33 157 414*55",
           phone: "098-867-6254",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Calbee%2B+Okinawa+Kokusai+Street",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2164,127.6891&travelmode=walking",
           color: "#f59e0b",
           icon: "🍟",
           parkingInfo: "單軌牧志站步行 5 分鐘 / 美榮橋站步行 6 分鐘",
@@ -888,18 +1160,26 @@ const OKINAWA_TRIP_DATA = {
               name: "Ice Oasis (雪花冰專門店)",
               tag: "清單名店 / 消暑冰品",
               desc: "Google My Maps 清單名店！平和通商店街內，主打濃郁芒果雪花冰與黑糖豆花，逛累了可進店吹冷氣歇腳。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ice+Oasis+Naha"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ice+Oasis+Naha&travelmode=driving"
             },
             {
               name: "唐吉訶德 國際通店",
               tag: "免稅地標 / 24小時營業",
               desc: "國際通正中心地標，B1 至 4F 囊括沖繩限定零食、面膜藥妝與紀念品，可迅速補齊清單漏買的小物。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Don+Quijote+Kokusai+Dori"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Don+Quijote+Kokusai+Dori&travelmode=driving"
             }
           ]
         },
         {
           id: "d4-4",
+          transitFromPrev: {
+            mode: "monorail",
+            duration: "約 18 分",
+            distance: "約 1.8 km",
+            route: "單軌牧志站 → おもろまち站徒步 5 分",
+            toll: "單軌車票 ¥270",
+            tips: "新都心核心百貨，超市伴手禮與免稅店一網打盡"
+          },
           name: "單軌歌町站：San-A Naha Main Place 採買 ＆ 美食午餐 ＆ 迪斐世 DFS 免稅店",
           category: "購物",
           period: "中午採買",
@@ -908,7 +1188,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2253, 127.6949],
           mapCode: "33 188 559*22",
           phone: "098-951-3300",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=San-A+Naha+Main+Place",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2253,127.6949&travelmode=walking",
           color: "#10b981",
           icon: "🛍️",
           parkingInfo: "單軌電車『おもろまち站（歌町站）』步行 5 分鐘（空橋直通 DFS）",
@@ -921,18 +1201,26 @@ const OKINAWA_TRIP_DATA = {
               name: "和風亭 那霸 Main Place 店",
               tag: "商場內人氣日式定食",
               desc: "位於 Main Place 1 樓，提供頂級天婦羅、鰻魚飯、蕎麥麵與花籃握壽司套餐，環境舒適寬敞，長輩喜愛。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Wafutei+Naha+Main+Place"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Wafutei+Naha+Main+Place&travelmode=driving"
             },
             {
               name: "沖繩麵 EIBUN",
               tag: "清單名店 / 若提早至市區用餐",
               desc: "Google My Maps 清單名店！那霸頂級文青沖繩麵，特製炙燒軟骨與清爽高湯無懈可擊，若喜愛文青小店可於離開國際通時順道朝聖。",
-              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Soba+EIBUN"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Okinawa+Soba+EIBUN&travelmode=driving"
             }
           ]
         },
         {
           id: "d4-5",
+          transitFromPrev: {
+            mode: "monorail",
+            duration: "約 20 分",
+            distance: "約 2.5 km",
+            route: "單軌おもろまち站 → 旭橋站徒步 4 分",
+            toll: "單軌車票 ¥270",
+            tips: "返回飯店大廳領取寄放行李並稍作休整"
+          },
           name: "返回飯店提領行李 ➔ 單軌電車直奔那霸機場",
           category: "交通",
           period: "午後移動",
@@ -941,7 +1229,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nest+Hotel+Naha",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=walking",
           color: "#0284c7",
           icon: "🚝",
           parkingInfo: "單軌旭橋站 ➔ 那霸機場站（車程約 12 分鐘）",
@@ -951,6 +1239,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d4-6",
+          transitFromPrev: {
+            mode: "monorail",
+            duration: "約 12 分",
+            distance: "約 4.5 km",
+            route: "單軌旭橋站 → 那霸機場站直達航廈 2 樓",
+            toll: "單軌車票 ¥270",
+            tips: "班機 16:50 起飛，14:55 前抵達機場，預留近 2 小時完成託運安檢"
+          },
           name: "那霸機場國內線 2F 伴手禮名店街最後狂掃",
           category: "購物",
           period: "最後掃貨",
@@ -959,7 +1255,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2064, 127.6465],
           mapCode: "33 123 279*00",
           phone: "098-840-1179",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Naha+Airport+Domestic+Terminal",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2064,127.6465&travelmode=walking",
           color: "#f59e0b",
           icon: "🛍️",
           parkingInfo: "航廈 2 樓室內空橋連通",
@@ -969,6 +1265,14 @@ const OKINAWA_TRIP_DATA = {
         },
         {
           id: "d4-7",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 15 分",
+            distance: "航廈內",
+            route: "國際線出發大廳 → 安檢門 → 免稅候機室",
+            toll: "無料",
+            tips: "16:15 開放登機，滿載回憶與戰利品平安賦歸！"
+          },
           name: "國際線出發大廳報到 ＆ 託運 ＆ 安檢通關 ＆ 16:50 班機賦歸",
           category: "交通",
           period: "出境登機",
@@ -977,7 +1281,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2064, 127.6465],
           mapCode: "33 123 279*00",
           phone: "098-840-1179",
-          googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Naha+Airport+International+Terminal",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2064,127.6465&travelmode=walking",
           color: "#0284c7",
           icon: "🛫",
           parkingInfo: "國際線出境管制區",

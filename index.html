@@ -194,8 +194,10 @@
           
           <!-- Live Weather Pill -->
           <button onclick="toggleWeatherCity()" aria-label="切換那霸／名護氣溫顯示" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md px-2 sm:px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1 shadow-inner text-xs min-h-[44px]" title="切換那霸 / 名護氣溫">
+            <span id="weatherCityName" class="text-[10px] text-sky-100 font-bold hidden sm:inline">那霸</span>
             <span id="weatherIconContainer">⛅</span>
             <span id="liveWeatherTemp" class="font-bold text-amber-300">23°C</span>
+            <span id="liveWeatherDesc" class="text-[10px] text-white/90 font-medium hidden md:inline">晴時多雲</span>
           </button>
 
           <!-- Search Button (🔍) -->
@@ -295,30 +297,30 @@
             <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scroll-smooth" style="scrollbar-width: none;">
               
               <!-- Sign 1: 古宇利島 -->
-              <button onclick="jumpToSpot(1, 'd2-3')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(1, 'd2-5')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🌉</span>
                 <span>古宇利島</span>
                 <span class="text-[10px] text-amber-300 font-mono">D2</span>
               </button>
 
               <!-- Sign 2: 美ら海水族館 -->
-              <button onclick="jumpToSpot(1, 'd2-4')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(1, 'd2-9')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🐟</span>
                 <span>美ら海水族館</span>
                 <span class="text-[10px] text-sky-300 font-mono">D2</span>
               </button>
 
-              <!-- Sign 3: 首里城 / 波上宮 -->
-              <button onclick="jumpToSpot(2, 'd3-1')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-100 rounded-xl text-xs font-bold border border-rose-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <!-- Sign 3: 波上宮海灘 -->
+              <button onclick="jumpToSpot(1, 'd2-1')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-100 rounded-xl text-xs font-bold border border-rose-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>⛩️</span>
                 <span>波上宮海灘</span>
-                <span class="text-[10px] text-rose-300 font-mono">D3</span>
+                <span class="text-[10px] text-rose-300 font-mono">D2</span>
               </button>
 
-              <!-- Sign 4: 瀨長島 -->
-              <button onclick="jumpToSpot(2, 'd3-3')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-teal-950/80 hover:bg-teal-900 text-teal-100 rounded-xl text-xs font-bold border border-teal-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>🥞</span>
-                <span>瀨長島海景</span>
+              <!-- Sign 4: 首里城公園 -->
+              <button onclick="jumpToSpot(2, 'd3-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-teal-950/80 hover:bg-teal-900 text-teal-100 rounded-xl text-xs font-bold border border-teal-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>🏯</span>
+                <span>首里城公園</span>
                 <span class="text-[10px] text-teal-300 font-mono">D3</span>
               </button>
 
@@ -330,10 +332,10 @@
               </button>
 
               <!-- Sign 6: 美國村 -->
-              <button onclick="jumpToSpot(1, 'd2-5')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-indigo-950/80 hover:bg-indigo-900 text-indigo-100 rounded-xl text-xs font-bold border border-indigo-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(2, 'd3-7')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-indigo-950/80 hover:bg-indigo-900 text-indigo-100 rounded-xl text-xs font-bold border border-indigo-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🎡</span>
                 <span>美國村夜景</span>
-                <span class="text-[10px] text-indigo-300 font-mono">D2</span>
+                <span class="text-[10px] text-indigo-300 font-mono">D3</span>
               </button>
 
               <!-- Sign 7: 傑克牛排 -->
@@ -488,7 +490,7 @@
               <span class="text-xl">💴</span>
               <h4 class="font-bold text-slate-900 text-sm sm:text-base">日幣 ⇄ 台幣快速試算</h4>
             </div>
-            <span class="text-[11px] text-amber-800/80 font-medium">目前匯率約 0.215</span>
+            <span id="sidebarRateLabel" class="text-[11px] text-amber-800/80 font-medium">目前匯率約 0.215</span>
           </div>
 
           <div class="grid grid-cols-2 gap-2 text-xs">
@@ -1211,7 +1213,8 @@
       const results = [];
       tripData.days.forEach((day, dIdx) => {
         day.waypoints.forEach(wp => {
-          const matchTarget = `${wp.name} ${wp.desc || ''} ${wp.tips || ''} ${(wp.tags || []).join(' ')} ${wp.category || ''} ${wp.mapCode || ''}`.toLowerCase();
+          const backupText = (wp.backupOptions || []).map(b => `${b.name} ${b.desc || ''} ${b.tag || ''}`).join(' ');
+          const matchTarget = `${wp.name} ${wp.desc || ''} ${wp.tips || ''} ${(wp.tags || []).join(' ')} ${wp.category || ''} ${wp.mapCode || ''} ${backupText}`.toLowerCase();
           if (matchTarget.includes(query)) {
             results.push({ day, dIdx, wp });
           }
@@ -1325,6 +1328,22 @@
             <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
               ${notice.content}
             </p>
+            ${day.transitSummary ? `
+              <div class="mt-3 pt-2.5 border-t border-slate-900/10 flex flex-wrap items-center justify-between gap-2 text-xs">
+                <div class="flex flex-wrap items-center gap-1.5 sm:gap-2">
+                  <span class="px-2 py-0.5 rounded-lg bg-white/95 font-black text-slate-800 shadow-2xs border border-white/80 flex items-center gap-1">
+                    <span>🧭</span>
+                    <span>移動總覽</span>
+                  </span>
+                  <span class="font-bold text-slate-900">總移動時間：${day.transitSummary.totalDrivingTime}</span>
+                  <span class="text-slate-400">·</span>
+                  <span class="font-semibold text-slate-800">${day.transitSummary.totalDistance}</span>
+                  <span class="text-slate-400">·</span>
+                  <span class="px-2 py-0.5 rounded-md bg-sky-100/80 text-sky-800 font-bold text-[11px]">${day.transitSummary.mode}</span>
+                </div>
+                <div class="text-[11px] text-slate-600 font-medium">💡 ${day.transitSummary.tips}</div>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
@@ -1418,8 +1437,42 @@
           ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-mono">第 ${idx + 1}／${day.waypoints.length} 站</span>`
           : '';
 
-        // Time-block divider: only appears when the data assigns a `period` (currently used on
-        // longer days like Day 2) and it changes from the previous waypoint.
+        // 站點間交通連接膠囊 (Between-Cards Transit Pill)
+        if (idx > 0 && wp.transitFromPrev) {
+          const t = wp.transitFromPrev;
+          const prevWp = day.waypoints[idx - 1];
+          const modeIcon = t.mode === 'car' ? '🚗' : t.mode === 'walk' ? '🚶' : t.mode === 'monorail' ? '🚝' : t.mode === 'taxi' ? '🚕' : '📍';
+          const modeName = t.mode === 'car' ? '自駕車程' : t.mode === 'walk' ? '步行路程' : t.mode === 'monorail' ? '單軌電車' : t.mode === 'taxi' ? '計程車' : '交通移動';
+          const navTravelMode = t.mode === 'walk' ? 'walking' : t.mode === 'monorail' ? 'transit' : 'driving';
+          const liveRouteUrl = `https://www.google.com/maps/dir/?api=1&origin=${prevWp.coords[0]},${prevWp.coords[1]}&destination=${wp.coords[0]},${wp.coords[1]}&travelmode=${navTravelMode}`;
+
+          cards.push(`
+            <div class="relative py-1.5 pl-2 sm:pl-3 my-0.5">
+              <div class="inline-flex flex-wrap items-center gap-1.5 sm:gap-2 px-3 py-1.5 rounded-xl bg-slate-100/95 border border-slate-200/90 text-xs shadow-2xs hover:border-sky-300 transition">
+                <span class="font-bold text-slate-800 flex items-center gap-1">
+                  <span>${modeIcon}</span>
+                  <span>${modeName} ${t.duration}</span>
+                </span>
+                <span class="text-slate-400">·</span>
+                <span class="font-mono text-slate-600 font-semibold">${t.distance}</span>
+                ${t.route ? `
+                  <span class="text-slate-400 hidden sm:inline">·</span>
+                  <span class="text-[11px] text-slate-600 hidden sm:inline truncate max-w-[200px]">${t.route}</span>
+                ` : ''}
+                ${t.toll && t.toll !== '無料' ? `
+                  <span class="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900 border border-amber-200">${t.toll}</span>
+                ` : ''}
+                <a href="${liveRouteUrl}" target="_blank" rel="noopener noreferrer" class="ml-auto inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-sky-50 hover:bg-sky-100 text-sky-700 text-[11px] font-bold transition active:scale-95" title="在 Google Maps 查看兩站即時路況與行車規劃">
+                  <span>🚦</span>
+                  <span>即時路況</span>
+                  <span class="text-[9px]">↗</span>
+                </a>
+              </div>
+            </div>
+          `);
+        }
+
+        // Time-block divider: only appears when the data assigns a `period`
         if (wp.period && wp.period !== lastPeriod) {
           lastPeriod = wp.period;
           cards.push(`
@@ -1616,7 +1669,7 @@
                           <strong class="text-indigo-900">• ${b.name}</strong>
                           ${b.tag ? `<span class="ml-1 text-[10px] bg-white px-1 py-0.2 rounded border border-indigo-200 text-indigo-700">${b.tag}</span>` : ''}：
                           <span>${b.desc}</span>
-                          ${b.googleMapsUrl ? `<a href="${b.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="text-indigo-600 hover:text-indigo-800 hover:underline ml-1 font-bold">📍導航</a>` : ''}
+                          ${b.googleMapsUrl ? `<a href="${b.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-800 ml-1.5 font-bold transition text-[10px] active:scale-95"><span>🗺️</span><span>導航前往</span></a>` : ''}
                         </div>
                       `).join('')}
                     </div>
@@ -1793,27 +1846,27 @@
         box.innerHTML = `
           <div class="flex items-center justify-between border-b border-slate-100 pb-3">
             <div class="flex items-center space-x-2">
-              <span class="text-xl">🥞</span>
+              <span class="text-xl">🎆</span>
               <div>
-                <h4 class="font-bold text-slate-900 text-sm sm:text-base">南部海景 ＆ 國際通採買攻略</h4>
-                <p class="text-xs text-slate-500">幸福鬆餅、知念岬與免稅退稅重點</p>
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base">中部蔚藍跨海 ＆ 美國村落日煙火攻略</h4>
+                <p class="text-xs text-slate-500">海中道路、達摩開運、落日沙灘與週六璀璨煙火</p>
               </div>
             </div>
-            <span class="text-[11px] bg-purple-50 text-purple-700 font-bold px-2 py-0.5 rounded-full">南部與市區</span>
+            <span class="text-[11px] bg-indigo-50 text-indigo-700 font-bold px-2 py-0.5 rounded-full">跨海與花火</span>
           </div>
 
           <div class="space-y-2 text-xs text-slate-700">
-            <div class="p-2.5 bg-purple-50 rounded-xl border border-purple-200">
-              <strong class="text-purple-900 block">🥞 瀨長島幸福鬆餅：</strong>
-              <p class="text-[11px] text-slate-600 mt-0.5">現場平板抽號後，可在白色階梯商城拍照散步，露台每幾分鐘就有飛機由海面掠過！</p>
+            <div class="p-2.5 bg-indigo-50 rounded-xl border border-indigo-200">
+              <strong class="text-indigo-900 block">🎆 美國村週六 20:00 海上煙火秘境：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">每週六 20:00 準時施放 3 分鐘海上煙火！最佳無遮蔽視角位於 <strong>Depot Island Boardwalk 臨海木棧道</strong> 或 <strong>Sunset Beach 堤防</strong>，建議 19:45 提前卡位。</p>
             </div>
-            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-              <strong class="text-slate-800 block">⛩️ 波上宮特色御守：</strong>
-              <p class="text-[11px] text-slate-600 mt-0.5">推薦入手超可愛的黑色/紅色「小書包交通安全御守」，送禮自用兩相宜。</p>
+            <div class="p-2.5 bg-sky-50 rounded-xl border border-sky-200">
+              <strong class="text-sky-900 block">🌊 海中道路跨海公路 ＆ 濱比嘉島：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">全長 4.7 公里海上長虹，兩側太平洋碧藍絕景。中途於「海之驛 Ayahashi 館」2樓遠眺拍照，並可延伸過橋至神之島濱比嘉散策。</p>
             </div>
-            <div class="p-2.5 bg-rose-50 rounded-xl border border-rose-200">
-              <strong class="text-rose-900 block">🏮 國際通屋台村氛圍：</strong>
-              <p class="text-[11px] text-slate-600 mt-0.5">20家特色排檔齊聚，推薦點一份阿古豬煎餃與一杯 Orion 生啤酒。</p>
+            <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200">
+              <strong class="text-amber-900 block">🏯 首里達摩寺開運 ＆ 19:30 赤嶺還車提點：</strong>
+              <p class="text-[11px] text-slate-600 mt-0.5">首里達摩寺可體驗日本開運不倒翁祈願；傍晚自駕返程請於 <strong>19:30 前</strong> 抵達 Heat Sports 赤嶺門市完成交車（還車前先於對面加油站加滿油），再搭單軌前往久茂地享用頂級燒肉！</p>
             </div>
           </div>
         `;
@@ -1877,7 +1930,7 @@
         time: time,
         coords: [lat, lng],
         mapCode: mapCode,
-        googleMapsUrl: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name + ' Okinawa')}`,
+        googleMapsUrl: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`,
         color: '#06b6d4',
         icon: category === '美食' ? '🍜' : category === '購物' ? '🛍️' : '📍',
         parkingInfo: '自訂地點',
@@ -1925,7 +1978,17 @@
       const badge = document.getElementById(`booking-badge-${stopId}`);
       if (badge) {
         if (value && value.trim()) {
-          badge.textContent = `🏷️ 預約: ${value.trim()}`;
+          let label = '預約';
+          for (const d of tripData.days) {
+            const found = d.waypoints.find(w => w.id === stopId);
+            if (found) {
+              if (found.category === '美食') label = '訂位';
+              else if (found.category === '住宿') label = '入住';
+              else if (found.category === '交通') label = '取車/還車';
+              break;
+            }
+          }
+          badge.textContent = `🏷️ ${label}: ${value.trim()}`;
           badge.classList.remove('hidden');
         } else {
           badge.classList.add('hidden');
@@ -2106,6 +2169,8 @@
       const rate = parseFloat(document.getElementById('exchangeRateInput').value);
       if (rate > 0) {
         currentExchangeRate = rate;
+        const sidebarLabel = document.getElementById('sidebarRateLabel');
+        if (sidebarLabel) sidebarLabel.textContent = `目前匯率約 ${rate}`;
         modalCalcFromJpy();
         calculateQuickExchange();
         showToast(`匯率已更新為 1 JPY = ${rate} TWD`, '💴');
@@ -2296,13 +2361,25 @@
       }
     }
 
+    function updateOnlineStatus() {
+      const indicator = document.getElementById('offlineIndicator');
+      if (!indicator) return;
+      if (!navigator.onLine) {
+        indicator.classList.remove('hidden');
+        showToast('目前處於離線快取模式，行程資料仍可正常瀏覽！', '📡');
+      } else {
+        indicator.classList.add('hidden');
+      }
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+
     function registerServiceWorker() {
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./service-worker.js')
           .then((reg) => {
             console.log('[PWA] Service Worker registered successfully:', reg.scope);
-            const indicator = document.getElementById('offlineIndicator');
-            if (indicator) indicator.classList.remove('hidden');
+            updateOnlineStatus();
           })
           .catch((err) => {
             console.warn('[PWA] Service Worker registration skipped:', err);
