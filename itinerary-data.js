@@ -87,6 +87,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           image: "thumb-jacksteak.jpg",
           time: "20:50 ~ 22:00",
+          bookingTime: "現場排隊 (預估21:10抵達)",
           coords: [26.2163, 127.6710],
           mapCode: "33 155 087*50",
           phone: "098-868-2408",
@@ -94,9 +95,25 @@ const OKINAWA_TRIP_DATA = {
           color: "#f43f5e",
           icon: "🥩",
           parkingInfo: "專用停車場（約12台，用餐免費用）",
-          tags: ["昭和排隊名店", "特選沙朗牛排", "招牌濃湯"],
-          desc: "創業於 1953 年的沖繩美軍時期懷舊牛排館。特選菲力（Tenderloin）鮮嫩多汁，紅綠黃燈號看板充滿昭和復古氣息。",
-          tips: "週一晚間人潮雖較週末平緩，抵達時仍請先至門口登記抽號碼牌，通常需候位 15~30 分鐘。"
+          tags: ["昭和排隊名店", "特選菲力牛排", "昭和紅綠燈", "自駕老字號"],
+          desc: "創業於 1953 年的沖繩美軍統治時期懷舊牛排館。特選菲力（Tenderloin Steak）軟嫩無比、鮮嫩多汁，搭配經典白醬濃湯與昭和紅綠燈候位燈號，極具年代儀式感。",
+          tips: "週一晚間 21:00 以後抵達人潮已過首輪高峰。抵達後請先至門口自動發券機抽號碼牌，依燈號叫號入座（候位約 15~25 分鐘）。",
+          reservationInfo: "不可預約。全店一律採現場抽號排隊制度，無官網或電話訂位。",
+          branchTip: "傑克牛排為那霸獨家歷史老字號，全沖繩【僅此一家，無任何分店】！避開 18:30~20:00 第一輪尖峰，21:00 後抵達排隊時間最短（約 15~25 分鐘）。",
+          backupOptions: [
+            {
+              name: "Agu Pork Shabu-shabu Miruku Naha (みるく 阿古豬涮涮鍋)",
+              tag: "可訂位 / 步行6分",
+              desc: "Google My Maps 清單名店！主打極品阿古豬涮涮鍋，營業至 23:00。離 Nest Hotel 僅步行 6 分鐘，可提早電話/官網訂位！",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Agu+Pork+Shabu-shabu+Miruku+Naha"
+            },
+            {
+              name: "Buchi 久茂地店 (沖繩炭火燒肉居酒屋)",
+              tag: "清單名店 / 步行10分",
+              desc: "Google My Maps 清單名店！深夜微醺首選，提供厚切牛舌與炭火直烤和牛內臟，營業至深夜，氣氛放鬆。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Buchi+Kumoji+Naha"
+            }
+          ]
         },
         {
           id: "d1-5",
@@ -200,7 +217,17 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "休息站專屬超大型免費停車場 (約 150 台)",
           tags: ["日本第一休息站", "三矢本舖開口笑", "三矢球", "水族館優惠票", "海景天橋"],
           desc: "全日本公路休息站冠軍！沖繩高速公路終點許田交流道必經地標。必吃「三矢本舖」現炸黑糖開口笑沙翁與每日限量 QQ 三矢球，走上海景天橋眺望名護灣，並可在服務台購入最划算的水族館特惠門票！",
-          tips: "停留約 25 分鐘。下車上洗手間、伸展筋骨，買熱騰騰開口笑當自駕點心，若需水族館實體折扣票可在此順手購入。"
+          tips: "停留約 25 分鐘。下車上洗手間、伸展筋骨，買熱騰騰開口笑當自駕點心，若需水族館實體折扣票可在此順手購入。",
+          reservationInfo: "休息站開放式美食街與伴手禮專櫃，無須訂位。",
+          branchTip: "三矢本舖在恩納村另有總店，但許田店位於高速公路出口必經路線，最順路免繞道。",
+          backupOptions: [
+            {
+              name: "伊芸服務區 (Igei Service Area 下行)",
+              tag: "高速公路中途",
+              desc: "若許田休息站車位客滿，高速公路中途的伊芸 SA 亦有海景展望台、沖繩蕎麥麵與藍海霜淇淋。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Igei+Service+Area+Down"
+            }
+          ]
         },
         {
           id: "d2-5",
@@ -227,6 +254,7 @@ const OKINAWA_TRIP_DATA = {
           period: "古宇利跳島",
           image: "thumb-kourishrimp.jpg",
           time: "11:55 ~ 12:35",
+          bookingTime: "現場排隊 (11:55抵達搶頭香)",
           coords: [26.7022, 128.0233],
           mapCode: "485 692 126*55",
           phone: "098-056-1242",
@@ -236,7 +264,23 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "店內專屬停車場 (約 30 台)",
           tags: ["大蒜檸檬蝦", "海景露台", "夏威夷風", "人氣必吃"],
           desc: "過橋後山坡上的名物蝦蝦飯。飽滿 Q 彈大蝦裹上濃郁大蒜奶油與新鮮檸檬汁，搭配白飯與薯角，在頂樓露台吹海風俯瞰古宇利大橋用餐。",
-          tips: "支援觸控螢幕自助點餐機（可刷卡/現金）。份量剛好不會過飽，為下一站阿古豬料理保留完美食慾！"
+          tips: "支援觸控螢幕自助點餐機（可刷卡/現金）。份量剛好不會過飽，為下一站阿古豬料理保留完美食慾！",
+          reservationInfo: "不可預約。全店採現場觸控螢幕自助點餐機，取得號碼單後於露台等候叫號取餐。",
+          branchTip: "全沖繩【僅此古宇利島一家總店，無其他分店】！排隊避雷指南：11:55 前抵達點餐最順暢，能完全避開 12:30~13:30 大排長龍的人潮。",
+          backupOptions: [
+            {
+              name: "5910 sa-ta-cafe (古宇利沙翁咖啡)",
+              tag: "清單名店 / 開車2分",
+              desc: "Google My Maps 清單名店！心形岩旁人氣小店，提供現烤沙翁、塔可飯與冷萃咖啡，環境清幽免排隊。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=5910+sa-ta-cafe+Kouri"
+            },
+            {
+              name: "錦屋 (にしきや 古宇利海鮮食堂)",
+              tag: "跨海大橋旁",
+              desc: "大橋南詰老牌海鮮定食，提供鮮甜海膽丼、海葡萄蓋飯與沖繩麵，翻桌速度快。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Nishikiya+Kouri"
+            }
+          ]
         },
         {
           id: "d2-7",
@@ -263,6 +307,7 @@ const OKINAWA_TRIP_DATA = {
           period: "美麗海水族館",
           image: "thumb-ufuya.jpg",
           time: "13:30 ~ 14:20",
+          bookingTime: "現場抽號 (13:35已過用餐高峰)",
           coords: [26.6234, 127.9715],
           mapCode: "206 745 056*66",
           phone: "098-053-0280",
@@ -272,7 +317,23 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "專用超大型免費停車場 (含電動高爾夫球接駁車)",
           tags: ["阿古豬肉麵", "百年古民家", "森林流水庭園", "人氣泡芙"],
           desc: "名護山林間由百年安里家古民宅修復而成的名店。伴著庭院潺潺流水聲，品嚐極致鮮美的阿古豬（Agu）沖繩蕎麥麵與特製泡芙，意境悠遠迷人。",
-          tips: "從古宇利開車約 25 分鐘。平日下午 13:30 已過最巔峰午餐人潮，入座較快。午餐供應至 15:00。"
+          tips: "從古宇利開車約 25 分鐘。平日下午 13:30 已過最巔峰午餐人潮，入座較快。午餐供應至 15:00。",
+          reservationInfo: "午餐時段（11:00~16:00）僅限現場門口抽號碼牌候位（午餐不開放預約）；晚餐時段（18:00起）可提早透過官方網站 TableCheck 系統線上訂位。",
+          branchTip: "大家全沖繩【僅此名護山林總店，無任何市區分店】！全店座位超過 200 席，13:35 抵達人潮已疏解，等候時間通常在 10~15 分鐘以內。",
+          backupOptions: [
+            {
+              name: "幸ちゃんそば (Satchan Soba)",
+              tag: "清單名店 / 開車12分",
+              desc: "Google My Maps 清單名店！名護在地排隊老店，特製伊平屋島水雲沖繩麵與軟嫩軟骨肉，湯頭甘醇清爽。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Satchan+Soba+Nago"
+            },
+            {
+              name: "元祖海葡萄總店 (萬座毛旁)",
+              tag: "清單名店 / 順路往南",
+              desc: "Google My Maps 清單名店！若在名護節省時間直接往南，可在萬座毛旁品嚐元祖海葡萄阿古豬蓋飯。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ganso+Umibudo+Honten"
+            }
+          ]
         },
         {
           id: "d2-9",
@@ -335,6 +396,7 @@ const OKINAWA_TRIP_DATA = {
           period: "晚間返程",
           image: "thumb-aw.jpg",
           time: "19:10 ~ 19:45",
+          bookingTime: "現場點餐 (19:10抵達免排隊)",
           coords: [26.2625, 127.7144],
           mapCode: "33 342 546*22",
           phone: "098-876-6081",
@@ -344,7 +406,17 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "店前專用 Drive-in 美式停車場 (約 50 台，免費)",
           tags: ["50年代復古", "麥根沙士", "莫札瑞拉漢堡", "霓虹燈草坪"],
           desc: "從恩納村走高速公路南下西原IC至牧港，約 45 分鐘。沖繩歷史最悠久的 A&W 旗艦店，夜晚巨大的霓虹招牌、美式得來速雨棚與草坪小噴泉宛如置身 60 年代加州。",
-          tips: "必點 The A&W 漢堡配炸洋蔥圈、金黃捲捲薯條（Curly Fries），以及裝在冰鎮厚玻璃杯中的麥根沙士（Root Beer，內用可免費續杯）！"
+          tips: "必點 The A&W 漢堡配炸洋蔥圈、金黃捲捲薯條（Curly Fries），以及裝在冰鎮厚玻璃杯中的麥根沙士（Root Beer，內用可免費續杯）！",
+          reservationInfo: "速食餐廳無預約制度。採店內櫃台排隊或戶外美式 Drive-in 車道點餐。",
+          branchTip: "【首選牧港店，避開國際通店】：國際通分店室內狹小、排隊長達 30 人以上且無停車位；牧港店是全沖繩唯一擁有『50年代復古霓虹燈草坪＋得來速大雨棚』的旗艦總店，座位極多且附設 50 台免費車位，出餐超快完全不塞車！",
+          backupOptions: [
+            {
+              name: "暖暮拉麵 牧港店",
+              tag: "國道58號旁 / 開車2分",
+              desc: "九州拉麵冠軍，牧港店附專屬停車場，比起國際通排隊 1 小時的分店，牧港店等候時間短得多。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Danbo+Ramen+Makiminato"
+            }
+          ]
         },
         {
           id: "d2-13",
@@ -353,6 +425,7 @@ const OKINAWA_TRIP_DATA = {
           period: "晚間返程",
           image: "thumb-blueseal.jpg",
           time: "19:50 ~ 20:25",
+          bookingTime: "現場排隊 (多櫃台流動極快)",
           coords: [26.2673, 127.7214],
           mapCode: "33 342 635*44",
           phone: "098-877-5241",
@@ -362,7 +435,17 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "門市前專用免費停車場 (約 40 台)",
           tags: ["美式復古霓虹燈", "順路僅2分鐘", "鹽金楚糕冰淇淋", "紅芋甜筒", "打卡地標"],
           desc: "自 A&W 出發沿 58 號公路北向僅 2 分鐘車程（約 650 公尺）即達！創立於 1963 年的 BLUE SEAL 全沖繩發祥旗艦本店。夜間巨型美式復古霓虹招牌與繽紛燈海耀眼奪目，是沖繩自駕夜間必拍地標！",
-          tips: "必吃推薦：「沖繩鹽金楚糕（塩ちんすこう）」與「紅芋」雙球甜筒，還有香檸雪酪。店旁附設 Ice Park 歷史展示，門口霓虹燈下拿著冰淇淋與跑車合照極具氛圍。"
+          tips: "必吃推薦：「沖繩鹽金楚糕（塩ちんすこう）」與「紅芋」雙球甜筒，還有香檸雪酪。店旁附設 Ice Park 歷史展示，門口霓虹燈下拿著冰淇淋與跑車合照極具氛圍。",
+          reservationInfo: "一般外帶/內用無須訂位。若欲參加 Ice Park 冰淇淋 DIY 體驗工作坊，需提前 1 個月於官網預約。",
+          branchTip: "【首選牧港本店】：國際通與各大商場分店人潮擁擠，牧港本店設有多個獨立結帳櫃台與專用大型停車場，出餐速度極快。",
+          backupOptions: [
+            {
+              name: "BLUE SEAL 浦添 PARCO CITY 店",
+              tag: "商場2F順路",
+              desc: "若牧港外帶人潮稍多，可直接在下一站 PARCO CITY 館內 2F 門市購買邊逛邊吃。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Blue+Seal+PARCO+CITY"
+            }
+          ]
         },
         {
           id: "d2-14",
@@ -421,6 +504,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "晨間出發",
           time: "08:30 ~ 09:20",
+          bookingTime: "現場點餐 / App手機預訂",
           coords: [26.2109, 127.6934],
           mapCode: "33 158 202*44",
           phone: "098-833-2882",
@@ -430,7 +514,23 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "門市專用免費停車場 (約 25 台，附設得來速)",
           tags: ["日本限定早餐", "鬆餅滿福堡", "得來速專用", "出發首里城前哨"],
           desc: "自 Nest Hotel 出發開車僅 8 分鐘。寬敞明亮的美式速食門市，附設免卡底盤的平地專用停車場。出發前在此享用熱騰騰早餐與香濃咖啡，充滿元氣！",
-          tips: "推薦品嚐日本麥當勞早餐招牌「厚鬆餅豬肉蛋滿福堡 (McGriddles)」，鹹甜交織楓糖鬆餅皮極具特色；亦可走得來速車道快速取餐。"
+          tips: "推薦品嚐日本麥當勞早餐招牌「厚鬆餅豬肉蛋滿福堡 (McGriddles)」，鹹甜交織楓糖鬆餅皮極具特色；亦可走得來速車道快速取餐。",
+          reservationInfo: "不可訂位。但可使用日本 McDonald's App 手機點餐 (Mobile Order) 預先線上付款，到店直接取餐或外帶！",
+          branchTip: "【首選壺屋店，避開國際通店】：國際通麥當勞無附設停車場且觀光客繁雜；壺屋店離 Nest Hotel 開車僅 8 分鐘，附設 25 台全平面免費停車場與雙線得來速，自駕最順暢。",
+          backupOptions: [
+            {
+              name: "Pork Tamago Onigiri (Potama 豬肉蛋飯糰 牧志市場本店)",
+              tag: "清單名店 / 開車6分",
+              desc: "Google My Maps 清單名店！沖繩最知名早餐飯糰，提供炸蝦塔塔與明太子厚蛋，推薦使用官方 FastPick App 提早線上下單外帶免排隊。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Pork+Tamago+Onigiri+Makishi+Market"
+            },
+            {
+              name: "鳥與卵專門店 鳥玉 泉崎店",
+              tag: "清單名店 / 開車4分",
+              desc: "Google My Maps 清單名店！主打超嫩厚玉子燒、黃金親子丼與炸雞定食，早午餐營養滿分。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Toritama+Izumizaki+Naha"
+            }
+          ]
         },
         {
           id: "d3-2",
@@ -492,6 +592,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "海中跳島",
           time: "12:30 ~ 13:25",
+          bookingTime: "建議電話預約 12:30",
           coords: [26.3195, 127.9575],
           mapCode: "499 519 559*55",
           phone: "098-977-7688",
@@ -501,7 +602,29 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "勝連濱集落共同利用免費停車場（步行 2 分鐘穿過石牆巷弄）",
           tags: ["神明之島", "百年古民家", "島野菜定食", "鹽炊豚肉", "沖繩在地媽媽味"],
           desc: "開車跨過濱比嘉大橋進入神仙之島。隱身於咕咾石矮牆間的傳統琉球赤瓦古民家，入內脫鞋坐在榻榻米上，品嚐島野菜天婦羅、水雲酢、慢火鹽炊阿古豬肉與雜穀飯定食。",
-          tips: "【備選推薦】：若 Tirabui 週三店休或客滿，可至海中道路正中央「海の駅 あやはし館」2F 海景餐廳享用阿古豬排丼或海鮮拉麵，同享 360 度海景。"
+          tips: "【自駕攻略】：開敞篷車進濱比嘉島聚落時巷弄較窄，請直接停在勝連濱集落共同利用免費停車場，步行 2 分鐘穿過珊瑚石矮牆抵達。",
+          reservationInfo: "【可電話提早預約】：建議出發前 1~2 天或當天上午致電預約（TEL: 098-977-7688），保留榻榻米古民家席位。",
+          branchTip: "神之島濱比嘉島獨一無二的百年紅瓦古民家食堂，全沖繩無其他分店。若客滿可直接前往跨海大橋正中間的海之驛。",
+          backupOptions: [
+            {
+              name: "海の駅 あやはし館 2F 海景餐廳",
+              tag: "海中道路正中央 / 免排隊",
+              desc: "海中道路跨海大橋正中間，座位多免排隊，坐擁 360 度海景，提供宇流麻阿古豬排丼、海鮮拉麵與沖繩麵定食。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Ayahashikan+Kaichu-dori"
+            },
+            {
+              name: "丸吉食品 (濱比嘉漁港旁)",
+              tag: "在地排隊天婦羅 / 開車2分",
+              desc: "濱比嘉島老字號漁港炸物，招牌現炸帶殼小螃蟹（香酥多汁）、炸白身魚塊與海蘊天婦羅，銅板價外帶在海堤吃超享受！",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Maruyoshi+Foods+Hamahiga"
+            },
+            {
+              name: "King Tacos 与勝店 (キングタコス)",
+              tag: "清單名店 / 跨海大橋入口前",
+              desc: "沖繩塔可飯創始元祖老店！起司肉醬如小山般爆棚，份量巨大極度過癮。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=King+Tacos+Yokatsu"
+            }
+          ]
         },
         {
           id: "d3-6",
@@ -546,6 +669,7 @@ const OKINAWA_TRIP_DATA = {
           period: "西岸美式",
           image: "thumb-hanon.jpg",
           time: "16:35 ~ 17:15",
+          bookingTime: "現場平板登記候位 (16:35抵達)",
           coords: [26.3168, 127.7543],
           mapCode: "33 525 892*11",
           phone: "098-989-5788",
@@ -555,7 +679,29 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "停放於美國村 Depot Island 免費停車場，步行 3 分鐘",
           tags: ["現做舒芙蕾", "無敵海景露台", "紅豆抹茶", "波浪奶蓋咖啡", "人氣甜點"],
           desc: "美國村濱海建築 2 樓的頂級手作鬆餅名店。坐在面海戶外露台，眼下是湛藍東海潮汐，品嚐現點現烤、如雲朵般蓬鬆綿密的日式舒芙蕾鬆餅與微鹹奶蓋黑咖啡。",
-          tips: "招牌推薦「法式焦糖香蕉舒芙蕾」與「紅芋限定鬆餅」。傍晚氣溫舒適微風徐徐，是日落前最享受的午後時光。"
+          tips: "招牌推薦「法式焦糖香蕉舒芙蕾」與「紅芋限定鬆餅」。傍晚氣溫舒適微風徐徐，是日落前最享受的午後時光。",
+          reservationInfo: "不可提早訂位。現場於門口平板電腦登記取號（支援 QR Code 查看即時叫號進度），等候時可在 Depot Island 商店街漫步拍照。",
+          branchTip: "美國村僅此一家海景露台總店。下午 16:30 抵達正好銜接下午茶至日落時段。",
+          backupOptions: [
+            {
+              name: "Taco Rice Cafe Kijimuna (美國村店)",
+              tag: "清單名店 / Depot Island 2F",
+              desc: "Google My Maps 清單名店！若不想吃甜點鬆餅想吃鹹食，首推這家滑嫩歐姆蛋塔可飯（Omutaco），可自選中辣或照燒醬汁。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Taco+Rice+Cafe+Kijimuna+Depot+Island"
+            },
+            {
+              name: "Gourmet 迴轉壽司市場 美濱店",
+              tag: "清單名店 / 開車2分",
+              desc: "Google My Maps 清單名店！排隊人氣名店，傍晚 16:30 剛開門入內免排隊，品嚐新鮮生魚片、炙燒鮭魚與海膽壽司。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Gourmet+Conveyor+Belt+Sushi+Ichiba+Mihama"
+            },
+            {
+              name: "ZHYVAGO COFFEE WORKS OKINAWA",
+              tag: "濱海步道旁",
+              desc: "美式西海岸工業風海景咖啡館，外帶一杯冰滴拿鐵坐在防波堤邊吹風等日落極度愜意。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=ZHYVAGO+COFFEE+WORKS+OKINAWA"
+            }
+          ]
         },
         {
           id: "d3-9",
@@ -600,6 +746,7 @@ const OKINAWA_TRIP_DATA = {
           period: "晚間慶功",
           image: "thumb-ryukyu-beef.jpg",
           time: "19:50 ~ 21:30",
+          bookingTime: "建議官網預約 19:50",
           coords: [26.2154, 127.6820],
           mapCode: "33 156 673*88",
           phone: "098-988-3409",
@@ -609,7 +756,29 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "單軌電車縣廳前站步行 5 分鐘 / 美榮橋站步行 6 分鐘（已還車，可暢飲啤酒！）",
           tags: ["頂級黑毛和牛", "特選上等牛五花", "入口即化", "久茂地旗艦", "Orion生啤乾杯"],
           desc: "全沖繩公認頂級燒肉名店！還車後無需開車，終於可以盡情暢飲冰鎮 Orion 生啤酒！招牌「頂級特選上等牛五花」油花如大理石般細緻，炭火輕炙 5 秒即化為濃郁肉香與甘甜肉汁，無與倫比的美味！",
-          tips: "【老饕點餐攻略】：推薦雙人點一份「頂級特選和牛盛合套餐」，搭配炙燒和牛握壽司與石鍋拌飯。建議提早透過官網或 Google 訂位，若無預約可於 19:50 現場登記候補。"
+          tips: "【老饕點餐攻略】：推薦雙人點一份「頂級特選和牛盛合套餐」，搭配炙燒和牛握壽司與石鍋拌飯。建議提早透過官網或 Google 訂位，若無預約可於 19:50 現場登記候補。",
+          reservationInfo: "【強烈建議提早 1~2 週線上預約】！可透過官方網站（支援中文介面，使用 TableCheck 預約系統）完成訂位。若未預約，需於 19:30~19:50 現場登記候補，等候時間約 30~50 分鐘。",
+          branchTip: "【分店比較與首選久茂地店理由】：琉球的牛在沖繩有三家店（恩納本館、恩納別館、那霸久茂地店）。恩納兩家店自駕前往無法喝酒；而【久茂地店】位於那霸單軌『縣廳前站 / 美榮橋站』步行 5 分鐘，剛好在 19:30 赤嶺還車後搭電車直達，【全員可盡情暢飲 Orion 生啤與泡盛梅酒】，完全無酒駕顧慮，是自駕完工慶功最完美的安排！",
+          backupOptions: [
+            {
+              name: "WAGYU SUKIYAKI 極~GOKU~ 那霸國際通店",
+              tag: "清單名店 / 支援線上預約",
+              desc: "Google My Maps 清單名店！國際通頂級黑毛和牛壽喜燒，支援 Google / 官網線上訂位，霜降和牛沾蛋液入口即化，氣氛奢華。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=WAGYU+SUKIYAKI+GOKU+Naha"
+            },
+            {
+              name: "沖繩麵 EIBUN",
+              tag: "清單名店 / 文青排隊首選",
+              desc: "Google My Maps 清單名店！那霸最具話題性的文青沖繩麵，營業至 21:00。招牌特製軟骨三枚肉麵與柚子胡椒冷麵風味絕佳。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Okinawa+Soba+EIBUN"
+            },
+            {
+              name: "Buchi 久茂地店 (炭火內臟燒肉)",
+              tag: "清單名店 / 步行3分",
+              desc: "Google My Maps 清單名店！就在琉球的牛隔壁街角，高人氣沖繩炭火直烤燒肉居酒屋，氣氛熱鬧，若沒訂到琉球的牛可無縫轉場。",
+              googleMapsUrl: "https://www.google.com/maps/search/?api=1&query=Buchi+Kumoji+Naha"
+            }
+          ]
         },
         {
           id: "d3-12",
