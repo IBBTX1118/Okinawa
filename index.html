@@ -94,11 +94,10 @@
     }
     
     .moving-car-icon {
-      font-size: 26px;
-      line-height: 1;
       display: inline-block;
-      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.35));
       transition: transform 0.25s ease-out;
+      pointer-events: none;
+      transform-origin: center center;
     }
 
     #routeMap {
@@ -1007,12 +1006,12 @@
 
       markersLayer = L.layerGroup().addTo(map);
 
-      // Moving Vehicle Marker
+      // Moving Vehicle Marker (Q-version BMW Z4 Red Convertible)
       const carIcon = L.divIcon({
         className: 'car-div-icon',
-        html: `<div class="moving-car-icon">🚗</div>`,
-        iconSize: [32, 32],
-        iconAnchor: [16, 16]
+        html: `<img src="car-z4.png" class="moving-car-icon" alt="BMW Z4 紅色敞篷車" style="width: 46px; height: auto; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));">`,
+        iconSize: [46, 27],
+        iconAnchor: [23, 14]
       });
       movingMarker = L.marker([26.2064, 127.6465], { icon: carIcon, zIndexOffset: 1000 }).addTo(map);
 

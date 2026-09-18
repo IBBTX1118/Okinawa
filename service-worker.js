@@ -1,10 +1,11 @@
-const CACHE_NAME = 'okinawa-trip-v31';
+const CACHE_NAME = 'okinawa-trip-v32';
 const STATIC_ASSETS = [
   './',
   './index.html',
   './Okinawa.html',
   './itinerary-data.js',
   './manifest.json',
+  './car-z4.png',
   './icon.svg',
   './icon-192.png',
   './icon-512.png',
