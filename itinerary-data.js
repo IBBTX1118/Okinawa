@@ -34,7 +34,7 @@ const OKINAWA_TRIP_DATA = {
         totalDistance: "約 16 km",
         mode: "計程車 ＆ 步行",
         tips: "那霸機場 ➔ Outlet ➔ 飯店短程移動，建議出航廈搭計程車爭取 Outlet 採買時間"
-      },,
+      },
       waypoints: [
         {
           id: "d1-1",
@@ -189,7 +189,7 @@ const OKINAWA_TRIP_DATA = {
         totalDistance: "約 170 km",
         mode: "自駕 (ETC 高速＋國道58)",
         tips: "全日自駕核心！西原 IC ➔ 許田 IC 高速路段 (ETC ¥1,040)，北上名護、古宇利、美ら海與萬座毛"
-      },,
+      },
       waypoints: [
         {
           id: "d2-1",
@@ -658,7 +658,7 @@ const OKINAWA_TRIP_DATA = {
         totalDistance: "約 85 km",
         mode: "自駕 (19:30前還車) ＋ 單軌",
         tips: "橫跨東岸海中道路與西岸北谷美國村落日煙火，19:30 赤嶺門市還車後轉單軌至久茂地燒肉"
-      },,
+      },
       waypoints: [
         {
           id: "d3-1",
@@ -1067,7 +1067,7 @@ const OKINAWA_TRIP_DATA = {
         totalDistance: "步行約 3.5 km ｜ 單軌 3 趟",
         mode: "單軌電車 ＆ 悠閒徒步",
         tips: "全日單軌＋徒步漫遊！牧志市場 ➔ 國際通 ➔ 新都心 Main Place ➔ 旭橋取行李 ➔ 機場"
-      },,
+      },
       waypoints: [
         {
           id: "d4-1",

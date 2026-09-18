@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js"></script>
+  <script src="itinerary-data.js?v=20261117-v3.0"></script>
 
   <script>
     tailwind.config = {
@@ -904,35 +904,70 @@
     let animFrameId = null;
 
     // Load persisted data with version check to auto-sync upstream itinerary changes
-    const CURRENT_DATA_VERSION = (typeof OKINAWA_TRIP_DATA !== 'undefined' && OKINAWA_TRIP_DATA.meta && OKINAWA_TRIP_DATA.meta.version) ? OKINAWA_TRIP_DATA.meta.version : '20261117-v2.0';
+    const CURRENT_DATA_VERSION = (typeof OKINAWA_TRIP_DATA !== 'undefined' && OKINAWA_TRIP_DATA.meta && OKINAWA_TRIP_DATA.meta.version) ? OKINAWA_TRIP_DATA.meta.version : '20261117-v3.0';
     const savedVersion = localStorage.getItem('okinawa_trip_data_version');
-    let tripData;
-    if (typeof OKINAWA_TRIP_DATA !== 'undefined' && savedVersion !== CURRENT_DATA_VERSION) {
-      tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
-      try {
-        localStorage.setItem('okinawa_trip_custom_data', JSON.stringify(tripData));
-        localStorage.setItem('okinawa_trip_data_version', CURRENT_DATA_VERSION);
-      } catch (e) {
-        console.warn('LocalStorage save failed:', e);
+    let tripData = null;
+
+    try {
+      const storedData = localStorage.getItem('okinawa_trip_custom_data');
+      if (typeof OKINAWA_TRIP_DATA !== 'undefined') {
+        if (savedVersion !== CURRENT_DATA_VERSION || !storedData) {
+          tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+          localStorage.setItem('okinawa_trip_custom_data', JSON.stringify(tripData));
+          localStorage.setItem('okinawa_trip_data_version', CURRENT_DATA_VERSION);
+        } else {
+          tripData = JSON.parse(storedData);
+          if (!tripData || !tripData.days || tripData.days.length === 0) {
+            tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+          }
+        }
+      } else if (storedData) {
+        tripData = JSON.parse(storedData);
       }
-    } else {
-      tripData = JSON.parse(localStorage.getItem('okinawa_trip_custom_data')) || (typeof OKINAWA_TRIP_DATA !== 'undefined' ? OKINAWA_TRIP_DATA : null);
+    } catch (e) {
+      console.warn('TripData initialization recovery:', e);
+      if (typeof OKINAWA_TRIP_DATA !== 'undefined') {
+        tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+      }
     }
-    let checklists = JSON.parse(localStorage.getItem('okinawa_checklists')) || (OKINAWA_TRIP_DATA ? OKINAWA_TRIP_DATA.defaultChecklists : null);
+
+    let checklists = null;
+    try {
+      checklists = JSON.parse(localStorage.getItem('okinawa_checklists')) || (typeof OKINAWA_TRIP_DATA !== 'undefined' ? OKINAWA_TRIP_DATA.defaultChecklists : null);
+    } catch (e) {
+      checklists = typeof OKINAWA_TRIP_DATA !== 'undefined' ? OKINAWA_TRIP_DATA.defaultChecklists : null;
+    }
     let currentChecklistTab = 'essentials';
 
     /* =========================================================================
        1. INITIALIZATION ON LOAD
        ========================================================================= */
     window.addEventListener('DOMContentLoaded', () => {
-      initMap();
-      renderDayTabs();
-      renderActiveDay();
-      initChecklist();
-      initEmergencyContacts();
-      initDrivingModal();
-      fetchLiveWeather();
-      registerServiceWorker();
+      // 1. Prioritize UI layout rendering (tabs and timeline cards)
+      try {
+        renderDayTabs();
+        renderActiveDay();
+      } catch (e) {
+        console.error('Day rendering error:', e);
+      }
+
+      // 2. Leaflet Map Initialization
+      try {
+        initMap();
+      } catch (e) {
+        console.error('Leaflet Map init error:', e);
+      }
+
+      // 3. Secondary widgets
+      try {
+        initChecklist();
+        initEmergencyContacts();
+        initDrivingModal();
+        fetchLiveWeather();
+        registerServiceWorker();
+      } catch (e) {
+        console.warn('Widget init error:', e);
+      }
 
       // Invalidate map layout on window resize & scroll to prevent tile tearing
       window.addEventListener('resize', () => {
@@ -954,6 +989,13 @@
        2. LEAFLET MAP INITIALIZATION & DAY RENDERING
        ========================================================================= */
     function initMap() {
+      if (typeof L === 'undefined') {
+        console.warn('Leaflet library is not available');
+        return;
+      }
+      const mapEl = document.getElementById('routeMap');
+      if (!mapEl) return;
+
       // Centered on southern Okinawa
       map = L.map('routeMap', {
         center: [26.1850, 127.6650],
@@ -1151,6 +1193,15 @@
        ========================================================================= */
     function renderDayTabs() {
       const container = document.getElementById('dayTabsContainer');
+      if (!container) return;
+      if (!tripData || !tripData.days || tripData.days.length === 0) {
+        if (typeof OKINAWA_TRIP_DATA !== 'undefined' && OKINAWA_TRIP_DATA.days) {
+          tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+        } else {
+          container.innerHTML = '<div class="text-xs text-slate-500 py-1">載入行程資料中...</div>';
+          return;
+        }
+      }
       container.innerHTML = tripData.days.map((day, idx) => {
         const isActive = idx === currentDayIndex;
         const activeStyle = isActive 
@@ -1256,6 +1307,13 @@
     }
 
     function renderActiveDay() {
+      if (!tripData || !tripData.days || tripData.days.length === 0) {
+        if (typeof OKINAWA_TRIP_DATA !== 'undefined' && OKINAWA_TRIP_DATA.days) {
+          tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+        } else {
+          return;
+        }
+      }
       const day = tripData.days[currentDayIndex];
       if (!day) return;
 

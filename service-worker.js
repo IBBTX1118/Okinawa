@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v16';
+const CACHE_NAME = 'okinawa-trip-v30';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -49,7 +49,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Caching static assets for offline use');
+      console.log('[Service Worker] Caching static assets for offline use (v30)');
       return cache.addAll(STATIC_ASSETS).catch((err) => {
         console.warn('[Service Worker] Some non-critical asset caching skipped:', err);
       });
@@ -75,7 +75,7 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
 
-  // Weather API: Network first, cache fallback
+  // 1. Weather API: Network first, cache fallback
   if (url.hostname.includes('open-meteo.com')) {
     event.respondWith(
       fetch(event.request)
@@ -86,14 +86,39 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+
+  // 2. App Code (HTML & JS): Network-first with cache fallback
+  // Ensures fresh updates when online, seamless offline fallback
+  const isAppCode = event.request.mode === 'navigate' ||
+                    url.pathname.endsWith('.html') ||
+                    url.pathname.endsWith('.js') ||
+                    url.pathname.endsWith('/');
+
+  if (isAppCode && url.origin === location.origin) {
+    event.respondWith(
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const clone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, clone));
+          }
+          return networkResponse;
+        })
         .catch(() => {
-          return caches.match(event.request);
+          return caches.match(event.request).then((cached) => {
+            if (cached) return cached;
+            if (event.request.mode === 'navigate') return caches.match('./index.html');
+          });
         })
     );
     return;
   }
 
-  // Static Assets & CDN: Cache first, fallback to network
+  // 3. Static Assets (Images, Icons, CDNs): Cache first, fallback to network
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
@@ -109,7 +134,6 @@ self.addEventListener('fetch', (event) => {
         });
         return networkResponse;
       }).catch(() => {
-        // Fallback to offline home page if HTML navigation fails
         if (event.request.mode === 'navigate') {
           return caches.match('./index.html');
         }
