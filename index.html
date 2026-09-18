@@ -95,8 +95,10 @@
     
     .moving-car-icon {
       font-size: 26px;
+      line-height: 1;
+      display: inline-block;
       filter: drop-shadow(0 3px 6px rgba(0,0,0,0.35));
-      transition: all 0.2s linear;
+      transition: transform 0.25s ease-out;
     }
 
     #routeMap {
@@ -116,7 +118,7 @@
     }
     .leaflet-tile-pane {
       will-change: transform;
-      filter: contrast(1.04) saturate(1.15) sepia(0.08) hue-rotate(-8deg);
+      filter: contrast(1.02) saturate(1.06);
     }
     .leaflet-container {
       background-color: #f1f5f9 !important;
@@ -170,50 +172,41 @@
        TOP NAVIGATION
        ========================================================================= -->
   <header class="wave-bg text-white shadow-lg sticky-header-safe">
-    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-15 sm:h-18 gap-2">
-        
-        <!-- Screenshot-style Location & Title: 📍 沖繩 OKINAWA -->
-        <div class="flex items-center space-x-2 sm:space-x-3 min-w-0">
-          <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-xs shrink-0 p-0.5 overflow-hidden ring-2 ring-amber-300/80">
-            <img src="avatar.png" class="w-full h-full object-cover rounded-full" alt="沖繩風獅爺">
-          </div>
-          <div class="flex flex-col min-w-0">
-            <div class="flex items-baseline space-x-1.5">
-              <span class="text-white text-base sm:text-lg">📍</span>
-              <h1 class="text-lg sm:text-2xl font-black tracking-wider text-white whitespace-nowrap drop-shadow-md">沖繩</h1>
-              <span class="text-[10px] sm:text-xs text-amber-300 font-bold tracking-widest uppercase hidden xs:inline">OKINAWA</span>
-              <span class="text-xs animate-pulse hidden sm:inline">🌺</span>
-            </div>
-            <div class="h-0.5 w-14 sm:w-20 bg-gradient-to-r from-amber-300 via-sky-200 to-transparent rounded-full -mt-0.5"></div>
-          </div>
+    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
+      
+      <!-- Screenshot-style Location & Title: 📍 沖繩 OKINAWA -->
+      <div class="flex items-center space-x-2 sm:space-x-2.5 min-w-0">
+        <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-xs shrink-0 p-0.5 overflow-hidden ring-2 ring-amber-300/80">
+          <img src="avatar.png" class="w-full h-full object-cover rounded-full" alt="沖繩風獅爺">
         </div>
+        <div class="flex items-center space-x-1.5 min-w-0">
+          <span class="text-white text-base">📍</span>
+          <h1 class="text-lg sm:text-xl font-black tracking-wide text-white whitespace-nowrap drop-shadow-sm">沖繩</h1>
+          <span class="text-[10px] text-amber-300 font-extrabold tracking-wider uppercase px-1.5 py-0.5 rounded bg-amber-900/30 border border-amber-400/40">OKINAWA</span>
+          <span class="text-xs animate-pulse hidden sm:inline">🌺</span>
+        </div>
+      </div>
 
-        <!-- Top Right Actions: 🔍 🗺️ ☰ and Weather (Matching Screenshot) -->
-        <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
-          
-          <!-- Live Weather Pill -->
-          <button onclick="toggleWeatherCity()" aria-label="切換那霸／名護氣溫顯示" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md px-2 sm:px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1 shadow-inner text-xs min-h-[44px]" title="切換那霸 / 名護氣溫">
-            <span id="weatherCityName" class="text-[10px] text-sky-100 font-bold hidden sm:inline">那霸</span>
-            <span id="weatherIconContainer">⛅</span>
-            <span id="liveWeatherTemp" class="font-bold text-amber-300">23°C</span>
-            <span id="liveWeatherDesc" class="text-[10px] text-white/90 font-medium hidden md:inline">晴時多雲</span>
-          </button>
+      <!-- Top Right Actions: ⛅ Weather, 🔍 Search, ☰ Menu -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
+        
+        <!-- Live Weather Pill -->
+        <button onclick="toggleWeatherCity()" aria-label="切換那霸／名護氣溫顯示" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1.5 shadow-inner text-xs min-h-[40px]" title="切換那霸 / 名護氣溫">
+          <span id="weatherCityName" class="text-[11px] text-sky-100 font-bold">那霸</span>
+          <span id="weatherIconContainer" class="text-sm">⛅</span>
+          <span id="liveWeatherTemp" class="font-bold text-amber-300">23°C</span>
+          <span id="liveWeatherDesc" class="text-[10px] text-white/90 font-medium hidden md:inline">晴時多雲</span>
+        </button>
 
-          <!-- Search Button (🔍) -->
-          <button onclick="openModal('searchModal')" aria-label="搜尋景點、美食與代碼" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center min-w-[44px] min-h-[44px]" title="搜尋景點、美食與代碼">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          </button>
+        <!-- Search Button (🔍) -->
+        <button onclick="openModal('searchModal')" aria-label="搜尋景點、美食與代碼" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px]" title="搜尋景點、美食與代碼">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </button>
 
-          <!-- Map Shortcut Button (🗺️) -->
-          <a href="#mapSection" aria-label="跳轉至當日動態地圖" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center min-w-[44px] min-h-[44px]" title="跳轉至動態地圖">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
-          </a>
-
-          <!-- Menu Hamburger Button (☰) -->
-          <button onclick="openModal('menuModal')" aria-label="開啟所有行程與旅行工具選單" class="bg-white/15 hover:bg-white/25 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs active:scale-95 flex items-center justify-center min-w-[44px] min-h-[44px]" title="所有行程與旅行工具選單">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
-          </button>
+        <!-- Menu Hamburger Button (☰) -->
+        <button onclick="openModal('menuModal')" aria-label="開啟所有行程與旅行工具選單" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px]" title="所有行程與旅行工具選單">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
 
           <!-- Desktop Quick Modal Buttons -->
           <div class="hidden lg:flex items-center space-x-1.5 pl-1.5 border-l border-white/20">
@@ -1004,13 +997,11 @@
         scrollWheelZoom: false // Prevent mobile scroll capture
       });
 
-      // High-performance OpenStreetMap standard tiles (Zero API keys required, no watermarks, pre-buffered)
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
+      // Clean, street-focused ESRI World Street Map (Clear road hierarchy, soft ocean tones, zero watermarks)
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, METI, TomTom',
+        maxZoom: 18,
         keepBuffer: 8,
-        updateWhenIdle: false,
-        updateWhenZooming: false,
         crossOrigin: true
       }).addTo(map);
 
@@ -1024,6 +1015,11 @@
         iconAnchor: [16, 16]
       });
       movingMarker = L.marker([26.2064, 127.6465], { icon: carIcon, zIndexOffset: 1000 }).addTo(map);
+
+      // Render active day waypoints, polyline, and fit view immediately
+      if (tripData && tripData.days && tripData.days[currentDayIndex]) {
+        renderMapForDay(tripData.days[currentDayIndex]);
+      }
     }
 
     function renderMapForDay(dayObj) {
@@ -1119,10 +1115,16 @@
       }
     }
 
-    /* Route animation along waypoints */
+    /* Route animation along waypoints with physical distance linear speed */
+    let animTotalDist = 0;
+    let animCurrentDist = 0;
+    let animPoints = [];
+    let animSegmentDists = [];
+    let animLastTimestamp = null;
+
     function toggleRouteAnimation() {
       if (isPlaying) {
-        stopRouteAnimation();
+        stopRouteAnimation(false); // pause
         return;
       }
 
@@ -1133,55 +1135,107 @@
         return;
       }
 
+      // If starting fresh or new day, recalculate physical segment distances
+      if (animPoints !== points || animCurrentDist >= animTotalDist) {
+        animPoints = points;
+        animSegmentDists = [];
+        animTotalDist = 0;
+        animCurrentDist = 0;
+
+        for (let i = 0; i < points.length - 1; i++) {
+          const p1 = L.latLng(points[i][0], points[i][1]);
+          const p2 = L.latLng(points[i + 1][0], points[i + 1][1]);
+          const dist = p1.distanceTo(p2); // real distance in meters
+          animSegmentDists.push(dist);
+          animTotalDist += dist;
+        }
+      }
+
+      if (animTotalDist <= 0) return;
+
       isPlaying = true;
-      document.getElementById('playText').textContent = '暫停動態';
-      document.getElementById('playIcon').textContent = '⏸';
+      animLastTimestamp = null;
+      const playText = document.getElementById('playText');
+      const playIcon = document.getElementById('playIcon');
+      if (playText) playText.textContent = '暫停動態';
+      if (playIcon) playIcon.textContent = '⏸';
 
-      let currentSegment = 0;
-      let progress = 0;
-      const step = 0.018; // Speed factor
+      // Physical constant speed: full route tour takes ~13 seconds smoothly
+      const speed = animTotalDist / 13000; // meters per millisecond
 
-      function animate() {
+      function animate(timestamp) {
         if (!isPlaying) return;
+        if (!animLastTimestamp) animLastTimestamp = timestamp;
+        const dt = Math.min(timestamp - animLastTimestamp, 64); // clamp frame time
+        animLastTimestamp = timestamp;
 
-        progress += step;
-        if (progress >= 1) {
-          progress = 0;
-          currentSegment++;
-          if (currentSegment >= points.length - 1) {
-            stopRouteAnimation();
-            document.getElementById('mapStatusText').textContent = `${dayObj.title} 路線巡迴完成！`;
-            showToast(`${dayObj.title} 軌跡導覽完畢！`, '🎉');
-            return;
-          }
+        animCurrentDist += speed * dt;
+
+        if (animCurrentDist >= animTotalDist) {
+          animCurrentDist = animTotalDist;
+          movingMarker.setLatLng(animPoints[animPoints.length - 1]);
+          stopRouteAnimation(true); // completed
+          document.getElementById('mapStatusText').textContent = `${dayObj.title} 路線巡迴完成！`;
+          showToast(`${dayObj.title} 軌跡導覽完畢！`, '🎉');
+          return;
         }
 
-        const start = points[currentSegment];
-        const end = points[currentSegment + 1];
-        const lat = start[0] + (end[0] - start[0]) * progress;
-        const lng = start[1] + (end[1] - start[1]) * progress;
+        // Find current segment in physical meters
+        let accumulated = 0;
+        let segIdx = 0;
+        for (let i = 0; i < animSegmentDists.length; i++) {
+          if (accumulated + animSegmentDists[i] >= animCurrentDist) {
+            segIdx = i;
+            break;
+          }
+          accumulated += animSegmentDists[i];
+        }
 
+        const segDist = animSegmentDists[segIdx];
+        const segProgress = segDist > 0 ? (animCurrentDist - accumulated) / segDist : 0;
+        const start = animPoints[segIdx];
+        const end = animPoints[segIdx + 1];
+
+        // Linear interpolation in geographic coordinates proportional to distance
+        const lat = start[0] + (end[0] - start[0]) * segProgress;
+        const lng = start[1] + (end[1] - start[1]) * segProgress;
         movingMarker.setLatLng([lat, lng]);
 
-        const nextWp = dayObj.waypoints[currentSegment + 1];
+        // Flip car orientation based on longitude direction
+        const dLng = end[1] - start[1];
+        const carEl = document.querySelector('.moving-car-icon');
+        if (carEl) {
+          carEl.style.transform = dLng < -0.0001 ? 'scaleX(-1)' : 'scaleX(1)';
+        }
+
+        const nextWp = dayObj.waypoints[segIdx + 1];
         document.getElementById('mapStatusText').innerHTML = `動態移動中：前往 <strong>${nextWp.name}</strong> (${nextWp.time})`;
 
         animFrameId = requestAnimationFrame(animate);
       }
 
-      // Dynamically fit all waypoints with generous padding so ALL attractions are comfortably visible during playback
+      // Smoothly fit all waypoints in view
       const dayBounds = L.latLngBounds(points);
       map.flyToBounds(dayBounds, {
-        padding: [60, 60],
+        padding: [55, 55],
         maxZoom: 14,
-        duration: 0.8
+        duration: 0.7
       });
-      setTimeout(() => animate(), 850);
+      setTimeout(() => {
+        if (isPlaying) animFrameId = requestAnimationFrame(animate);
+      }, 750);
     }
 
-    function stopRouteAnimation() {
+    function stopRouteAnimation(isFinished = false) {
       isPlaying = false;
-      if (animFrameId) cancelAnimationFrame(animFrameId);
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = null;
+      }
+      animLastTimestamp = null;
+      if (isFinished) {
+        animCurrentDist = 0;
+      }
       const playText = document.getElementById('playText');
       const playIcon = document.getElementById('playIcon');
       if (playText) playText.textContent = '播放移動軌跡';
@@ -1591,32 +1645,8 @@
                   </div>
                 ` : ''}
 
-                <div class="pt-1.5 border-t border-slate-100 flex items-center justify-between gap-2 text-xs flex-wrap">
-                  <span class="text-slate-400 text-[11px]">🅿️ ${wp.parkingInfo || '詳見現場'}</span>
-                  <div class="flex items-center space-x-1.5">
-                    <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs active:scale-95">
-                      <span>🗺️ 導航</span>
-                    </a>
-                    <a href="${parkingSearchUrl}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1 shadow-xs active:scale-95" title="搜尋附近停車場">
-                      <span>🅿️ 停車場</span>
-                    </a>
-                    ${wp.mapCode ? `
-                      <button onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！')" class="px-2 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 rounded-xl text-xs font-mono font-bold transition">
-                        MC: ${wp.mapCode}
-                      </button>
-                    ` : ''}
-                    ${wp.phone ? `
-                      <a href="tel:${wp.phone}" aria-label="撥打電話 ${wp.phone}" class="px-2 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-mono transition min-w-[44px] min-h-[44px] flex items-center justify-center" title="撥打電話">
-                        <span aria-hidden="true">📞</span>
-                      </a>
-                    ` : ''}
-                    ${wp.isCustom ? `
-                      <button onclick="deleteCustomStop('${wp.id}')" aria-label="刪除此自訂站點" class="text-rose-500 hover:text-rose-700 text-xs font-semibold px-1 min-w-[44px] min-h-[44px] flex items-center justify-center">
-                        <span aria-hidden="true">🗑️</span>
-                      </button>
-                    ` : ''}
-                  </div>
-                </div>
+                <!-- Action Buttons -->
+                ${renderActionButtons(wp)}
 
                 <!-- Custom Booking / Schedule Input -->
                 <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
