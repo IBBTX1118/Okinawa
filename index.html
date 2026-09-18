@@ -171,39 +171,38 @@
        TOP NAVIGATION
        ========================================================================= -->
   <header class="wave-bg text-white shadow-lg sticky-header-safe">
-    <div class="max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 py-2.5 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-3">
       
-      <!-- Screenshot-style Location & Title: 📍 沖繩 OKINAWA -->
-      <div class="flex items-center space-x-2 sm:space-x-2.5 min-w-0">
+      <!-- Location & Title: 📍 沖繩 OKINAWA -->
+      <div class="flex items-center space-x-1.5 sm:space-x-2.5 min-w-0 shrink-0">
         <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center border border-white/40 shadow-xs shrink-0 p-0.5 overflow-hidden ring-2 ring-amber-300/80">
           <img src="avatar.png" class="w-full h-full object-cover rounded-full" alt="沖繩風獅爺">
         </div>
-        <div class="flex items-center space-x-1.5 min-w-0">
-          <span class="text-white text-base">📍</span>
-          <h1 class="text-lg sm:text-xl font-black tracking-wide text-white whitespace-nowrap drop-shadow-sm">沖繩</h1>
-          <span class="text-[10px] text-amber-300 font-extrabold tracking-wider uppercase px-1.5 py-0.5 rounded bg-amber-900/30 border border-amber-400/40">OKINAWA</span>
-          <span class="text-xs animate-pulse hidden sm:inline">🌺</span>
+        <div class="flex items-center space-x-1 sm:space-x-1.5 min-w-0">
+          <span class="text-white text-sm sm:text-base shrink-0">📍</span>
+          <h1 class="text-base sm:text-xl font-black tracking-wide text-white whitespace-nowrap drop-shadow-sm">沖繩</h1>
+          <span class="text-[9px] sm:text-[10px] text-amber-300 font-extrabold tracking-wider uppercase px-1.5 py-0.5 rounded bg-amber-900/30 border border-amber-400/40 whitespace-nowrap">OKINAWA</span>
         </div>
       </div>
 
       <!-- Top Right Actions: ⛅ Weather, 🔍 Search, ☰ Menu -->
       <div class="flex items-center space-x-1.5 sm:space-x-2 shrink-0">
         
-        <!-- Live Weather Pill -->
-        <button onclick="toggleWeatherCity()" aria-label="切換那霸／名護氣溫顯示" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1.5 shadow-inner text-xs min-h-[40px]" title="切換那霸 / 名護氣溫">
+        <!-- Live Weather Pill (Compact & non-wrapping) -->
+        <button onclick="toggleWeatherCity()" aria-label="切換那霸／名護氣溫顯示" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md px-2 sm:px-2.5 py-1.5 rounded-xl border border-white/25 flex items-center space-x-1 sm:space-x-1.5 shadow-inner text-xs min-h-[36px] sm:min-h-[40px] whitespace-nowrap" title="切換那霸 / 名護氣溫">
           <span id="weatherCityName" class="text-[11px] text-sky-100 font-bold">那霸</span>
-          <span id="weatherIconContainer" class="text-sm">⛅</span>
-          <span id="liveWeatherTemp" class="font-bold text-amber-300">23°C</span>
+          <span id="weatherIconContainer" class="text-xs sm:text-sm">⛅</span>
+          <span id="liveWeatherTemp" class="font-bold text-amber-300 text-xs sm:text-sm">23°C</span>
           <span id="liveWeatherDesc" class="text-[10px] text-white/90 font-medium hidden md:inline">晴時多雲</span>
         </button>
 
         <!-- Search Button (🔍) -->
-        <button onclick="openModal('searchModal')" aria-label="搜尋景點、美食與代碼" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px]" title="搜尋景點、美食與代碼">
+        <button onclick="openModal('searchModal')" aria-label="搜尋景點、美食與代碼" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md p-1.5 sm:p-2 rounded-xl border border-white/25 text-white shadow-xs flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 min-w-[36px] min-h-[36px]" title="搜尋景點、美食與代碼">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
         </button>
 
         <!-- Menu Hamburger Button (☰) -->
-        <button onclick="openModal('menuModal')" aria-label="開啟所有行程與旅行工具選單" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md p-2 rounded-xl border border-white/25 text-white shadow-xs flex items-center justify-center w-10 h-10 min-w-[40px] min-h-[40px]" title="所有行程與旅行工具選單">
+        <button onclick="openModal('menuModal')" aria-label="開啟所有行程與旅行工具選單" class="bg-white/15 hover:bg-white/25 active:scale-95 transition backdrop-blur-md p-1.5 sm:p-2 rounded-xl border border-white/25 text-white shadow-xs flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 min-w-[36px] min-h-[36px]" title="所有行程與旅行工具選單">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
@@ -253,15 +252,16 @@
         <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/35 to-transparent"></div>
         <div class="absolute inset-0 bg-gradient-to-r from-sky-950/60 via-transparent to-slate-950/30"></div>
 
-        <!-- Top Badges -->
-        <div class="absolute top-3 left-3 right-3 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between pointer-events-none">
-          <span class="bg-amber-400/95 backdrop-blur-md text-amber-950 text-[11px] font-black px-2.5 py-0.5 rounded-full shadow-md tracking-wider flex items-center gap-1 pointer-events-auto">
-            <span>めんそーれ！</span>
-            <span class="text-[10px] opacity-90 font-normal">琉球迎賓</span>
+        <!-- Top Badges (Single-line on mobile) -->
+        <div class="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-1.5 pointer-events-none">
+          <span class="bg-amber-400/95 backdrop-blur-md text-amber-950 text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 sm:py-1 rounded-full shadow-md tracking-wider flex items-center gap-1 pointer-events-auto whitespace-nowrap shrink-0">
+            <span>🌺</span>
+            <span>琉球迎賓</span>
+            <span class="text-[9px] opacity-85 font-normal hidden xs:inline">めんそーれ！</span>
           </span>
 
-          <span class="bg-white/20 backdrop-blur-md text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-white/30 shadow-xs pointer-events-auto">
-            2026/11/16 ~ 11/19 • 4天3夜
+          <span class="bg-white/20 backdrop-blur-md text-white text-[10px] sm:text-[11px] font-bold px-2.5 py-0.5 sm:py-1 rounded-full border border-white/30 shadow-xs pointer-events-auto whitespace-nowrap shrink-0">
+            <span class="hidden sm:inline">2026/</span>11/16 ~ 11/19 • 4天3夜
           </span>
         </div>
 
@@ -2318,7 +2318,7 @@
       const lat = isNago ? 26.5915 : 26.2124;
       const lon = isNago ? 127.9773 : 127.6809;
       if (!tempEl && !descEl && !cityEl) return;
-      if (cityEl) cityEl.textContent = isNago ? '名護(北部)' : '那霸即時';
+      if (cityEl) cityEl.textContent = isNago ? '名護' : '那霸';
 
       try {
         const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,weather_code&timezone=Asia%2FTokyo`;
