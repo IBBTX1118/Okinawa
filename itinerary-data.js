@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v3.0",
+    version: "20261117-v3.1",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -107,41 +107,47 @@ const OKINAWA_TRIP_DATA = {
           id: "d1-4",
           transitFromPrev: {
             mode: "walk",
-            duration: "約 5 分",
-            distance: "約 350 m",
-            route: "步行穿過久茂地西側街區",
+            duration: "約 3 分",
+            distance: "約 220 m",
+            route: "飯店出門往東町方向步行直達",
             toll: "無料",
-            tips: "距離飯店僅 350 公尺，步行即可抵達，先至門口抽號碼牌"
+            tips: "距離飯店僅 220 公尺，步行 3 分鐘即達，支援線上訂位免排隊！"
           },
-          name: "傑克牛排館 (Jack's Steak House)",
+          name: "テンダーロインステーキハウス 那覇東町店 (厚切多汁菲力牛排)",
           category: "美食",
-          image: "thumb-jacksteak.jpg",
+          image: "thumb-tenderloin.jpg",
           time: "20:50 ~ 22:00",
-          bookingTime: "現場排隊 (預估21:10抵達)",
-          coords: [26.2163, 127.6710],
-          mapCode: "33 155 087*50",
-          phone: "098-868-2408",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2163,127.6710&travelmode=driving",
+          bookingTime: "【可線上網路預約免排隊】(建議預約21:00)",
+          coords: [26.2132, 127.6740],
+          mapCode: "33 156 211*55",
+          phone: "098-971-4528",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2132,127.6740&travelmode=walking",
           color: "#f43f5e",
           icon: "🥩",
-          parkingInfo: "專用停車場（約12台，用餐免費用）",
-          tags: ["昭和排隊名店", "特選菲力牛排", "昭和紅綠燈", "自駕老字號"],
-          desc: "創業於 1953 年的沖繩美軍統治時期懷舊牛排館。特選菲力（Tenderloin Steak）軟嫩無比、鮮嫩多汁，搭配經典白醬濃湯與昭和紅綠燈候位燈號，極具年代儀式感。",
-          tips: "週一晚間 21:00 以後抵達人潮已過首輪高峰。抵達後請先至門口自動發券機抽號碼牌，依燈號叫號入座（候位約 15~25 分鐘）。",
-          reservationInfo: "不可預約。全店一律採現場抽號排隊制度，無官網或電話訂位。",
-          branchTip: "傑克牛排為那霸獨家歷史老字號，全沖繩【僅此一家，無任何分店】！避開 18:30~20:00 第一輪尖峰，21:00 後抵達排隊時間最短（約 15~25 分鐘）。",
+          parkingInfo: "周邊收費停車場 / 步行 3 分鐘即達 Nest Hotel",
+          tags: ["【可線上網路預約】", "厚切菲力牛排", "步行3分鐘", "免排隊首選", "2026新開幕高評價"],
+          desc: "2026年盛大開幕的頂級菲力牛排專門店！距 Nest Hotel 步行僅 3 分鐘。主打極致軟嫩且少油花負擔的招牌 Tenderloin 菲力牛排，鐵板滋滋作響香氣四溢。第一晚下機直奔免受排隊之苦，提前線上預訂即可從容入座享受高質感牛排！",
+          tips: "【營業與訂位指引】：營業時間 11:00-23:00（週四公休）。強烈建議透過 Hotpepper / Tabelog 或致電 098-971-4528 提早預約 21:00 席位；若想體驗 1953 年美軍時代復古情懷，亦可前往步行 5 分鐘的傑克牛排抽號！",
+          reservationInfo: "【可線上網路預約免排隊】：支援 Hotpepper / Tabelog 提早線上訂位，亦可致電 098-971-4528 保留席位。離 Nest Hotel 步行僅 3 分鐘！",
+          branchTip: "【那霸牛排評估對策】：相較於傑克牛排動輒排隊 30~50 分鐘且無法預約，テンダーロインステーキハウス離飯店更近、肉質極度軟嫩且支援線上預約，是第一晚抵達那霸最省時省力的美味首選！",
           backupOptions: [
             {
-              name: "Agu Pork Shabu-shabu Miruku Naha (みるく 阿古豬涮涮鍋)",
-              tag: "可訂位 / 步行6分",
-              desc: "Google My Maps 清單名店！主打極品阿古豬涮涮鍋，營業至 23:00。離 Nest Hotel 僅步行 6 分鐘，可提早電話/官網訂位！",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Agu+Pork+Shabu-shabu+Miruku+Naha&travelmode=driving"
+              name: "傑克牛排館 (Jack's Steak House)",
+              tag: "昭和1953名店 / 現場抽號",
+              desc: "1953 年創業的美軍懷舊牛排館，步行約 5 分鐘。特選菲力牛排配昭和紅綠燈候位燈號，21:00 後現場抽號排隊約 15~25 分鐘。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2163,127.6710&travelmode=walking"
             },
             {
-              name: "Buchi 久茂地店 (沖繩炭火燒肉居酒屋)",
-              tag: "清單名店 / 步行10分",
-              desc: "Google My Maps 清單名店！深夜微醺首選，提供厚切牛舌與炭火直烤和牛內臟，營業至深夜，氣氛放鬆。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Buchi+Kumoji+Naha&travelmode=driving"
+              name: "HANGERBAR CLAMP (美式街頭手工漢堡)",
+              tag: "那霸辻町深夜美式 / 步行8分",
+              desc: "位於那霸辻町的美式街頭風手工漢堡酒吧，厚切多汁牛肉漢堡排搭配特調醬汁與生啤酒，營業至深夜，氣氛放鬆。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=HANGERBAR+CLAMP+Naha&travelmode=walking"
+            },
+            {
+              name: "Agu Pork Shabu-shabu Miruku Naha (阿古豬涮涮鍋)",
+              tag: "可訂位 / 步行6分",
+              desc: "Google My Maps 清單名店！主打極品阿古豬涮涮鍋，營業至 23:00。離 Nest Hotel 僅步行 6 分鐘，可提早電話/官網訂位！",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Agu+Pork+Shabu-shabu+Miruku+Naha&travelmode=walking"
             }
           ]
         },
@@ -177,72 +183,83 @@ const OKINAWA_TRIP_DATA = {
       date: "2026/11/17",
       weekday: "週二",
       title: "中北部奔馳 ＆ 跑車海岸極致巡禮",
-      subtitle: "波上宮 • 道の駅許田 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • BLUE SEAL • PARCO CITY UTme!",
+      subtitle: "まるたま味噌早餐 • 波上宮 • 赤嶺取跑車 • .uki 世界冠軍咖啡 • 道の駅許田 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • BLUE SEAL • PARCO CITY UTme!",
       themeColor: "#059669",
       highlightNotice: {
         type: "info",
-        title: "自駕長途日：09:30取車、許田休息站、鯨鯊餵食秀、萬座毛夕陽、BLUE SEAL ＆ PARCO UTme!",
-        content: "租車時程自 11/17 09:30 至 11/18 19:30（整整 34 小時！）。10:55 於第一名「許田休息站」品嚐現炸三矢沙翁、11:40 馳騁古宇利藍大橋、14:45 直擊水族館 15:00 鯨鯊餵食秀、17:40 捕捉萬座毛夕陽。晚間接連造訪 A&W 與 BLUE SEAL 牧港旗艦雙名店，並於 PARCO CITY 預留 75 分鐘現場客製 UTme! 專屬紀念 T 恤！"
+        title: "自駕長途日：まるたま元氣早餐、赤嶺取跑車、.uki世界冠軍咖啡、鯨鯊餵食、萬座毛夕陽 ＆ PARCO UTme!",
+        content: "早晨 07:45 漫步享用「まるたま味噌飯屋」道地早餐，09:30 於赤嶺取敞篷跑車出發，沿國道58號朝聖 2024 WCTC 世界盃杯測師大賽冠軍名店「.uki coffee」極致手沖；隨後馳騁古宇利跨海大橋、14:55 直擊水族館 15:00 鯨鯊進食秀，傍晚萬座毛捕捉落日，夜間接連造訪 A&W、BLUE SEAL 牧港旗艦雙店並於 PARCO CITY 客製 UTme! 紀念 T 恤！"
       },
       transitSummary: {
         totalDrivingTime: "約 3.5 小時",
-        totalDistance: "約 170 km",
+        totalDistance: "約 175 km",
         mode: "自駕 (ETC 高速＋國道58)",
-        tips: "全日自駕核心！西原 IC ➔ 許田 IC 高速路段 (ETC ¥1,040)，北上名護、古宇利、美ら海與萬座毛"
+        tips: "全日自駕核心！國道58號北上經宜野灣 .uki ➔ 西原/宜野灣 IC 上高速直奔許田 IC (ETC ¥1,040)，串連名護、古宇利、美ら海與萬座毛"
       },
       waypoints: [
         {
           id: "d2-1",
-          name: "波上宮 (琉球八社之首) ＆ 波上海灘",
-          category: "景點",
+          name: "味噌めしや まるたま (Marutama 琉球傳統味噌早餐)",
+          category: "美食",
           period: "晨間出發",
-          image: "thumb-naminoue.jpg",
-          time: "08:00 ~ 08:40",
-          coords: [26.2207, 127.6713],
-          mapCode: "33 185 022*41",
-          phone: "098-868-3697",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2207,127.6713&travelmode=driving",
-          color: "#8b5cf6",
-          icon: "⛩️",
-          parkingInfo: "波上宮境內免費小型停車場 / 若狹海濱付費停車場",
-          tags: ["清晨參拜", "懸崖神社", "小書包御守", "波上海灘"],
-          desc: "早晨 08:00 人潮稀少寧靜，坐落於珊瑚礁峭壁上的琉球總鎮守。參拜祈求自駕行車平安，並求取超人氣小書包交通御守，順道漫步至海灘吹拂晨風。",
-          tips: "早晨空氣清新且參道無人，是拍攝紅色鳥居與無人懸崖的黃金時刻。"
+          image: "thumb-marutama.jpg",
+          time: "07:45 ~ 08:35",
+          bookingTime: "07:45 晨間抵達入座",
+          coords: [26.2104, 127.6778],
+          mapCode: "33 126 892*55",
+          phone: "098-831-7656",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2104,127.6778&travelmode=walking",
+          color: "#f59e0b",
+          icon: "🥣",
+          parkingInfo: "自 Nest Hotel 步行約 6 分鐘（泉崎2-4-3，無自駕停車壓力）",
+          tags: ["百年玉那霸味噌", "豚汁元氣早餐", "步行6分鐘", "道地琉球朝食", "週三公休/週二營業"],
+          desc: "使用首里創業 160 年歷史「玉那霸味噌」的傳統味噌料理名店！清晨 07:30 開始供應元氣朝食定食，大碗濃郁豚汁味噌湯、烤鮭魚、日本香米飯與特製味噌小菜，溫潤甘甜撫慰身心，是自駕出發前最頂級的元氣補給。",
+          tips: "【營業與預約提示】：早餐時段 07:30~10:30（午餐 11:30~15:00，週三公休）。早晨人潮多為在地老饕，07:45 抵達即可輕鬆入座。可電洽 098-831-7656 預先諮詢。",
+          reservationInfo: "早餐時段現場直接入座；午晚餐時段可電話預約（098-831-7656）。",
+          branchTip: "【那霸泉崎總店獨家】：僅此一家本店，坐落於那霸泉崎綠意靜巷，距離 Nest Hotel 步行僅 550 公尺，出發波上宮前順道漫步品嚐最順路！",
+          backupOptions: [
+            {
+              name: "TURNER COFFEE (若狹晨光精品手沖)",
+              tag: "波上宮旁 / 精品咖啡",
+              desc: "若想享受純咖啡輕食，波上宮步行 2 分鐘的精緻咖啡館提供優質冰滴咖啡與手沖拿鐵。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2198,127.6725&travelmode=walking"
+            }
+          ]
         },
         {
           id: "d2-2",
           transitFromPrev: {
             mode: "walk",
-            duration: "約 4 分",
-            distance: "約 280 m",
-            route: "沿若狹大通向南步行",
+            duration: "約 12 分",
+            distance: "約 1.1 km",
+            route: "沿泉崎向若狹波上宮方向散策",
             toll: "無料",
-            tips: "若狹靜巷步行外帶晨光手沖咖啡"
+            tips: "早餐後晨間散策漫步至波上宮（亦可搭計程車 4 分鐘約 ¥600）"
           },
-          name: "TURNER COFFEE (若狹晨光外帶咖啡)",
-          category: "美食",
+          name: "波上宮 (琉球八社之首) ＆ 波上海灘",
+          category: "景點",
           period: "晨間出發",
-          image: "thumb-turner.jpg",
-          time: "08:40 ~ 09:05",
-          coords: [26.2198, 127.6725],
-          mapCode: "33 185 053*44",
-          phone: "098-861-5511",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2198,127.6725&travelmode=driving",
-          color: "#f59e0b",
-          icon: "☕",
-          parkingInfo: "步行即達（自波上宮步行僅 2 分鐘）",
-          tags: ["精品手沖", "冰滴咖啡", "晨光提神"],
-          desc: "緊鄰波上宮步行 2 分鐘的精緻質感外帶咖啡館。出發長途自駕前，外帶一杯香醇冰滴咖啡或手沖拿鐵，喚醒整天精神！",
-          tips: "步行至此點咖啡外帶，隨後前往租車站點（計程車約 12 分鐘至赤嶺）。"
+          image: "thumb-naminoue.jpg",
+          time: "08:45 ~ 09:20",
+          coords: [26.2207, 127.6713],
+          mapCode: "33 185 022*41",
+          phone: "098-868-3697",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2207,127.6713&travelmode=walking",
+          color: "#8b5cf6",
+          icon: "⛩️",
+          parkingInfo: "波上宮境內免費小型停車場 / 若狹海濱付費停車場",
+          tags: ["清晨參拜", "懸崖神社", "小書包御守", "波上海灘"],
+          desc: "坐落於珊瑚礁峭壁上的琉球總鎮守。參拜祈求即將展開的 34 小時自駕行車平安，並求取超人氣小書包交通御守，順道漫步至海灘吹拂晨風。",
+          tips: "早晨空氣清新且參道人潮適中，是拍攝紅色鳥居與無人懸崖的黃金時刻。"
         },
         {
           id: "d2-3",
           transitFromPrev: {
-            mode: "monorail",
-            duration: "約 20 分",
+            mode: "taxi",
+            duration: "約 12 分",
             distance: "約 5.2 km",
-            route: "單軌旭橋站 → 赤嶺站步行 2 分",
-            toll: "單軌車票 ¥270",
+            route: "搭計程車直達赤嶺門市 (或自旭橋站搭單軌電車)",
+            toll: "車資約 ¥1,500 或 單軌 ¥270",
             tips: "準時 09:30 前往赤嶺取車，出示台灣駕照日文譯本與正本"
           },
           name: "Heat Sports Car Rental (赤嶺取車點檢)",
@@ -259,23 +276,59 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "租車站出發（赤嶺站旁步行 5 分鐘）",
           tags: ["跑車租賃", "租期至11/18 19:30", "外觀檢查", "ETC插卡", "敞篷操作"],
           desc: "沖繩專業特色跑車與敞篷車租賃。租車時程自 11/17 09:30 至 11/18 19:30（租滿 34 小時！）。辦理交車手續、檢查全車刮痕拍照錄影、確認油種（Regular紅色油槍）與敞篷開關操作，準備向北狂飆！",
-          tips: "務必出示：台灣駕照正本 + 監理所日文譯本 + 護照！09:55 準時出發上快速道路接沖繩高速公路。"
+          tips: "務必出示：台灣駕照正本 + 監理所日文譯本 + 護照！09:55 準時出發，沿國道 58 號北上前往宜野灣 .uki 冠軍咖啡。"
         },
         {
           id: "d2-4",
           transitFromPrev: {
             mode: "car",
-            duration: "約 55 分",
-            distance: "約 68 km",
-            route: "沖繩自動車道：西原 IC → 許田 IC",
+            duration: "約 25 分",
+            distance: "約 16 km",
+            route: "沿國道 58 號北上經浦添至宜野灣市大山",
+            toll: "無料",
+            tips: "開敞篷跑車沿國道 58 號北上，直達世界級咖啡冠軍名店"
+          },
+          name: ".uki coffee (2024 WCTC世界盃杯測冠軍精品咖啡)",
+          category: "美食",
+          period: "晨光咖啡",
+          image: "thumb-uki.jpg",
+          time: "10:20 ~ 10:50",
+          coords: [26.2764, 127.7478],
+          mapCode: "33 374 745*55",
+          phone: "098-943-0974",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2764,127.7478&travelmode=driving",
+          color: "#059669",
+          icon: "☕",
+          parkingInfo: "店前專用免費停車位 (約 4 台，自駕便利)",
+          tags: ["【務必加入行程】", "2024世界盃冠軍", "營業07:00-17:00", "極簡文青", "國道58號順路"],
+          desc: "由 2024 年世界盃杯測大賽 (WCTC) 日本冠軍兼世界第 4 名新田大悟 (Hiro Nitta) 創立的極品咖啡專門店！坐落於宜野灣大山國道 58 號旁，採光通透的極簡空間瀰漫著迷人焙香。早晨 07:00 即開門營業，提供層次極其澄澈的頂級手沖單品咖啡與特調拿鐵，是跑車北上自駕途中的靈魂中繼站！",
+          tips: "【營業時間與停車須知】：營業時間為 07:00 ~ 17:00（不定休，公休日可見官方 IG: @uki.coffee）。門口備有 4 個專屬免費停車位。點一杯冠軍手沖或外帶冰美式，啟程接續沖繩高速公路直奔名護！",
+          reservationInfo: "無須預約，現場點單手沖製作。內用設有高質感原木吧台與採光座位，亦支援快速外帶。",
+          branchTip: "【宜野灣大山旗艦總店】：新田冠軍親自主理之代表作，店內亦有陳列限量烘焙咖啡豆與掛耳包，是極具質感的伴手禮首選！",
+          backupOptions: [
+            {
+              name: "Bloom Coffee Okinawa Ginowan",
+              tag: "宜野灣咖啡備案 / 車程3分",
+              desc: "位於宜野灣的質感人氣咖啡館，提供精湛義式手沖、海景露台氛圍與招牌厚切法式吐司，環境悠閒。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Bloom+Coffee+Okinawa+Ginowan&travelmode=driving"
+            }
+          ]
+        },
+        {
+          id: "d2-5",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 40 分",
+            distance: "約 48 km",
+            route: "宜野灣 IC / 西原 IC → 沖繩自動車道 → 許田 IC",
             toll: "ETC ¥1,040",
-            tips: "自駕正式啟程！走高速公路直奔名護，進休息站買三矢沙翁"
+            tips: "喝完冠軍咖啡上高速公路直奔名護，進許田休息站買三矢沙翁"
           },
           name: "道の駅 許田 (名護海景休息站 ＆ 三矢本舖沙翁)",
           category: "美食",
           period: "古宇利跳島",
           image: "thumb-kyoda.jpg",
-          time: "10:55 ~ 11:20",
+          time: "11:35 ~ 12:00",
           coords: [26.5414, 127.9682],
           mapCode: "206 476 706*66",
           phone: "098-054-0880",
@@ -298,11 +351,11 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-5",
+          id: "d2-6",
           transitFromPrev: {
             mode: "car",
-            duration: "約 35 分",
-            distance: "約 25 km",
+            duration: "約 15 分",
+            distance: "約 13 km",
             route: "國道 58 號 → 屋我地島 → 縣道 110 號",
             toll: "無料",
             tips: "兩側碧藍海天一線，過橋前南端有觀景展望台"
@@ -311,7 +364,7 @@ const OKINAWA_TRIP_DATA = {
           category: "景點",
           period: "古宇利跳島",
           image: "thumb-kouri.jpg",
-          time: "11:40 ~ 11:55",
+          time: "12:15 ~ 12:30",
           coords: [26.6967, 128.0242],
           mapCode: "485 693 485*03",
           phone: "098-056-1242",
@@ -324,10 +377,10 @@ const OKINAWA_TRIP_DATA = {
           tips: "過橋前可在南詰停車場短暫停車，以跨海長橋與跑車為背景拍下經典紀念照。"
         },
         {
-          id: "d2-6",
+          id: "d2-7",
           transitFromPrev: {
             mode: "car",
-            duration: "約 3 分",
+            duration: "約 2 分",
             distance: "約 1.2 km",
             route: "古宇利大橋北端上山坡",
             toll: "無料",
@@ -337,8 +390,8 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "古宇利跳島",
           image: "thumb-kourishrimp.jpg",
-          time: "11:55 ~ 12:35",
-          bookingTime: "現場排隊 (11:55抵達搶頭香)",
+          time: "12:30 ~ 13:10",
+          bookingTime: "現場排隊 (12:30抵達搶先點餐)",
           coords: [26.7022, 128.0233],
           mapCode: "485 692 126*55",
           phone: "098-056-1242",
@@ -350,7 +403,7 @@ const OKINAWA_TRIP_DATA = {
           desc: "過橋後山坡上的名物蝦蝦飯。飽滿 Q 彈大蝦裹上濃郁大蒜奶油與新鮮檸檬汁，搭配白飯與薯角，在頂樓露台吹海風俯瞰古宇利大橋用餐。",
           tips: "支援觸控螢幕自助點餐機（可刷卡/現金）。份量剛好不會過飽，為下一站阿古豬料理保留完美食慾！",
           reservationInfo: "不可預約。全店採現場觸控螢幕自助點餐機，取得號碼單後於露台等候叫號取餐。",
-          branchTip: "全沖繩【僅此古宇利島一家總店，無其他分店】！排隊避雷指南：11:55 前抵達點餐最順暢，能完全避開 12:30~13:30 大排長龍的人潮。",
+          branchTip: "全沖繩【僅此古宇利島一家總店，無其他分店】！12:30 抵達點餐最順暢，能避開最壅塞人潮。",
           backupOptions: [
             {
               name: "5910 sa-ta-cafe (古宇利沙翁咖啡)",
@@ -367,10 +420,10 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-7",
+          id: "d2-8",
           transitFromPrev: {
             mode: "car",
-            duration: "約 6 分",
+            duration: "約 5 分",
             distance: "約 2.8 km",
             route: "古宇利環島公路至北側 Tinu 浜",
             toll: "停車 ¥100~300",
@@ -380,7 +433,7 @@ const OKINAWA_TRIP_DATA = {
           category: "景點",
           period: "古宇利跳島",
           image: "thumb-heartrock.jpg",
-          time: "12:40 ~ 13:15",
+          time: "13:15 ~ 13:45",
           coords: [26.7126, 128.0287],
           mapCode: "485 751 179*22",
           phone: "098-056-2256",
@@ -390,13 +443,13 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "心形岩入口處民營停車場 (計次約 ¥100~¥300)",
           tags: ["嵐廣告聖地", "天然心形礁石", "Tinu海灘", "戀愛守護寺社"],
           desc: "位於古宇利島北端 Tinu Beach 的天然雙心奇岩，日本天團「嵐」在此拍攝 JAL 廣告而爆紅。沿著小徑走向海灘，並造訪恋守寺社打卡祈求幸福美滿。",
-          tips: "前往沙灘的小石坡路稍微傾斜，建議換穿好走的平底鞋或涼鞋；停留約 35 分鐘後驅車啟程。"
+          tips: "前往沙灘的小石坡路稍微傾斜，建議換穿好走的平底鞋或涼鞋；停留約 30 分鐘後驅車啟程。"
         },
         {
-          id: "d2-8",
+          id: "d2-9",
           transitFromPrev: {
             mode: "car",
-            duration: "約 25 分",
+            duration: "約 20 分",
             distance: "約 17 km",
             route: "縣道 72 號 → 名護山間聚落",
             toll: "無料",
@@ -406,8 +459,8 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "美麗海水族館",
           image: "thumb-ufuya.jpg",
-          time: "13:30 ~ 14:20",
-          bookingTime: "現場抽號 (13:35已過用餐高峰)",
+          time: "14:05 ~ 14:45",
+          bookingTime: "現場抽號 (14:05已過用餐高峰)",
           coords: [26.6234, 127.9715],
           mapCode: "206 745 056*66",
           phone: "098-053-0280",
@@ -417,30 +470,30 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "專用超大型免費停車場 (含電動高爾夫球接駁車)",
           tags: ["阿古豬肉麵", "百年古民家", "森林流水庭園", "人氣泡芙"],
           desc: "名護山林間由百年安里家古民宅修復而成的名店。伴著庭院潺潺流水聲，品嚐極致鮮美的阿古豬（Agu）沖繩蕎麥麵與特製泡芙，意境悠遠迷人。",
-          tips: "從古宇利開車約 25 分鐘。平日下午 13:30 已過最巔峰午餐人潮，入座較快。午餐供應至 15:00。",
+          tips: "從古宇利開車約 20 分鐘。平日下午 14:00 已過最巔峰午餐人潮，入座極快。午餐供應至 15:00。",
           reservationInfo: "午餐時段（11:00~16:00）僅限現場門口抽號碼牌候位（午餐不開放預約）；晚餐時段（18:00起）可提早透過官方網站 TableCheck 系統線上訂位。",
-          branchTip: "大家全沖繩【僅此名護山林總店，無任何市區分店】！全店座位超過 200 席，13:35 抵達人潮已疏解，等候時間通常在 10~15 分鐘以內。",
+          branchTip: "大家全沖繩【僅此名護山林總店，無任何市區分店】！全店座位超過 200 席，14:05 抵達人潮已疏解，等候時間極短。",
           backupOptions: [
+            {
+              name: "CAMEL SANDWICH & SMOOTHIE (本部町超狂手撕豬三明治)",
+              tag: "水族館旁 / 營業07:00-15:00",
+              desc: "距美麗海水族館僅 8 分鐘車程！美軍風格爆汁煙燻手撕豬肉大三明治與新鮮水果昔，份量十足且出餐快，外帶前往水族館或海邊享用極佳。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=CAMEL+SANDWICH+%26+SMOOTHIE+Motobu&travelmode=driving"
+            },
             {
               name: "幸ちゃんそば (Satchan Soba)",
               tag: "清單名店 / 開車12分",
               desc: "Google My Maps 清單名店！名護在地排隊老店，特製伊平屋島水雲沖繩麵與軟嫩軟骨肉，湯頭甘醇清爽。",
               googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Satchan+Soba+Nago&travelmode=driving"
-            },
-            {
-              name: "元祖海葡萄總店 (萬座毛旁)",
-              tag: "清單名店 / 順路往南",
-              desc: "Google My Maps 清單名店！若在名護節省時間直接往南，可在萬座毛旁品嚐元祖海葡萄阿古豬蓋飯。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ganso+Umibudo+Honten&travelmode=driving"
             }
           ]
         },
         {
-          id: "d2-9",
+          id: "d2-10",
           transitFromPrev: {
             mode: "car",
-            duration: "約 28 分",
-            distance: "約 18 km",
+            duration: "約 10 分",
+            distance: "約 8 km",
             route: "國道 449 號 → 海洋博公園 P7 立體停車場",
             toll: "公園停車無料",
             tips: "導航 P7 北停車場，離水族館入口最近，直奔 15:00 鯨鯊餵食秀"
@@ -449,7 +502,7 @@ const OKINAWA_TRIP_DATA = {
           category: "景點",
           period: "美麗海水族館",
           image: "thumb-churaumi.jpg",
-          time: "14:45 ~ 16:15",
+          time: "14:55 ~ 16:30",
           coords: [26.6943, 127.8779],
           mapCode: "553 075 797*77",
           phone: "098-048-3748",
@@ -458,14 +511,14 @@ const OKINAWA_TRIP_DATA = {
           icon: "🐋",
           parkingInfo: "導航至「P7北停車場 (立體停車場)」(離水族館最近且遮陽防曬)",
           tags: ["15:00鯨鯊餵食", "黑潮之海", "鬼蝠魟", "海洋博公園"],
-          desc: "從大家驅車 25 分鐘抵達。世界級水族館，正好完美趕上 15:00 最震撼的「鯨鯊垂直站立進食秀」！看長達 8 米的巨型鯨鯊仰頭吸入海水，極具魄力。",
+          desc: "從大家驅車抵達。世界級水族館，正好完美趕上 15:00 最震撼的「鯨鯊垂直站立進食秀」！看長達 8 米的巨型鯨鯊仰頭吸入海水，極具魄力。",
           tips: "入館直奔「黑潮之海」大水槽卡位看 15:00 餵食解說，隨後漫步深海區與紀念品專賣店。"
         },
         {
-          id: "d2-10",
+          id: "d2-11",
           transitFromPrev: {
             mode: "car",
-            duration: "約 8 分",
+            duration: "約 5 分",
             distance: "約 3.5 km",
             route: "海洋博公園往本部港方向 Hanasaki Marche",
             toll: "園區免費停車",
@@ -475,7 +528,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "西岸夕陽",
           image: "thumb-starbucks.jpg",
-          time: "16:20 ~ 16:50",
+          time: "16:35 ~ 17:05",
           coords: [26.6853, 127.8847],
           mapCode: "553 046 422*00",
           phone: "098-043-9865",
@@ -484,14 +537,14 @@ const OKINAWA_TRIP_DATA = {
           icon: "☕",
           parkingInfo: "Ala Mahaina / Hanasaki Marche 商場大型免費停車場",
           tags: ["沖繩最美星巴克", "海景露台", "木質琉球建材", "瀨底島遠眺"],
-          desc: "距離水族館僅 3 分鐘車程！座落於 Hanasaki Marche 複合園區，採用沖繩在地琉球石灰岩與杉木建造。戶外露台遠眺瀨底島海峽，喝杯咖啡放鬆小憩。",
+          desc: "距離水族館僅 5 分鐘車程！座落於 Hanasaki Marche 複合園區，採用沖繩在地琉球石灰岩與杉木建造。戶外露台遠眺瀨底島海峽，喝杯咖啡放鬆小憩。",
           tips: "點杯沖繩限定飲品或抹茶星冰樂，在二樓戶外木平台吹風打卡，身心徹底充飽電。"
         },
         {
-          id: "d2-11",
+          id: "d2-12",
           transitFromPrev: {
             mode: "car",
-            duration: "約 60 分",
+            duration: "約 45 分",
             distance: "約 46 km",
             route: "沿國道 58 號南下恩納村海岬",
             toll: "門票 ¥100 / 停車無料",
@@ -501,7 +554,7 @@ const OKINAWA_TRIP_DATA = {
           category: "景點",
           period: "西岸夕陽",
           image: "thumb-manzamo.jpg",
-          time: "17:40 ~ 18:25",
+          time: "17:50 ~ 18:30",
           coords: [26.5049, 127.8502],
           mapCode: "206 312 038*55",
           phone: "098-966-8086",
@@ -510,11 +563,11 @@ const OKINAWA_TRIP_DATA = {
           icon: "🌅",
           parkingInfo: "萬座毛遊客中心專用大型免費停車場 (約 300 台)",
           tags: ["落日象鼻岩", "金色黃昏", "琉球石灰岩", "海蝕懸崖"],
-          desc: "從本部南下車程約 50 分鐘，抵達時間正好是 17:40 沖繩日落黃金時刻！夕陽餘暉灑在壯麗的象鼻海蝕洞與碧海之上，金色霞光令人嘆為觀止。",
+          desc: "從本部南下車程約 45 分鐘，抵達時間正好是沖繩日落黃金時刻！夕陽餘暉灑在壯麗的象鼻海蝕洞與碧海之上，金色霞光令人嘆為觀止。",
           tips: "參觀步道門票每人 ¥100。日落後可在全新遊客中心購買特色伴手禮或上洗手間，準備返程往南。"
         },
         {
-          id: "d2-12",
+          id: "d2-13",
           transitFromPrev: {
             mode: "car",
             duration: "約 45 分",
@@ -527,8 +580,8 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "晚間返程",
           image: "thumb-aw.jpg",
-          time: "19:10 ~ 19:45",
-          bookingTime: "現場點餐 (19:10抵達免排隊)",
+          time: "19:15 ~ 19:50",
+          bookingTime: "現場點餐 (19:15抵達免排隊)",
           coords: [26.2625, 127.7144],
           mapCode: "33 342 546*22",
           phone: "098-876-6081",
@@ -537,11 +590,17 @@ const OKINAWA_TRIP_DATA = {
           icon: "🍔",
           parkingInfo: "店前專用 Drive-in 美式停車場 (約 50 台，免費)",
           tags: ["50年代復古", "麥根沙士", "莫札瑞拉漢堡", "霓虹燈草坪"],
-          desc: "從恩納村走高速公路南下西原IC至牧港，約 45 分鐘。沖繩歷史最悠久的 A&W 旗艦店，夜晚巨大的霓虹招牌、美式得來速雨棚與草坪小噴泉宛如置身 60 年代加州。",
+          desc: "從恩納村南下西原IC至牧港。沖繩歷史最悠久的 A&W 旗艦店，夜晚巨大的霓虹招牌、美式得來速雨棚與草坪小噴泉宛如置身 60 年代加州。",
           tips: "必點 The A&W 漢堡配炸洋蔥圈、金黃捲捲薯條（Curly Fries），以及裝在冰鎮厚玻璃杯中的麥根沙士（Root Beer，內用可免費續杯）！",
           reservationInfo: "速食餐廳無預約制度。採店內櫃台排隊或戶外美式 Drive-in 車道點餐。",
-          branchTip: "【首選牧港店，避開國際通店】：國際通分店室內狹小、排隊長達 30 人以上且無停車位；牧港店是全沖繩唯一擁有『50年代復古霓虹燈草坪＋得來速大雨棚』的旗艦總店，座位極多且附設 50 台免費車位，出餐超快完全不塞車！",
+          branchTip: "【首選牧港店，避開國際通店】：國際通分店室內狹小排隊長；牧港店是全沖繩唯一擁有『50年代復古霓虹燈草坪＋得來速大雨棚』的旗艦總店，座位極多且附設 50 台免費車位！",
           backupOptions: [
+            {
+              name: "George Restaurant (喬治美式餐廳 辻町總店)",
+              tag: "昭和A-Sign老字號 / 營業至22:00",
+              desc: "1954年創業的美軍A-Sign名店！手工脆皮墨西哥塔可（Tacos）與薄脆起司披薩極具特色。週一公休，週二晚間正常營業（11:30-22:00）。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=George+Restaurant+Naha&travelmode=driving"
+            },
             {
               name: "暖暮拉麵 牧港店",
               tag: "國道58號旁 / 開車2分",
@@ -551,7 +610,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-13",
+          id: "d2-14",
           transitFromPrev: {
             mode: "car",
             duration: "約 2 分",
@@ -564,7 +623,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "晚間返程",
           image: "thumb-blueseal.jpg",
-          time: "19:50 ~ 20:25",
+          time: "19:55 ~ 20:30",
           bookingTime: "現場排隊 (多櫃台流動極快)",
           coords: [26.2673, 127.7214],
           mapCode: "33 342 635*44",
@@ -588,7 +647,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-14",
+          id: "d2-15",
           transitFromPrev: {
             mode: "car",
             duration: "約 10 分",
@@ -601,7 +660,7 @@ const OKINAWA_TRIP_DATA = {
           category: "購物",
           period: "晚間返程",
           image: "thumb-parcocity.jpg",
-          time: "20:35 ~ 21:50",
+          time: "20:40 ~ 21:50",
           coords: [26.2618, 127.6975],
           mapCode: "33 339 054*88",
           phone: "098-871-1120",
@@ -609,15 +668,15 @@ const OKINAWA_TRIP_DATA = {
           color: "#dc2626",
           icon: "🛍️",
           parkingInfo: "PARCO CITY 超大型室內立體免費停車場 (約 4000 台)",
-          tags: ["預留75分鐘", "UTme現場客製T恤", "Orion啤酒聯名", "全沖繩最大旗艦", "22點打烊前免稅"],
-          desc: "自 BLUE SEAL 沿臨海道路開車僅 8 分鐘即達西海岸 PARCO CITY。此處擁有全沖繩唯二且設備最齊全的【UTme! 客製化工坊】，足足預留 1 小時 15 分鐘，讓您親自設計印製獨一無二的沖繩專屬紀念 T 恤！",
+          tags: ["預留70分鐘", "UTme現場客製T恤", "Orion啤酒聯名", "全沖繩最大旗艦", "22點打烊前免稅"],
+          desc: "自 BLUE SEAL 沿臨海道路開車僅 8 分鐘即達西海岸 PARCO CITY。此處擁有全沖繩唯二且設備最齊全的【UTme! 客製化工坊】，足足預留 1 小時 10 分鐘，讓您親自設計印製獨一無二的沖繩專屬紀念 T 恤！",
           tips: "【UTme! 客製化 T 恤極速攻略】：① 一進店直奔 2F UTme! 機台平板設計排版（因現場印製約需 20 分鐘，且店方通常於 21:15 截止當日收單！）；② 圖庫內建沖繩限定素材：風獅爺、Orion 啤酒授權標誌、沖繩苦瓜等，可自由加入字樣；③ 送印拿號碼牌後，利用空檔採買沖繩限定 UT 與免稅商品；④ 21:40 取件並出示護照統一辦理免稅結帳！"
         },
         {
-          id: "d2-15",
+          id: "d2-16",
           transitFromPrev: {
             mode: "car",
-            duration: "約 18 分",
+            duration: "約 15 分",
             distance: "約 8.5 km",
             route: "經西海岸道路南下進入那霸市區",
             toll: "無料",
@@ -1019,6 +1078,12 @@ const OKINAWA_TRIP_DATA = {
               tag: "清單名店 / 步行3分",
               desc: "Google My Maps 清單名店！就在琉球的牛隔壁街角，高人氣沖繩炭火直烤燒肉居酒屋，氣氛熱鬧，若沒訂到琉球的牛可無縫轉場。",
               googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Buchi+Kumoji+Naha&travelmode=driving"
+            },
+            {
+              name: "琉球新麵 通堂 (小祿本店 / 儀保店)",
+              tag: "深夜拉麵傳奇 / 男人麵・女人麵",
+              desc: "沖繩最具代表性的拉麵傳奇！招牌「男人麵」（焦香濃郁黑麻油豚骨湯頭）與「女人麵」（甘醇金黃鹽味久米島土雞高湯），佐特製辣豆芽無限享用。營業至深夜，宵夜首選！",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ryukyu+Shinmen+Tondo+Oroku&travelmode=driving"
             }
           ]
         },

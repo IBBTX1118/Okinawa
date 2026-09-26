@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.0"></script>
+  <script src="itinerary-data.js?v=20261117-v3.1"></script>
 
   <script>
     tailwind.config = {
@@ -289,51 +289,58 @@
             <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scroll-smooth" style="scrollbar-width: none;">
               
               <!-- Sign 1: 古宇利島 -->
-              <button onclick="jumpToSpot(1, 'd2-5')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(1, 'd2-6')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🌉</span>
                 <span>古宇利島</span>
                 <span class="text-[10px] text-amber-300 font-mono">D2</span>
               </button>
 
               <!-- Sign 2: 美ら海水族館 -->
-              <button onclick="jumpToSpot(1, 'd2-9')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(1, 'd2-10')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🐟</span>
                 <span>美ら海水族館</span>
                 <span class="text-[10px] text-sky-300 font-mono">D2</span>
               </button>
 
-              <!-- Sign 3: 波上宮海灘 -->
-              <button onclick="jumpToSpot(1, 'd2-1')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-100 rounded-xl text-xs font-bold border border-rose-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <!-- Sign 3: .uki 冠軍咖啡 -->
+              <button onclick="jumpToSpot(1, 'd2-4')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-100 rounded-xl text-xs font-bold border border-emerald-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+                <span>☕</span>
+                <span>.uki 冠軍咖啡</span>
+                <span class="text-[10px] text-emerald-300 font-mono">D2</span>
+              </button>
+
+              <!-- Sign 4: 波上宮海灘 -->
+              <button onclick="jumpToSpot(1, 'd2-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-100 rounded-xl text-xs font-bold border border-rose-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>⛩️</span>
                 <span>波上宮海灘</span>
                 <span class="text-[10px] text-rose-300 font-mono">D2</span>
               </button>
 
-              <!-- Sign 4: 首里城公園 -->
+              <!-- Sign 5: 首里城公園 -->
               <button onclick="jumpToSpot(2, 'd3-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-teal-950/80 hover:bg-teal-900 text-teal-100 rounded-xl text-xs font-bold border border-teal-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🏯</span>
                 <span>首里城公園</span>
                 <span class="text-[10px] text-teal-300 font-mono">D3</span>
               </button>
 
-              <!-- Sign 5: ASHIBINAA -->
+              <!-- Sign 6: ASHIBINAA -->
               <button onclick="jumpToSpot(0, 'd1-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🛍️</span>
                 <span>奧特萊斯</span>
                 <span class="text-[10px] text-amber-300 font-mono">D1</span>
               </button>
 
-              <!-- Sign 6: 美國村 -->
+              <!-- Sign 7: 美國村 -->
               <button onclick="jumpToSpot(2, 'd3-7')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-indigo-950/80 hover:bg-indigo-900 text-indigo-100 rounded-xl text-xs font-bold border border-indigo-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🎡</span>
                 <span>美國村夜景</span>
                 <span class="text-[10px] text-indigo-300 font-mono">D3</span>
               </button>
 
-              <!-- Sign 7: 傑克牛排 -->
+              <!-- Sign 8: 菲力牛排 -->
               <button onclick="jumpToSpot(0, 'd1-4')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-red-950/80 hover:bg-red-900 text-red-100 rounded-xl text-xs font-bold border border-red-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🥩</span>
-                <span>傑克牛排</span>
+                <span>菲力牛排</span>
                 <span class="text-[10px] text-red-300 font-mono">D1</span>
               </button>
 
