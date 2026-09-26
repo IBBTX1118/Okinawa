@@ -439,8 +439,20 @@
               <span>⏱️ 行程時間軸</span>
             </h3>
             <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 shrink-0" id="timelineDayLabel">Day 1</span>
+            <span class="text-xs text-slate-400 font-mono shrink-0 hidden sm:inline" id="timelineDateLabel">2026/11/16</span>
           </div>
-          <span class="text-xs text-slate-500 font-mono shrink-0" id="timelineDateLabel">2026/11/16</span>
+
+          <!-- Card Folding Quick Controls -->
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="toggleAllCards(false)" id="btnCollapseAll" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 text-xs font-bold rounded-xl transition border border-slate-200/80 flex items-center gap-1 shadow-2xs cursor-pointer" title="全部收合為精簡清單">
+              <span>🗂️</span>
+              <span>全部收合</span>
+            </button>
+            <button onclick="toggleAllCards(true)" id="btnExpandAll" class="px-2.5 py-1 bg-sky-50 hover:bg-sky-100 active:scale-95 text-sky-800 text-xs font-bold rounded-xl transition border border-sky-200/80 flex items-center gap-1 shadow-2xs cursor-pointer" title="全部展開完整攻略">
+              <span>📖</span>
+              <span>全部展開</span>
+            </button>
+          </div>
         </div>
 
         <!-- Timeline Cards Container -->
@@ -938,6 +950,10 @@
     }
     let currentChecklistTab = 'essentials';
 
+    // Card Folding & Disclosure State
+    let collapsedCardIds = new Set();
+    let isTimelineCollapsedMode = false;
+
     /* =========================================================================
        1. INITIALIZATION ON LOAD
        ========================================================================= */
@@ -1296,6 +1312,9 @@
         renderActiveDay();
       }
       
+      // Expand card if it was collapsed
+      expandCard(spotId);
+
       setTimeout(() => {
         const card = document.getElementById(`timeline-card-${spotId}`);
         if (card) {
@@ -1545,6 +1564,11 @@
       let lastPeriod = null;
       const cards = [];
 
+      // If global collapsed mode is active, collapse all cards in this day
+      if (isTimelineCollapsedMode) {
+        day.waypoints.forEach(wp => collapsedCardIds.add(wp.id));
+      }
+
       day.waypoints.forEach((wp, idx) => {
         const customNoteKey = `user_note_${wp.id}`;
         const userNote = localStorage.getItem(customNoteKey) || '';
@@ -1554,6 +1578,48 @@
         const progressBadge = showProgress
           ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-mono">第 ${idx + 1}／${day.waypoints.length} 站</span>`
           : '';
+        const isCollapsed = collapsedCardIds.has(wp.id);
+
+        // Toggle button on card header
+        const toggleBtnHtml = `
+          <button type="button" id="card-toggle-${wp.id}" onclick="toggleCard('${wp.id}')" aria-expanded="${!isCollapsed}" aria-label="${isCollapsed ? '展開完整詳情' : '收合卡片'}" class="px-2 sm:px-2.5 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 text-xs font-bold transition flex items-center gap-1 shadow-2xs border border-slate-200/80 cursor-pointer shrink-0" title="${isCollapsed ? '展開完整攻略' : '收合卡片'}">
+            <span class="text-[11px] font-medium text-slate-600">${isCollapsed ? '展開' : '收合'}</span>
+            <span class="text-[10px] transform ${isCollapsed ? 'rotate-180' : ''} transition-transform duration-200">▲</span>
+          </button>
+        `;
+
+        // Compact quick action strip shown when card is collapsed
+        const summaryStripHtml = `
+          <div id="card-summary-${wp.id}" class="${isCollapsed ? '' : 'hidden'} pt-1.5 space-y-2 border-t border-slate-100 mt-1.5">
+            <p class="text-xs text-slate-600 line-clamp-1 leading-relaxed cursor-pointer" onclick="toggleCard('${wp.id}')" title="點擊展開完整攻略">${wp.desc || wp.tips || ''}</p>
+            <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+              <a href="${wp.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-2xs active:scale-95 transition">
+                <span>🗺️</span>
+                <span>導航</span>
+              </a>
+              <a href="${parkingSearchUrl}" target="_blank" rel="noopener noreferrer" class="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-2xs active:scale-95 transition">
+                <span>🅿️</span>
+                <span>停車</span>
+              </a>
+              ${wp.mapCode ? `
+                <button type="button" onclick="copyToClipboard('${wp.mapCode}', 'MapCode: ${wp.mapCode} 已複製！')" class="px-2.5 py-1 bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200/80 rounded-lg text-xs font-mono font-bold flex items-center gap-1 active:scale-95 transition">
+                  <span>🚗</span>
+                  <span>MC: ${wp.mapCode}</span>
+                </button>
+              ` : ''}
+              ${wp.phone ? `
+                <a href="tel:${wp.phone}" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-mono transition flex items-center gap-1">
+                  <span>📞</span>
+                  <span>電話</span>
+                </a>
+              ` : ''}
+              <button type="button" onclick="toggleCard('${wp.id}')" class="ml-auto text-[11px] text-sky-600 hover:text-sky-800 font-semibold px-2 py-1 rounded-md hover:bg-sky-50 transition flex items-center gap-0.5">
+                <span>展開詳情</span>
+                <span>▾</span>
+              </button>
+            </div>
+          </div>
+        `;
 
         // 站點間交通連接膠囊 (Between-Cards Transit Pill)
         if (idx > 0 && wp.transitFromPrev) {
@@ -1612,19 +1678,7 @@
               </div>
 
               <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-3.5 border border-slate-200/90 shadow-xs hover:shadow-md transition space-y-2">
-                ${wp.image ? `
-                  <div class="relative h-36 sm:h-44 w-full rounded-xl overflow-hidden shadow-2xs group/img mb-1.5">
-                    <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-2 left-3 right-3 flex items-center justify-between text-white">
-                      <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">${wp.name.split(' ')[0]}</span>
-                      <span class="text-[10px] bg-black/50 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
-                        ${wp.category === '交通' ? '交通門戶' : '舒適住宿'}
-                      </span>
-                    </div>
-                  </div>
-                ` : ''}
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between gap-2">
                   <div class="flex items-center space-x-2 flex-wrap gap-y-1">
                     <span class="text-[11px] font-bold px-2 py-0.5 rounded-md text-white" style="background-color: ${wp.color || day.themeColor}">
                       ${wp.icon || '📍'} ${wp.category}
@@ -1634,36 +1688,59 @@
                       🏷️ ${wp.category === '交通' ? '取車/還車' : '入住'}: ${userBooking}
                     </span>
                   </div>
-                  <span class="font-mono text-xs font-bold text-slate-500">${wp.time}</span>
+                  <div class="flex items-center gap-1.5 shrink-0">
+                    <span class="font-mono text-xs font-bold text-slate-500">${wp.time}</span>
+                    ${toggleBtnHtml}
+                  </div>
                 </div>
 
                 <div>
-                  <h4 class="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-1.5">
+                  <h4 class="font-bold text-slate-900 text-sm sm:text-base flex items-center gap-1.5 cursor-pointer" onclick="toggleCard('${wp.id}')">
                     <span>${idx + 1}. ${wp.name}</span>
                   </h4>
+                </div>
+
+                <!-- Collapsed Quick Summary Strip -->
+                ${summaryStripHtml}
+
+                <!-- Collapsible Details Container -->
+                <div id="card-details-${wp.id}" class="${isCollapsed ? 'hidden' : ''} space-y-2 pt-1">
+                  ${wp.image ? `
+                    <div class="relative h-36 sm:h-44 w-full rounded-xl overflow-hidden shadow-2xs group/img mb-1.5">
+                      <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                      <div class="absolute bottom-2 left-3 right-3 flex items-center justify-between text-white">
+                        <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">${wp.name.split(' ')[0]}</span>
+                        <span class="text-[10px] bg-black/50 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
+                          ${wp.category === '交通' ? '交通門戶' : '舒適住宿'}
+                        </span>
+                      </div>
+                    </div>
+                  ` : ''}
+
                   <p class="text-xs text-slate-600 mt-0.5 leading-relaxed">${wp.desc || ''}</p>
-                </div>
 
-                ${wp.tips ? `
-                  <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-700 flex items-start gap-1.5">
-                    <span class="text-slate-400 shrink-0 text-sm" aria-hidden="true">💡</span>
-                    <p class="leading-relaxed"><strong>小叮嚀：</strong>${wp.tips}</p>
+                  ${wp.tips ? `
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-xs text-slate-700 flex items-start gap-1.5">
+                      <span class="text-slate-400 shrink-0 text-sm" aria-hidden="true">💡</span>
+                      <p class="leading-relaxed"><strong>小叮嚀：</strong>${wp.tips}</p>
+                    </div>
+                  ` : ''}
+
+                  <!-- Action Buttons -->
+                  ${renderActionButtons(wp)}
+
+                  <!-- Custom Booking / Schedule Input -->
+                  <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
+                    <label for="booking-input-${wp.id}" class="text-indigo-600 font-bold shrink-0">⏰ 時間自訂：</label>
+                    <input type="text" id="booking-input-${wp.id}" value="${userBooking}" placeholder="點擊備註預約/取車時間（如 09:30）..." onchange="saveStopBooking('${wp.id}', this.value)" class="flex-grow bg-indigo-50/30 hover:bg-white focus:bg-white border border-indigo-200 focus:border-indigo-400 rounded-lg px-2.5 py-1 text-slate-800 font-medium transition">
                   </div>
-                ` : ''}
 
-                <!-- Action Buttons -->
-                ${renderActionButtons(wp)}
-
-                <!-- Custom Booking / Schedule Input -->
-                <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
-                  <label for="booking-input-${wp.id}" class="text-indigo-600 font-bold shrink-0">⏰ 時間自訂：</label>
-                  <input type="text" id="booking-input-${wp.id}" value="${userBooking}" placeholder="點擊備註預約/取車時間（如 09:30）..." onchange="saveStopBooking('${wp.id}', this.value)" class="flex-grow bg-indigo-50/30 hover:bg-white focus:bg-white border border-indigo-200 focus:border-indigo-400 rounded-lg px-2.5 py-1 text-slate-800 font-medium transition">
-                </div>
-
-                <!-- Personal Memo Note Input -->
-                <div class="flex items-center gap-2 text-xs">
-                  <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
-                  <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-slate-50 hover:bg-white focus:bg-white border border-transparent focus:border-slate-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
+                  <!-- Personal Memo Note Input -->
+                  <div class="flex items-center gap-2 text-xs">
+                    <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
+                    <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-slate-50 hover:bg-white focus:bg-white border border-transparent focus:border-slate-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
+                  </div>
                 </div>
 
               </div>
@@ -1683,23 +1760,8 @@
                 <span class="w-2 h-2 rounded-full" style="background-color: ${wp.color || badgeColor}"></span>
               </div>
 
-              <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
-
-                <!-- Postcard Thumbnail if available -->
-                ${wp.image ? `
-                  <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
-                    <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-                    <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
-                      <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">${isFood ? '🍽️' : '🛍️'} ${wp.name.split(' ')[0]}</span>
-                      <span class="text-[10px] bg-black/50 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
-                        ${isFood ? '在地必吃' : '免稅熱門'}
-                      </span>
-                    </div>
-                  </div>
-                ` : ''}
-
-                <!-- Header: Tags & Time -->
+              <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-card hover:shadow-lg transition-all duration-300 space-y-2.5">
+                <!-- Header: Tags & Time & Toggle -->
                 <div class="flex flex-wrap items-center justify-between gap-2">
                   <div class="flex items-center space-x-1.5 sm:space-x-2 flex-wrap gap-y-1">
                     <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style="background-color: ${wp.color || badgeColor}">
@@ -1711,78 +1773,103 @@
                     </span>
                     ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600">${t}</span>`).join('')}
                   </div>
-                  <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-slate-800">
-                    <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                    <span class="font-mono">${wp.time}</span>
+                  <div class="flex items-center gap-2">
+                    <div class="flex items-center space-x-1 text-xs sm:text-sm font-bold text-slate-800">
+                      <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                      <span class="font-mono">${wp.time}</span>
+                    </div>
+                    ${toggleBtnHtml}
                   </div>
                 </div>
 
-                <!-- Title & Desc -->
+                <!-- Title -->
                 <div>
-                  <h4 class="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2">
+                  <h4 class="text-lg sm:text-xl font-black text-slate-900 flex items-center gap-2 cursor-pointer" onclick="toggleCard('${wp.id}')">
                     <span>${idx + 1}. ${wp.name}</span>
                   </h4>
-                  <p class="text-xs sm:text-sm text-slate-700 mt-1 leading-relaxed">
+                </div>
+
+                <!-- Collapsed Quick Summary Strip -->
+                ${summaryStripHtml}
+
+                <!-- Collapsible Details Container -->
+                <div id="card-details-${wp.id}" class="${isCollapsed ? 'hidden' : ''} space-y-3 pt-1">
+                  <!-- Postcard Thumbnail if available -->
+                  ${wp.image ? `
+                    <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
+                      <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
+                      <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                      <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
+                        <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">${isFood ? '🍽️' : '🛍️'} ${wp.name.split(' ')[0]}</span>
+                        <span class="text-[10px] bg-black/50 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
+                          ${isFood ? '在地必吃' : '免稅熱門'}
+                        </span>
+                      </div>
+                    </div>
+                  ` : ''}
+
+                  <!-- Desc -->
+                  <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
                     ${wp.desc || ''}
                   </p>
-                </div>
 
-                <!-- Tips / Gourmet Warning -->
-                ${wp.tips ? `
-                  <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
-                    <span class="text-base shrink-0" aria-hidden="true">${isFood ? '🥢' : '🛍️'}</span>
-                    <p class="leading-relaxed"><strong>${isFood ? '老饕指南：' : '採購攻略：'}</strong>${wp.tips}</p>
-                  </div>
-                ` : ''}
-
-                <!-- Reservation & Branch Guide -->
-                ${(wp.reservationInfo || wp.branchTip) ? `
-                  <div class="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-3 text-xs text-amber-950 space-y-1.5">
-                    <div class="flex items-center gap-1.5 font-bold text-amber-900">
-                      <span aria-hidden="true">📅</span>
-                      <span>訂位規範 ＆ 分店免排隊避雷攻略：</span>
+                  <!-- Tips / Gourmet Warning -->
+                  ${wp.tips ? `
+                    <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
+                      <span class="text-base shrink-0" aria-hidden="true">${isFood ? '🥢' : '🛍️'}</span>
+                      <p class="leading-relaxed"><strong>${isFood ? '老饕指南：' : '採購攻略：'}</strong>${wp.tips}</p>
                     </div>
-                    ${wp.reservationInfo ? `<p class="leading-relaxed"><strong class="text-amber-900">預約訂位：</strong>${wp.reservationInfo}</p>` : ''}
-                    ${wp.branchTip ? `<p class="leading-relaxed"><strong class="text-amber-900">分店推薦：</strong>${wp.branchTip}</p>` : ''}
-                  </div>
-                ` : ''}
+                  ` : ''}
 
-                <!-- Backup Dining Options -->
-                ${wp.backupOptions && wp.backupOptions.length > 0 ? `
-                  <div class="bg-indigo-50/80 border border-indigo-200/90 rounded-2xl p-3 text-xs text-indigo-950 space-y-1.5">
-                    <div class="flex items-center justify-between font-bold text-indigo-900">
-                      <span class="flex items-center gap-1">
-                        <span aria-hidden="true">🔄</span>
-                        <span>老饕備案推薦（排太長免驚）：</span>
-                      </span>
-                      <span class="text-[10px] bg-indigo-200/70 text-indigo-900 px-1.5 py-0.5 rounded font-bold">順路首選</span>
+                  <!-- Reservation & Branch Guide -->
+                  ${(wp.reservationInfo || wp.branchTip) ? `
+                    <div class="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-3 text-xs text-amber-950 space-y-1.5">
+                      <div class="flex items-center gap-1.5 font-bold text-amber-900">
+                        <span aria-hidden="true">📅</span>
+                        <span>訂位規範 ＆ 分店免排隊避雷攻略：</span>
+                      </div>
+                      ${wp.reservationInfo ? `<p class="leading-relaxed"><strong class="text-amber-900">預約訂位：</strong>${wp.reservationInfo}</p>` : ''}
+                      ${wp.branchTip ? `<p class="leading-relaxed"><strong class="text-amber-900">分店推薦：</strong>${wp.branchTip}</p>` : ''}
                     </div>
-                    <div class="space-y-1.5 mt-1">
-                      ${wp.backupOptions.map(b => `
-                        <div class="text-[11px] text-slate-700 leading-relaxed border-t border-indigo-100/70 pt-1 first:border-none first:pt-0">
-                          <strong class="text-indigo-900">• ${b.name}</strong>
-                          ${b.tag ? `<span class="ml-1 text-[10px] bg-white px-1 py-0.2 rounded border border-indigo-200 text-indigo-700">${b.tag}</span>` : ''}：
-                          <span>${b.desc}</span>
-                          ${b.googleMapsUrl ? `<a href="${b.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-800 ml-1.5 font-bold transition text-[10px] active:scale-95"><span>🗺️</span><span>導航前往</span></a>` : ''}
-                        </div>
-                      `).join('')}
+                  ` : ''}
+
+                  <!-- Backup Dining Options -->
+                  ${wp.backupOptions && wp.backupOptions.length > 0 ? `
+                    <div class="bg-indigo-50/80 border border-indigo-200/90 rounded-2xl p-3 text-xs text-indigo-950 space-y-1.5">
+                      <div class="flex items-center justify-between font-bold text-indigo-900">
+                        <span class="flex items-center gap-1">
+                          <span aria-hidden="true">🔄</span>
+                          <span>老饕備案推薦（排太長免驚）：</span>
+                        </span>
+                        <span class="text-[10px] bg-indigo-200/70 text-indigo-900 px-1.5 py-0.5 rounded font-bold">順路首選</span>
+                      </div>
+                      <div class="space-y-1.5 mt-1">
+                        ${wp.backupOptions.map(b => `
+                          <div class="text-[11px] text-slate-700 leading-relaxed border-t border-indigo-100/70 pt-1 first:border-none first:pt-0">
+                            <strong class="text-indigo-900">• ${b.name}</strong>
+                            ${b.tag ? `<span class="ml-1 text-[10px] bg-white px-1 py-0.2 rounded border border-indigo-200 text-indigo-700">${b.tag}</span>` : ''}：
+                            <span>${b.desc}</span>
+                            ${b.googleMapsUrl ? `<a href="${b.googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-indigo-100 hover:bg-indigo-200 text-indigo-800 ml-1.5 font-bold transition text-[10px] active:scale-95"><span>🗺️</span><span>導航前往</span></a>` : ''}
+                          </div>
+                        `).join('')}
+                      </div>
                     </div>
+                  ` : ''}
+
+                  <!-- Action Buttons -->
+                  ${renderActionButtons(wp)}
+
+                  <!-- Personal Reservation Time Input -->
+                  <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
+                    <label for="booking-input-${wp.id}" class="text-rose-600 font-bold shrink-0">🍽️ 訂位時間：</label>
+                    <input type="text" id="booking-input-${wp.id}" value="${userBooking}" placeholder="填入您的預約時間（如 19:30 或 現場排隊）..." onchange="saveStopBooking('${wp.id}', this.value)" class="flex-grow bg-rose-50/40 hover:bg-white focus:bg-white border border-rose-200 focus:border-rose-400 rounded-lg px-2.5 py-1 text-slate-800 font-medium transition">
                   </div>
-                ` : ''}
 
-                <!-- Action Buttons -->
-                ${renderActionButtons(wp)}
-
-                <!-- Personal Reservation Time Input -->
-                <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
-                  <label for="booking-input-${wp.id}" class="text-rose-600 font-bold shrink-0">🍽️ 訂位時間：</label>
-                  <input type="text" id="booking-input-${wp.id}" value="${userBooking}" placeholder="填入您的預約時間（如 19:30 或 現場排隊）..." onchange="saveStopBooking('${wp.id}', this.value)" class="flex-grow bg-rose-50/40 hover:bg-white focus:bg-white border border-rose-200 focus:border-rose-400 rounded-lg px-2.5 py-1 text-slate-800 font-medium transition">
-                </div>
-
-                <!-- Personal Memo Note Input -->
-                <div class="flex items-center gap-2 text-xs">
-                  <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
-                  <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-white border border-slate-200 focus:border-slate-400 rounded-lg px-2.5 py-1 text-slate-700 transition">
+                  <!-- Personal Memo Note Input -->
+                  <div class="flex items-center gap-2 text-xs">
+                    <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
+                    <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-white border border-slate-200 focus:border-slate-400 rounded-lg px-2.5 py-1 text-slate-700 transition">
+                  </div>
                 </div>
 
               </div>
@@ -1799,21 +1886,8 @@
               <span class="w-2 h-2 rounded-full" style="background-color: ${wp.color || day.themeColor}"></span>
             </div>
 
-            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-card hover:shadow-lg transition-all duration-300 space-y-3">
-
-              <!-- Postcard Thumbnail if available -->
-              ${wp.image ? `
-                <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
-                  <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
-                  <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
-                  <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
-                    <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">📍 ${wp.name.split(' ')[0]}</span>
-                    <span class="text-[10px] bg-accent-gold text-on-gold font-black px-2 py-0.5 rounded-full shadow-xs" style="background-color:#fbbf24; color:#451a03;">必訪景點</span>
-                  </div>
-                </div>
-              ` : ''}
-
-              <!-- Header: Tags & Time -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border border-slate-200/90 shadow-card hover:shadow-lg transition-all duration-300 space-y-2.5">
+              <!-- Header: Tags & Time & Toggle -->
               <div class="flex flex-wrap items-center justify-between gap-2">
                 <div class="flex items-center space-x-1.5 sm:space-x-2 flex-wrap gap-y-1">
                   <span class="text-xs font-bold px-2.5 py-1 rounded-lg text-white shadow-xs" style="background-color: ${wp.color || day.themeColor}">
@@ -1825,37 +1899,60 @@
                   </span>
                   ${(wp.tags || []).map(t => `<span class="text-[11px] font-semibold px-2 py-0.5 rounded-md bg-slate-100 text-slate-600 font-medium">${t}</span>`).join('')}
                 </div>
-                <div class="flex items-center space-x-1.5 text-xs sm:text-sm font-bold text-slate-800">
-                  <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                  <span class="font-mono">${wp.time}</span>
+                <div class="flex items-center gap-2">
+                  <div class="flex items-center space-x-1 text-xs sm:text-sm font-bold text-slate-800">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="font-mono">${wp.time}</span>
+                  </div>
+                  ${toggleBtnHtml}
                 </div>
               </div>
 
-              <!-- Title & Desc -->
+              <!-- Title -->
               <div>
-                <h4 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2">
+                <h4 class="text-base sm:text-lg font-black text-slate-900 flex items-center gap-2 cursor-pointer" onclick="toggleCard('${wp.id}')">
                   <span>${idx + 1}. ${wp.name}</span>
                 </h4>
-                <p class="text-xs sm:text-sm text-slate-600 mt-1 leading-relaxed">
-                  ${wp.desc || ''}
-                </p>
               </div>
 
-              <!-- Tips / Practical Warning -->
-              ${wp.tips ? `
-                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
-                  <span class="text-slate-400 shrink-0 text-sm" aria-hidden="true">💡</span>
-                  <p class="leading-relaxed"><strong>攻略指南：</strong>${wp.tips}</p>
+              <!-- Collapsed Quick Summary Strip -->
+              ${summaryStripHtml}
+
+              <!-- Collapsible Details Container -->
+              <div id="card-details-${wp.id}" class="${isCollapsed ? 'hidden' : ''} space-y-3 pt-1">
+                <!-- Postcard Thumbnail if available -->
+                ${wp.image ? `
+                  <div class="relative h-40 sm:h-48 w-full rounded-2xl overflow-hidden shadow-xs group/img">
+                    <img src="${wp.image}" class="w-full h-full object-cover group-hover/img:scale-105 transition duration-500" alt="${wp.name}">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent"></div>
+                    <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
+                      <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">📍 ${wp.name.split(' ')[0]}</span>
+                      <span class="text-[10px] bg-accent-gold text-on-gold font-black px-2 py-0.5 rounded-full shadow-xs" style="background-color:#fbbf24; color:#451a03;">必訪景點</span>
+                    </div>
+                  </div>
+                ` : ''}
+
+                <!-- Desc -->
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                  ${wp.desc || ''}
+                </p>
+
+                <!-- Tips / Practical Warning -->
+                ${wp.tips ? `
+                  <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3 text-xs text-slate-700 flex items-start gap-2">
+                    <span class="text-slate-400 shrink-0 text-sm" aria-hidden="true">💡</span>
+                    <p class="leading-relaxed"><strong>攻略指南：</strong>${wp.tips}</p>
+                  </div>
+                ` : ''}
+
+                <!-- Navigation & Quick Action Bar -->
+                ${renderActionButtons(wp)}
+
+                <!-- Personal Memo Note Input -->
+                <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
+                  <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
+                  <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-slate-50 hover:bg-white focus:bg-white border border-transparent focus:border-slate-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
                 </div>
-              ` : ''}
-
-              <!-- Navigation & Quick Action Bar -->
-              ${renderActionButtons(wp)}
-
-              <!-- Personal Memo Note Input -->
-              <div class="pt-2 border-t border-slate-100 flex items-center gap-2 text-xs">
-                <label for="note-input-${wp.id}" class="text-slate-400 shrink-0">📝 筆記：</label>
-                <input type="text" id="note-input-${wp.id}" value="${userNote}" placeholder="點擊加註個人備忘（如預約號、必買菜單）..." onchange="saveStopNote('${wp.id}', this.value)" class="flex-grow bg-slate-50 hover:bg-white focus:bg-white border border-transparent focus:border-slate-300 rounded-lg px-2.5 py-1 text-slate-700 transition">
               </div>
 
             </div>
@@ -1864,6 +1961,71 @@
       });
 
       container.innerHTML = cards.join('');
+    }
+
+    /* =========================================================================
+       CARD FOLDING & ACCORDION SYSTEM
+       ========================================================================= */
+    function toggleCard(wpId) {
+      if (collapsedCardIds.has(wpId)) {
+        collapsedCardIds.delete(wpId);
+      } else {
+        collapsedCardIds.add(wpId);
+      }
+      applyCardState(wpId);
+    }
+
+    function expandCard(wpId) {
+      if (collapsedCardIds.has(wpId)) {
+        collapsedCardIds.delete(wpId);
+        applyCardState(wpId);
+      }
+    }
+
+    function toggleAllCards(expand) {
+      const day = tripData.days[currentDayIndex];
+      if (!day || !day.waypoints) return;
+      
+      isTimelineCollapsedMode = !expand;
+      if (expand) {
+        collapsedCardIds.clear();
+      } else {
+        day.waypoints.forEach(wp => collapsedCardIds.add(wp.id));
+      }
+      
+      day.waypoints.forEach(wp => applyCardState(wp.id));
+      showToast(expand ? '已展開所有景點完整照片與攻略' : '已收合為精簡時間軸清單', expand ? '📖' : '🗂️');
+    }
+
+    function applyCardState(wpId) {
+      const isCollapsed = collapsedCardIds.has(wpId);
+      const details = document.getElementById(`card-details-${wpId}`);
+      const summary = document.getElementById(`card-summary-${wpId}`);
+      const toggleBtn = document.getElementById(`card-toggle-${wpId}`);
+      
+      if (details) {
+        if (isCollapsed) {
+          details.classList.add('hidden');
+        } else {
+          details.classList.remove('hidden');
+        }
+      }
+      if (summary) {
+        if (isCollapsed) {
+          summary.classList.remove('hidden');
+        } else {
+          summary.classList.add('hidden');
+        }
+      }
+      if (toggleBtn) {
+        toggleBtn.innerHTML = `
+          <span class="text-[11px] font-medium text-slate-600">${isCollapsed ? '展開' : '收合'}</span>
+          <span class="text-[10px] transform ${isCollapsed ? 'rotate-180' : ''} transition-transform duration-200">▲</span>
+        `;
+        toggleBtn.title = isCollapsed ? '展開完整攻略' : '收合卡片';
+        toggleBtn.setAttribute('aria-expanded', !isCollapsed);
+        toggleBtn.setAttribute('aria-label', isCollapsed ? '展開完整詳情' : '收合卡片');
+      }
     }
 
     function renderFeaturedGuide(day) {
