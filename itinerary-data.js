@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v3.1",
+    version: "20261117-v3.3",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -21,19 +21,19 @@ const OKINAWA_TRIP_DATA = {
       day: 1,
       date: "2026/11/16",
       weekday: "週一",
-      title: "抵達沖繩 ＆ 奧特萊斯快攻",
-      subtitle: "落地出關 • ASHIBINAA • 那霸飯店 • 傑克牛排",
+      title: "抵達沖繩 ＆ 奧特萊斯快攻 ＆ 國際通夜遊",
+      subtitle: "落地出關 • ASHIBINAA • 那霸飯店 • 菲力牛排 • 雪塩霜淇淋 • 24H唐吉訶德",
       themeColor: "#0284c7",
       highlightNotice: {
         type: "warning",
-        title: "17:50 班機落地出境推算 ＆ ASHIBINAA 20:00 打烊應變",
-        content: "國際線出關約需 45-55 分，出境預估 18:35~18:45。強烈建議出航廈直接搭乘 Uber 或排班計程車（約 ¥2,000，車程 15 分），爭取在 19:05 前抵達 Outlet 鎖定 Vivienne 等目標快攻！"
+        title: "17:50 班機落地出境推算 ＆ ASHIBINAA 20:00 打烊應變 ＆ 國際通夜遊",
+        content: "國際線出關約需 45-55 分，出境預估 18:35~18:45。建議直接搭計程車爭取 19:05 前抵達 Outlet 快攻；隨後 Check-in 並享用厚切菲力牛排，夜間漫步國際通品嚐雪塩霜淇淋並狂掃 24H 唐吉訶德免稅伴手禮！"
       },
       transitSummary: {
         totalDrivingTime: "約 45 分",
         totalDistance: "約 16 km",
         mode: "計程車 ＆ 步行",
-        tips: "那霸機場 ➔ Outlet ➔ 飯店短程移動，建議出航廈搭計程車爭取 Outlet 採買時間"
+        tips: "那霸機場 ➔ Outlet ➔ 飯店 ➔ 菲力牛排 ➔ 雪塩霜淇淋 ➔ 國際通唐吉訶德"
       },
       waypoints: [
         {
@@ -116,7 +116,7 @@ const OKINAWA_TRIP_DATA = {
           name: "テンダーロインステーキハウス 那覇東町店 (厚切多汁菲力牛排)",
           category: "美食",
           image: "thumb-tenderloin.jpg",
-          time: "20:50 ~ 22:00",
+          time: "20:50 ~ 21:50",
           bookingTime: "【可線上網路預約免排隊】(建議預約21:00)",
           coords: [26.2132, 127.6740],
           mapCode: "33 156 211*55",
@@ -156,25 +156,54 @@ const OKINAWA_TRIP_DATA = {
           transitFromPrev: {
             mode: "walk",
             duration: "約 8 分",
-            distance: "約 600 m",
-            route: "步行沿久茂地方向進入國際通商圈",
+            distance: "約 650 m",
+            route: "沿久茂地大街漫步進入國際通松尾段",
             toll: "無料",
-            tips: "晚餐後消食散策，唐吉訶德24小時營業"
+            tips: "牛排晚餐後悠閒散步消食，直達雪塩專賣店"
           },
-          name: "首夜待定漫步 (國際通唐吉訶德 / 居酒屋)",
-          category: "放鬆",
+          name: "宮古島の雪塩 國際通松尾店 (雪塩霜淇淋 ＆ 沖繩海鹽伴手禮)",
+          category: "美食",
           image: "thumb-kokusaidori-night.jpg",
-          time: "22:00 ~ 23:30",
+          time: "22:00 ~ 22:30",
+          coords: [26.2158, 127.6865],
+          mapCode: "33 157 444*11",
+          phone: "098-860-6366",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2158,127.6865&travelmode=walking",
+          color: "#06b6d4",
+          icon: "🍦",
+          parkingInfo: "國際通商圈徒步街（建議自牛排館或飯店散步前往）",
+          tags: ["【國際通必吃】", "雪塩霜淇淋", "自選調味鹽體驗", "雪塩金楚糕", "海鹽餅乾"],
+          desc: "沖繩最具代表性的天然海鹽名店！必點人氣招牌「雪塩霜淇淋 (雪塩ソフトクリーム)」，純濃牛奶融合宮古島地下深層海鹽，甘甜中帶微鹹尾韻。店內自助調味吧備有多款特色風味鹽（柚子鹽、抹茶鹽、可可鹽、辣椒鹽等），撒在霜淇淋上迸發驚艷層次！亦可採買雪塩金楚糕、雪塩黑糖與雪塩洗顏保養明星伴手禮。",
+          tips: "【甜品朝聖攻略】：營業至 22:00~22:30，吃完牛排第一時間前往品嚐霜淇淋；店內雪鹽試吃體驗豐富，金楚糕更是連續多年伴手禮大賞得主！",
+          reservationInfo: "外帶內用皆免預約，現場點單出餐迅速。",
+          branchTip: "國際通有多家雪塩與塩屋門市，松尾店近唐吉訶德步行僅 1 分鐘，動線最順！"
+        },
+        {
+          id: "d1-6",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 1 分",
+            distance: "約 90 m",
+            route: "出雪塩店向西過馬路即達",
+            toll: "無料",
+            tips: "距離雪塩僅 90 公尺，步行 1 分鐘無縫接軌"
+          },
+          name: "唐吉訶德 那霸國際通店 (24H 免稅旗艦採購 ＆ 宵夜零食狂掃)",
+          category: "購物",
+          image: "thumb-kokusaidori-night.jpg",
+          time: "22:30 ~ 23:30",
           coords: [26.2155, 127.6853],
           mapCode: "33 157 382*41",
           phone: "098-951-2311",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2155,127.6853&travelmode=driving",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2155,127.6853&travelmode=walking",
           color: "#a855f7",
-          icon: "🌙",
-          parkingInfo: "周邊收費停車場（夜間最高收費約 ¥600~¥800）",
-          tags: ["24小時採買", "Orion生啤", "波上海灘海風"],
-          desc: "吃完牛排後自由放鬆：可至國際通唐吉訶德 24H 補齊零食藥妝，或至久茂地居酒屋來杯 Orion 生啤配島豆腐。",
-          tips: "夜間微風涼爽，步行回飯店僅需 10 分鐘，輕鬆無壓力。"
+          icon: "🐧",
+          parkingInfo: "周邊收費停車場（夜間最高收費約 ¥600~¥800）/ 徒步返程",
+          tags: ["【24H不打烊】", "全天候免稅退稅", "Orion生啤", "零食藥妝補齊", "深夜狂掃"],
+          desc: "國際通正中心地標旗艦店！全棟 B1 至 4F 全天候 24 小時營業不打烊。第一晚直接在此補齊整個旅程所需的隨身藥妝、防曬乳、休足時間、泡盛古酒、Orion 生啤酒與沖繩限定零食。滿 ¥5,000 直接至專屬退稅櫃台出示護照辦理免稅！",
+          tips: "【採買退稅指南】：退稅櫃台位於 4 樓或專屬免稅走廊；採買後步行回 Nest Hotel 約 10~12 分鐘（經久茂地方向，夜間街道明亮安全）；若提大包戰利品，門口隨時有排班計程車，起跳價約 ¥600 即可舒服送達飯店大廳！",
+          reservationInfo: "全天候 24 小時自由入場免預約。",
+          branchTip: "沖繩最大唐吉訶德旗艦店，品項最齊全、陳列密度最高，深夜逛人潮較白天舒適。"
         }
       ]
     },
@@ -182,19 +211,19 @@ const OKINAWA_TRIP_DATA = {
       day: 2,
       date: "2026/11/17",
       weekday: "週二",
-      title: "中北部奔馳 ＆ 跑車海岸極致巡禮",
-      subtitle: "まるたま味噌早餐 • 波上宮 • 赤嶺取跑車 • .uki 世界冠軍咖啡 • 道の駅許田 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • BLUE SEAL • PARCO CITY UTme!",
+      title: "中北部奔馳 ＆ 跑車海岸極致巡禮 ＆ 深夜丸幸拉麵",
+      subtitle: "まるたま味噌早餐 • 波上宮 • 赤嶺取跑車 • .uki 世界冠軍咖啡 • 道の駅許田 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • BLUE SEAL • PARCO CITY UTme! • 丸幸拉麵宵夜",
       themeColor: "#059669",
       highlightNotice: {
         type: "info",
-        title: "自駕長途日：まるたま元氣早餐、赤嶺取跑車、.uki世界冠軍咖啡、鯨鯊餵食、萬座毛夕陽 ＆ PARCO UTme!",
-        content: "早晨 07:45 漫步享用「まるたま味噌飯屋」道地早餐，09:30 於赤嶺取敞篷跑車出發，沿國道58號朝聖 2024 WCTC 世界盃杯測師大賽冠軍名店「.uki coffee」極致手沖；隨後馳騁古宇利跨海大橋、14:55 直擊水族館 15:00 鯨鯊進食秀，傍晚萬座毛捕捉落日，夜間接連造訪 A&W、BLUE SEAL 牧港旗艦雙店並於 PARCO CITY 客製 UTme! 紀念 T 恤！"
+        title: "自駕長途日：まるたま元氣早餐、赤嶺取跑車、.uki咖啡、水族館、萬座毛、PARCO UTme! ＆ 深夜丸幸拉麵",
+        content: "早晨 07:45 漫步享用「まるたま味噌飯屋」道地早餐，09:30 於赤嶺取敞篷跑車出發，沿國道58號朝聖 2024 WCTC 世界盃冠軍「.uki coffee」；隨後馳騁古宇利跨海大橋、14:55 直擊水族館 15:00 鯨鯊進食秀，傍晚萬座毛捕捉落日，夜間接連造訪 A&W、BLUE SEAL 牧港旗艦雙店並於 PARCO CITY 客製 UTme! 紀念 T 恤；返抵那霸後，直奔松尾巷內 4.9 星「Ramen Paradise 丸幸」享用深夜濃郁豚骨拉麵宵夜！"
       },
       transitSummary: {
         totalDrivingTime: "約 3.5 小時",
         totalDistance: "約 175 km",
-        mode: "自駕 (ETC 高速＋國道58)",
-        tips: "全日自駕核心！國道58號北上經宜野灣 .uki ➔ 西原/宜野灣 IC 上高速直奔許田 IC (ETC ¥1,040)，串連名護、古宇利、美ら海與萬座毛"
+        mode: "自駕 (ETC 高速＋國道58) ＆ 步行宵夜",
+        tips: "全日自駕核心！國道58號北上經宜野灣 .uki ➔ 許田 IC 串連名護古宇利、美ら海與萬座毛，夜間返抵那霸卸戰利品後漫步品嚐松尾丸幸拉麵宵夜"
       },
       waypoints: [
         {
@@ -682,11 +711,11 @@ const OKINAWA_TRIP_DATA = {
             toll: "無料",
             tips: "車停周邊收費停車場（夜間最大 ¥400~¥500）"
           },
-          name: "返抵那霸飯店休息 ＆ 戰利品整理",
+          name: "返抵那霸飯店卸戰利品 ＆ 跑車停妥",
           category: "住宿",
           period: "晚間返程",
           image: "thumb-nesthotel.jpg",
-          time: "22:05 ~ 22:30",
+          time: "22:05 ~ 22:25",
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
@@ -694,9 +723,78 @@ const OKINAWA_TRIP_DATA = {
           color: "#6366f1",
           icon: "🏨",
           parkingInfo: "高CP首選：步行2分「ザ・パーク西町第3 (夜間最大¥400)」或「タイムズ西1丁目 (夜間¥500)」",
-          tags: ["夜間返程", "西海岸快速道路", "戰利品清點", "周邊平價停車", "明日19:30前還車"],
-          desc: "從 PARCO CITY 沿西海岸快速道路直通飯店（夜間無車僅需 15 分鐘）。跑車直接停放飯店旁步行 2 分鐘的露天平價停車場，全平地免卡底盤，安全又省錢。明天可一路自駕至 19:30 還車！",
-          tips: "【今晚跑車停車推薦】：首推「ザ・パーク西町第3」(那霸市西1-4-14，夜間20:00-08:00僅¥400，全平地免卡底盤)；若客滿可停「タイムズ西1丁目」(西1-14，夜間18:00-08:00僅¥500，支援悠遊信用卡)。比飯店 ¥1,500 省下一大半！"
+          tags: ["夜間返程", "西海岸快速道路", "卸下戰利品", "周邊平價停車", "準備深夜拉麵"],
+          desc: "從 PARCO CITY 沿西海岸快速道路直通飯店（夜間無車僅需 15 分鐘）。跑車停妥於飯店旁步行 2 分鐘的平價露天停車場（夜間僅 ¥400~¥500），將 UTme! 客製衣物與戰利品放回房間稍作梳洗，準備出發享用國際通 4.9 星深夜拉麵宵夜！",
+          tips: "【今晚跑車停車推薦】：首推「ザ・パーク西町第3」(那霸市西1-4-14，夜間20:00-08:00僅¥400，全平地免卡底盤)；停妥後搭計程車或散步前往松尾丸幸拉麵。"
+        },
+        {
+          id: "d2-17",
+          transitFromPrev: {
+            mode: "taxi",
+            duration: "約 5 分",
+            distance: "約 1.6 km",
+            route: "那霸市西町 ➔ 久茂地方向 ➔ 松尾2丁目巷弄",
+            toll: "計程車跳表約 ¥600~¥700 / 步行約 12 分",
+            tips: "飯店門口搭排班計程車跳表約 5 分鐘直達松尾巷口，亦可悠閒散步前往"
+          },
+          name: "Ramen Paradise Maruko (ラーメンパラダイス丸幸 • 深夜4.9星濃厚豚骨拉麵)",
+          category: "美食",
+          period: "深夜宵夜",
+          image: "thumb-maruko.jpg",
+          time: "22:30 ~ 23:25",
+          bookingTime: "現場排隊入座 (營業至深夜 24:00/01:00)",
+          coords: [26.2142, 127.6881],
+          mapCode: "33 157 325*14",
+          phone: "無 (現場直接入座)",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2142,127.6881&travelmode=walking",
+          color: "#f43f5e",
+          icon: "🍜",
+          parkingInfo: "國際通周邊收費停車場 / 徒步漫遊",
+          tags: ["【深夜4.9星神級好評】", "濃厚豚骨醬油", "細麵可替玉", "深夜限定", "松尾隱藏版名店"],
+          desc: "Google 評價高達 4.9 星的國際通隱藏版拉麵傳奇！隱身在松尾2丁目巷弄內，全店專注單一品項「丸幸拉麵（豚骨醬油）」。湯頭濃郁醇厚、膠質滿滿卻毫無豬肉腥臊味，搭配厚切炙燒叉燒與新鮮青蔥。自駕長途奔波一天後，來上一碗熱騰騰的現煮拉麵，是極致療癒的深夜享受！",
+          tips: "【點餐老饕攻略】：營業時間 18:00 至 24:00 (有時營業至深夜 01:00，不定休)。進店後可自選「粗麵」或「細麵」；強烈推薦選細麵，吃完後可追加「替玉（加麵）」！建議出發前可查看官方 Instagram (@ramen_paradise_marukou) 確認當晚營業動態。",
+          reservationInfo: "免預約，現場直接入座（夜間翻桌率快）。",
+          branchTip: "僅此一家松尾本店，坐落於第一牧志公設市場旁巷弄，夜間氣氛放鬆，是在地夜貓老饕的私藏名單。",
+          backupOptions: [
+            {
+              name: "暖暮拉麵 那霸牧志店",
+              tag: "九州拉麵大賞冠軍 / 步行4分",
+              desc: "國際通經典豚骨拉麵名店，營業至深夜，濃郁豚骨湯頭配細麵，若遇丸幸臨時休業可作為首選替代方案。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=暖暮拉麵+那霸牧志店&travelmode=walking"
+            },
+            {
+              name: "琉球新麵 通堂 (小祿本店)",
+              tag: "深夜拉麵傳奇 / 男人麵女人麵",
+              desc: "沖繩最具代表性的拉麵傳奇！招牌焦香黑麻油豚骨湯頭，營業至深夜，宵夜首選！",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ryukyu+Shinmen+Tondo+Oroku&travelmode=driving"
+            }
+          ]
+        },
+        {
+          id: "d2-18",
+          transitFromPrev: {
+            mode: "walk",
+            duration: "約 12 分",
+            distance: "約 1.2 km",
+            route: "自松尾漫步經久茂地返回西町飯店",
+            toll: "無料 (計程車跳表約 ¥600)",
+            tips: "拉麵暖胃後漫步散步消食，或隨手招計程車起跳價送返飯店大廳"
+          },
+          name: "返抵 THE NEST 那霸 ＆ 養精蓄銳好眠",
+          category: "住宿",
+          period: "深夜返程",
+          image: "thumb-nesthotel.jpg",
+          time: "23:35 ~ 24:00",
+          coords: [26.2127, 127.6745],
+          mapCode: "33 156 363*88",
+          phone: "098-868-1118",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=walking",
+          color: "#6366f1",
+          icon: "🛌",
+          parkingInfo: "車輛已妥善停放於周邊平價停車場",
+          tags: ["暖心宵夜收尾", "散步消食", "養精蓄銳", "明日首里城與海中道路"],
+          desc: "享用完深夜暖心拉麵後，漫步散步消食返回飯店休息，準備明日精采的琉球首里古韻、海中道路兜風與寶可夢中心旗艦巡禮！",
+          tips: "明天上午 08:30 出發首里城，今晚好好休息，洗去自駕疲勞！"
         }
       ]
     },
@@ -704,19 +802,19 @@ const OKINAWA_TRIP_DATA = {
       day: 3,
       date: "2026/11/18",
       weekday: "週三",
-      title: "琉球首里古韻 ＆ 海中道路跨海奔馳 • 美國村日落夜景",
-      subtitle: "壺屋麥當勞早餐 • 首里城 • 達摩寺 • 海中道路跨海 • 濱比嘉島午餐 • 美國村Hanon鬆餅 • 日落海灘點燈 • 赤嶺還車 • 琉球的牛和牛燒肉",
+      title: "琉球首里古韻 ＆ 海中道路跨海 • 寶可夢旗艦店 • 美國村夕陽夜景",
+      subtitle: "壺屋麥當勞早餐 • 首里城 • 達摩寺 • 海中道路跨海 • 濱比嘉島午餐 • 來客夢寶可夢中心 • 美國村Hanon鬆餅 • 日落海灘夕陽 • 赤嶺還車 • 琉球的牛和牛燒肉",
       themeColor: "#8b5cf6",
       highlightNotice: {
         type: "warning",
-        title: "還車提醒：19:30 前赤嶺門市還車 ＆ 18:15 前自美國村啟程南下",
-        content: "本日為自駕最後一日（租期至 19:30）。上午探索首里城與達摩寺祈願，中午駛上海天一色的海中道路；下午漫步北谷美國村、品嚐 Hanon 舒芙蕾海景鬆餅並欣賞日落海灘金色霞光與異國點燈！請務必於 18:15 啟程南下，加滿油後於 19:30 前在赤嶺門市交車，隨後搭單軌前往久茂地享用頂級「琉球的牛」黑毛和牛慶功宴！"
+        title: "還車提醒：19:30 前赤嶺門市還車 ＆ 18:20 前自美國村啟程南下",
+        content: "本日為自駕最後一日（租期至 19:30）。上午探索首里城與達摩寺祈願，中午駛上海天一色的海中道路與濱比嘉島；下午順路橫跨沖繩中部，直奔永旺來客夢朝聖全沖繩唯一「沖繩寶可夢中心」搶購限定花襯衫皮卡丘；隨後漫步北谷美國村、品嚐 Hanon 舒芙蕾海景鬆餅並捕捉日落海灘金色晚霞！請務必於 18:20 啟程南下，加滿油後於 19:30 前在赤嶺門市交車，搭單軌至久茂地享受頂級「琉球的牛」黑毛和牛慶功宴！"
       },
       transitSummary: {
         totalDrivingTime: "約 2.5 小時",
         totalDistance: "約 85 km",
         mode: "自駕 (19:30前還車) ＋ 單軌",
-        tips: "橫跨東岸海中道路與西岸北谷美國村落日煙火，19:30 赤嶺門市還車後轉單軌至久茂地燒肉"
+        tips: "橫跨東岸海中道路、中部來客夢寶可夢旗艦與西岸北谷美國村落日，19:30 赤嶺門市還車後轉單軌至久茂地和牛燒肉"
       },
       waypoints: [
         {
@@ -903,23 +1001,58 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "Ayahashi 館專屬免費大型停車場 (約 200 台)",
           tags: ["跨海沙灘", "海天一色", "踏浪踩沙", "特產海葡萄", "跑車海景打卡"],
           desc: "海中道路中央隆起的人工島嶼。走下平緩白沙灘踩著溫暖海水，海天一色開闊無邊。館內亦有宇流麻特產黃金芋烘焙點心與新鮮海葡萄冰淇淋可外帶。",
-          tips: "沙灘旁有沖洗洗腳區與洗手間，踩沙踏浪後穿好鞋襪，準備橫跨沖繩中部前往西海岸美國村！"
+          tips: "沙灘旁有沖洗洗腳區與洗手間，踩沙踏浪後穿好鞋襪，開車 25 分鐘橫跨中部直達永旺來客夢寶可夢中心！"
         },
         {
           id: "d3-7",
           transitFromPrev: {
             mode: "car",
-            duration: "約 45 分",
-            distance: "約 26 km",
-            route: "橫跨沖繩中部幹道至西海岸北谷町",
-            toll: "北谷町公共停車場無料",
-            tips: "建議停放美國村中央免費大停車場或 Sunset Beach 停車場"
+            duration: "約 25 分",
+            distance: "約 17 km",
+            route: "縣道 10 號接縣道 85 號線橫跨沖繩中部至北中城",
+            toll: "無料 (商場免費停車約4000台)",
+            tips: "由東岸海中道路橫跨中部直達北中城來客夢，直奔 1F 官方寶可夢中心"
+          },
+          name: "沖繩寶可夢中心 (Pokémon Center OKINAWA • 永旺夢樂城來客夢 1F)",
+          category: "購物",
+          period: "中部旗艦",
+          image: "thumb-pokemon.jpg",
+          time: "14:40 ~ 15:45",
+          coords: [26.3145, 127.7955],
+          mapCode: "33 530 406*45",
+          phone: "098-923-0720",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3145,127.7955&travelmode=driving",
+          color: "#eab308",
+          icon: "⚡",
+          parkingInfo: "永旺夢樂城來客夢超大型室內外免費停車場 (約 4000 台，自駕無壓力)",
+          tags: ["【沖繩唯一官方旗艦】", "等身大風速狗迎賓", "花襯衫皮卡丘", "阿羅拉椰蛋樹", "沖繩限定周邊"],
+          desc: "全沖繩唯一的官方 Pokémon Center 旗艦店！坐落於永旺夢樂城沖繩來客夢 1 樓。店門口迎賓的是極具視覺震撼的等身大「風速狗與衝浪皮卡丘」造景，以及超巨型阿羅拉椰蛋樹拍照區。店內以南國蔚藍海洋為主題，陳列各世代豐富寶可夢周邊！",
+          tips: "【必搶沖繩限定推薦】：必買穿著沖繩傳統「Kariyushi 花襯衫」的度假皮卡丘布偶、琉舞傳統花笠皮卡丘，以及結合沖繩風獅爺造型的限定徽章、吊飾與夾心餅乾禮盒；店內亦設有 PTCG 卡牌對戰區與限定扭蛋機。",
+          branchTip: "【沖繩獨家旗艦】：全沖繩僅此一家官方旗艦店，來客夢店規模最大、造景最完整、限定品項最齊全！",
+          backupOptions: [
+            {
+              name: "San-A 浦添 PARCO CITY Sanrio / 玩具專區",
+              tag: "大型動漫周邊選品",
+              desc: "若時間有限，PARCO CITY 亦有大型動漫與卡通角色主題專區可選購伴手禮。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=PARCO+CITY+Urasoe&travelmode=driving"
+            }
+          ]
+        },
+        {
+          id: "d3-8",
+          transitFromPrev: {
+            mode: "car",
+            duration: "約 15 分",
+            distance: "約 5.5 km",
+            route: "沿縣道 85 號向西直達北谷美濱",
+            toll: "無料",
+            tips: "車程僅 15 分鐘，直達西海岸美國村 Depot Island 免費停車場"
           },
           name: "北谷美濱美國村 Depot Island (異國街區 ＆ 濱海木棧步道)",
           category: "景點",
           period: "西岸美式",
           image: "thumb-american.jpg",
-          time: "15:00 ~ 16:30",
+          time: "16:00 ~ 16:50",
           coords: [26.3158, 127.7540],
           mapCode: "33 526 450*55",
           phone: "098-926-5678",
@@ -928,11 +1061,11 @@ const OKINAWA_TRIP_DATA = {
           icon: "🎡",
           parkingInfo: "Depot Island 海岸專用免費大型停車場 / 美國村公共停車場 (約 1500 台)",
           tags: ["美式海濱市集", "Depot Island", "海邊木棧道", "特色選品", "潮流服飾"],
-          desc: "自海中道路橫跨中部縣道，約 40 分鐘抵達充滿南加州海濱風情的美國村。Depot Island 彩色斑斕的歐美建築、塗鴉牆、巨型風獅爺公仔與海邊木棧道步道，漫步其間處處是拍照背景！",
+          desc: "自來客夢開車僅 15 分鐘抵達充滿南加州海濱風情的美國村。Depot Island 彩色斑斕的歐美建築、塗鴉牆、巨型風獅爺公仔與海邊木棧道步道，漫步其間處處是拍照背景！",
           tips: "推薦沿著 Boardwalk 濱海木棧道散步吹海風，店鋪林立沖繩特色古著店、限定海灘拖鞋與夏威夷飾品。"
         },
         {
-          id: "d3-8",
+          id: "d3-9",
           transitFromPrev: {
             mode: "walk",
             duration: "約 4 分",
@@ -945,8 +1078,8 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "西岸美式",
           image: "thumb-hanon.jpg",
-          time: "16:35 ~ 17:15",
-          bookingTime: "現場平板登記候位 (16:35抵達)",
+          time: "16:50 ~ 17:35",
+          bookingTime: "現場平板登記候位 (16:50抵達)",
           coords: [26.3168, 127.7543],
           mapCode: "33 525 892*11",
           phone: "098-989-5788",
@@ -958,7 +1091,7 @@ const OKINAWA_TRIP_DATA = {
           desc: "美國村濱海建築 2 樓的頂級手作鬆餅名店。坐在面海戶外露台，眼下是湛藍東海潮汐，品嚐現點現烤、如雲朵般蓬鬆綿密的日式舒芙蕾鬆餅與微鹹奶蓋黑咖啡。",
           tips: "招牌推薦「法式焦糖香蕉舒芙蕾」與「紅芋限定鬆餅」。傍晚氣溫舒適微風徐徐，是日落前最享受的午後時光。",
           reservationInfo: "不可提早訂位。現場於門口平板電腦登記取號（支援 QR Code 查看即時叫號進度），等候時可在 Depot Island 商店街漫步拍照。",
-          branchTip: "美國村僅此一家海景露台總店。下午 16:30 抵達正好銜接下午茶至日落時段。",
+          branchTip: "美國村僅此一家海景露台總店。下午抵達正好銜接下午茶至日落時段。",
           backupOptions: [
             {
               name: "Taco Rice Cafe Kijimuna (美國村店)",
@@ -981,7 +1114,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d3-9",
+          id: "d3-10",
           transitFromPrev: {
             mode: "walk",
             duration: "約 5 分",
@@ -994,7 +1127,7 @@ const OKINAWA_TRIP_DATA = {
           category: "景點",
           period: "西岸美式",
           image: "thumb-american.jpg",
-          time: "17:20 ~ 18:15",
+          time: "17:35 ~ 18:20",
           coords: [26.3159, 127.7532],
           mapCode: "33 525 803*77",
           phone: "098-936-8273",
@@ -1002,16 +1135,16 @@ const OKINAWA_TRIP_DATA = {
           color: "#e11d48",
           icon: "🌅",
           parkingInfo: "美國村 Sunset Beach 專用停車場 (免費)",
-          tags: ["西海岸落日", "日落海灘", "璀璨童話霓虹", "18:15務必啟程", "夜景勝過煙火"],
-          desc: "傍晚 17:25 漫步至 Sunset Beach 階梯防波堤，全沖繩最負盛名的落日美景就在眼前！金色餘暉灑落海面，天色由紫紅轉為寶藍。天黑瞬間（約 17:50），整個美國村數萬顆異國霓虹燈與歐式燈飾同時點亮，如夢似幻！",
-          tips: "【關鍵倒數提醒】：欣賞完璀璨點燈夜景後，**務必於 18:15 前準時回到跑車發動出發南下**！預留 55 分鐘車程避開國道 58 號下班車潮，確保 19:30 前順利還車！"
+          tags: ["西海岸落日", "日落海灘", "璀璨童話霓虹", "18:20務必啟程", "夜景勝過煙火"],
+          desc: "傍晚 17:35 漫步至 Sunset Beach 階梯防波堤，全沖繩最負盛名的落日美景就在眼前！金色餘暉灑落海面，天色由紫紅轉為寶藍。天黑瞬間（約 17:50），整個美國村數萬顆異國霓虹燈與歐式燈飾同時點亮，如夢似幻！",
+          tips: "【關鍵倒數提醒】：欣賞完璀璨點燈夜景後，**務必於 18:20 前準時回到跑車發動出發南下**！預留 55 分鐘車程避開國道 58 號下班車潮，確保 19:30 前順利還車！"
         },
         {
-          id: "d3-10",
+          id: "d3-11",
           transitFromPrev: {
             mode: "car",
-            duration: "約 35 分",
-            distance: "約 21 km",
+            duration: "約 50 分",
+            distance: "約 22 km",
             route: "國道 58 號南下至赤嶺門市，還車前先至斜對面加油站加滿油",
             toll: "無料",
             tips: "租車預約至 19:30 還車！請出示加油收據並點檢外觀交車"
@@ -1033,7 +1166,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "交車後步行 3 分鐘至「單軌電車赤嶺站」，搭乘單軌往首里方向（車程僅 8 分鐘 / ¥270）直達「美榮橋站 / 縣廳前站」，無拘無束迎接慶功和牛晚宴！"
         },
         {
-          id: "d3-11",
+          id: "d3-12",
           transitFromPrev: {
             mode: "monorail",
             duration: "約 12 分",
@@ -1088,7 +1221,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d3-12",
+          id: "d3-13",
           transitFromPrev: {
             mode: "walk",
             duration: "約 6 分",
@@ -1110,7 +1243,7 @@ const OKINAWA_TRIP_DATA = {
           icon: "🏨",
           parkingInfo: "飯店客房（自燒肉店散步回飯店僅 10 分鐘）",
           tags: ["微醺漫步", "戰利品裝箱", "秤重打包", "明日收官返台"],
-          desc: "飽足微醺後吹著初冬涼爽海風，步行 10 分鐘回到 Nest Hotel。洗個熱水澡舒緩兩日自駕疲憊，開始整理 PARCO CITY 客製 T 恤、名產伴手禮，將液體化妝品與泡盛裝入大行李箱秤重封箱！",
+          desc: "飽足微醺後吹著初冬涼爽海風，步行 10 分鐘回到 Nest Hotel。洗個熱水澡舒緩兩日自駕疲憊，開始整理 PARCO CITY 客製 T 恤、寶可夢戰利品、名產伴手禮，將液體化妝品與泡盛裝入大行李箱秤重封箱！",
           tips: "明天為沖繩行程最後一日，今晚先行完成行李配重，準備迎接明日第一牧志市場與那霸機場國內線挖寶！"
         }
       ]

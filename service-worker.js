@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v35';
+const CACHE_NAME = 'okinawa-trip-v38';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -35,6 +35,8 @@ const STATIC_ASSETS = [
   './thumb-blueseal.jpg',
   './thumb-parcocity.jpg',
   './thumb-american.jpg',
+  './thumb-pokemon.jpg',
+  './thumb-maruko.jpg',
   './thumb-shuri.jpg',
   './thumb-daruma.jpg',
   './thumb-kaichu.jpg',
@@ -52,11 +54,15 @@ const STATIC_ASSETS = [
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      console.log('[Service Worker] Caching static assets for offline use (v30)');
-      return cache.addAll(STATIC_ASSETS).catch((err) => {
-        console.warn('[Service Worker] Some non-critical asset caching skipped:', err);
-      });
+    caches.open(CACHE_NAME).then(async (cache) => {
+      console.log('[Service Worker] Caching static assets for offline use (v38)');
+      await Promise.allSettled(
+        STATIC_ASSETS.map((asset) =>
+          cache.add(asset).catch((err) => {
+            console.warn('[Service Worker] Asset caching skipped:', asset, err);
+          })
+        )
+      );
     }).then(() => self.skipWaiting())
   );
 });
@@ -113,9 +119,11 @@ self.addEventListener('fetch', (event) => {
           return networkResponse;
         })
         .catch(() => {
-          return caches.match(event.request).then((cached) => {
+          return caches.match(event.request, { ignoreSearch: true }).then((cached) => {
             if (cached) return cached;
-            if (event.request.mode === 'navigate') return caches.match('./index.html');
+            if (event.request.mode === 'navigate') {
+              return caches.match('./index.html', { ignoreSearch: true });
+            }
           });
         })
     );
@@ -124,12 +132,12 @@ self.addEventListener('fetch', (event) => {
 
   // 3. Static Assets (Images, Icons, CDNs): Cache first, fallback to network
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
+    caches.match(event.request, { ignoreSearch: true }).then((cachedResponse) => {
       if (cachedResponse) {
         return cachedResponse;
       }
       return fetch(event.request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200 || networkResponse.type === 'opaque') {
+        if (!networkResponse || (networkResponse.status !== 200 && networkResponse.type !== 'opaque')) {
           return networkResponse;
         }
         const responseToCache = networkResponse.clone();
@@ -139,7 +147,7 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       }).catch(() => {
         if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
+          return caches.match('./index.html', { ignoreSearch: true });
         }
       });
     })

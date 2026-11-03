@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.1"></script>
+  <script src="itinerary-data.js?v=20261117-v3.3"></script>
 
   <script>
     tailwind.config = {
@@ -208,6 +208,10 @@
 
           <!-- Desktop Quick Modal Buttons -->
           <div class="hidden lg:flex items-center space-x-1.5 pl-1.5 border-l border-white/20">
+            <button onclick="switchLeftTab('dining'); document.getElementById('btnLeftTabDining').scrollIntoView({ behavior: 'smooth' });" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition shadow-sm" title="4天行程餐廳訂位與避雷攻略">
+              <span>🍽️</span>
+              <span>訂位攻略</span>
+            </button>
             <button onclick="openModal('currencyModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition shadow-sm">
               <span>💴</span>
               <span>匯率</span>
@@ -430,32 +434,39 @@
          ========================================================================= -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
       
-      <!-- Left Column: Detailed Timeline Cards -->
+      <!-- Left Column: Detailed Timeline Cards & Dining Guide Tab -->
       <section class="lg:col-span-7 space-y-5">
         
-        <div class="flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-200/80 pb-2">
-          <div class="flex items-center gap-2 min-w-0">
-            <h3 class="font-extrabold text-slate-900 text-base sm:text-lg whitespace-nowrap flex items-center gap-1.5">
-              <span>⏱️ 行程時間軸</span>
-            </h3>
-            <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-sky-100 text-sky-800 shrink-0" id="timelineDayLabel">Day 1</span>
-            <span class="text-xs text-slate-400 font-mono shrink-0 hidden sm:inline" id="timelineDateLabel">2026/11/16</span>
+        <!-- Left Section Segmented Tab Switcher (時間軸 / 餐廳訂位攻略) -->
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200/80 pb-2.5">
+          <div class="flex items-center gap-1.5 p-1 bg-slate-100/90 rounded-2xl border border-slate-200/80 shadow-inner">
+            <button id="btnLeftTabTimeline" onclick="switchLeftTab('timeline')" class="px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 bg-white text-okinawa-ocean shadow-xs cursor-pointer">
+              <span>⏱️</span>
+              <span>行程時間軸</span>
+              <span class="text-[10px] font-bold px-1.5 py-0.2 rounded-full bg-sky-100 text-sky-800" id="timelineDayLabel">Day 1</span>
+            </button>
+            <button id="btnLeftTabDining" onclick="switchLeftTab('dining')" class="px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer">
+              <span>🍽️</span>
+              <span>餐廳訂位攻略</span>
+              <span class="text-[10px] bg-rose-500 text-white font-black px-1.5 py-0.2 rounded-full animate-pulse">精選</span>
+            </button>
           </div>
 
-          <!-- Card Folding Quick Controls -->
-          <div class="flex items-center gap-1.5 shrink-0">
+          <!-- Card Folding Quick Controls (Active on Timeline) -->
+          <div class="flex items-center gap-1.5 shrink-0" id="timelineControlButtons">
+            <span class="text-xs text-slate-400 font-mono shrink-0 hidden sm:inline mr-1" id="timelineDateLabel">2026/11/16</span>
             <button onclick="toggleAllCards(false)" id="btnCollapseAll" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 active:scale-95 text-slate-700 text-xs font-bold rounded-xl transition border border-slate-200/80 flex items-center gap-1 shadow-2xs cursor-pointer" title="全部收合為精簡清單">
               <span>🗂️</span>
-              <span>全部收合</span>
+              <span class="hidden xs:inline">全部收合</span>
             </button>
             <button onclick="toggleAllCards(true)" id="btnExpandAll" class="px-2.5 py-1 bg-sky-50 hover:bg-sky-100 active:scale-95 text-sky-800 text-xs font-bold rounded-xl transition border border-sky-200/80 flex items-center gap-1 shadow-2xs cursor-pointer" title="全部展開完整攻略">
               <span>📖</span>
-              <span>全部展開</span>
+              <span class="hidden xs:inline">全部展開</span>
             </button>
           </div>
         </div>
 
-        <!-- Timeline Cards Container -->
+        <!-- 1. Timeline Cards Container -->
         <div class="relative pl-6 sm:pl-8 border-l-2 border-dashed border-sky-300 space-y-5 sm:space-y-6" id="timelineContainer">
           <!-- Static skeleton shown until renderTimeline() replaces this with real cards -->
           <div class="bg-white/80 rounded-3xl p-4 sm:p-5 border border-slate-200/90 space-y-3 animate-pulse" aria-hidden="true">
@@ -469,6 +480,11 @@
             <div class="h-4 w-1/2 rounded bg-slate-200"></div>
             <div class="h-3 w-3/4 rounded bg-slate-100"></div>
           </div>
+        </div>
+
+        <!-- 2. Dining Reservation Guide Container (Left Tab Content) -->
+        <div class="hidden space-y-4 sm:space-y-5" id="diningGuideContainer">
+          <!-- Injected via JavaScript renderDiningGuide() -->
         </div>
 
       </section>
@@ -844,6 +860,13 @@
       </div>
 
       <div class="space-y-2 text-xs">
+        <button onclick="closeModal('menuModal'); switchLeftTab('dining'); document.getElementById('btnLeftTabDining').scrollIntoView({ behavior: 'smooth' });" class="w-full flex items-center justify-between p-3 bg-rose-50 hover:bg-rose-100 text-rose-900 rounded-2xl font-bold transition">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">🍽️</span>
+            <span>4天餐廳訂位 ＆ 避雷攻略</span>
+          </div>
+          <span class="text-xs text-rose-600 font-bold">查看 →</span>
+        </button>
         <button onclick="closeModal('menuModal'); openAddStopModal();" class="w-full flex items-center justify-between p-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 rounded-2xl font-bold transition">
           <div class="flex items-center gap-2.5">
             <span class="text-lg">➕</span>
@@ -922,8 +945,29 @@
     try {
       const storedData = localStorage.getItem('okinawa_trip_custom_data');
       if (typeof OKINAWA_TRIP_DATA !== 'undefined') {
-        if (savedVersion !== CURRENT_DATA_VERSION || !storedData) {
+        if (!storedData) {
           tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+          localStorage.setItem('okinawa_trip_custom_data', JSON.stringify(tripData));
+          localStorage.setItem('okinawa_trip_data_version', CURRENT_DATA_VERSION);
+        } else if (savedVersion !== CURRENT_DATA_VERSION) {
+          // Version updated: smart merge to preserve user's custom stops while adopting upstream fixes
+          const oldData = JSON.parse(storedData);
+          tripData = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA));
+
+          if (oldData && Array.isArray(oldData.days)) {
+            oldData.days.forEach(oldDay => {
+              const targetDay = tripData.days.find(d => d.day === oldDay.day);
+              if (targetDay && Array.isArray(oldDay.waypoints)) {
+                // Preserve custom waypoints added by user
+                const customWaypoints = oldDay.waypoints.filter(w => w && w.isCustom);
+                customWaypoints.forEach(cw => {
+                  if (!targetDay.waypoints.some(w => w.id === cw.id)) {
+                    targetDay.waypoints.push(cw);
+                  }
+                });
+              }
+            });
+          }
           localStorage.setItem('okinawa_trip_custom_data', JSON.stringify(tripData));
           localStorage.setItem('okinawa_trip_data_version', CURRENT_DATA_VERSION);
         } else {
@@ -1301,6 +1345,7 @@
       currentDayIndex = index;
       renderDayTabs();
       renderActiveDay();
+      switchLeftTab('timeline');
       showToast(`已切換至 Day ${tripData.days[index].day} • ${tripData.days[index].title}`, '🗓️');
     }
 
@@ -2158,7 +2203,360 @@
     }
 
     /* =========================================================================
-       4. CUSTOM STOP ADDITION & LOCAL PERSISTENCE
+       4. LEFT SECTION TABS & RESTAURANT RESERVATION GUIDE
+       ========================================================================= */
+    let currentLeftTab = 'timeline';
+
+    function switchLeftTab(tabName) {
+      currentLeftTab = tabName;
+      const btnTimeline = document.getElementById('btnLeftTabTimeline');
+      const btnDining = document.getElementById('btnLeftTabDining');
+      const timelineContainer = document.getElementById('timelineContainer');
+      const diningContainer = document.getElementById('diningGuideContainer');
+      const timelineControls = document.getElementById('timelineControlButtons');
+
+      if (tabName === 'timeline') {
+        if (btnTimeline) btnTimeline.className = 'px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 bg-white text-okinawa-ocean shadow-xs cursor-pointer';
+        if (btnDining) btnDining.className = 'px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer';
+        if (timelineContainer) timelineContainer.classList.remove('hidden');
+        if (diningContainer) diningContainer.classList.add('hidden');
+        if (timelineControls) timelineControls.classList.remove('hidden');
+      } else {
+        if (btnDining) btnDining.className = 'px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-black transition-all flex items-center gap-1.5 bg-white text-rose-600 shadow-xs cursor-pointer';
+        if (btnTimeline) btnTimeline.className = 'px-3 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 text-slate-600 hover:text-slate-900 cursor-pointer';
+        if (timelineContainer) timelineContainer.classList.add('hidden');
+        if (diningContainer) {
+          diningContainer.classList.remove('hidden');
+          renderDiningGuide();
+        }
+        if (timelineControls) timelineControls.classList.add('hidden');
+      }
+    }
+
+    function jumpFromDiningToSpot(dayIndex, spotId) {
+      switchLeftTab('timeline');
+      jumpToSpot(dayIndex, spotId);
+    }
+
+    function renderDiningGuide() {
+      const container = document.getElementById('diningGuideContainer');
+      if (!container) return;
+
+      container.innerHTML = `
+        <!-- Summary Header Banner -->
+        <div class="bg-gradient-to-br from-rose-50 via-amber-50/60 to-orange-50 border-2 border-rose-200/90 rounded-3xl p-4 sm:p-5 shadow-card space-y-2.5">
+          <div class="flex items-center justify-between gap-2 border-b border-rose-200/60 pb-2.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-2xl">🍽️</span>
+              <div>
+                <h3 class="font-black text-slate-900 text-base sm:text-lg">沖繩 4 天 3 夜餐廳訂位 ＆ 避雷全攻略</h3>
+                <p class="text-xs text-slate-500">依店家營運規範精準整理 • 提前線上訂位 • App外帶預約 • 現場抽號錯峰指南</p>
+              </div>
+            </div>
+            <button onclick="switchLeftTab('timeline')" class="text-xs font-bold px-3 py-1.5 bg-white hover:bg-slate-50 text-slate-700 rounded-xl border border-slate-200 shadow-2xs transition">
+              返回時間軸 ➔
+            </button>
+          </div>
+          <div class="flex flex-wrap gap-1.5 text-[11px] font-bold">
+            <span class="px-2.5 py-1 rounded-lg bg-rose-500 text-white shadow-2xs">🔥 2 家強烈建議提前訂位</span>
+            <span class="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 border border-amber-300">📞 2 家建議電話/App預訂</span>
+            <span class="px-2.5 py-1 rounded-lg bg-sky-100 text-sky-900 border border-sky-300">🎫 4 家熱門現場抽號避雷</span>
+          </div>
+        </div>
+
+        <!-- Section 1: 最關鍵・強烈建議提前訂位 -->
+        <div class="space-y-3">
+          <div class="flex items-center justify-between border-b border-slate-200/80 pb-1.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg">🔥</span>
+              <h4 class="font-black text-slate-900 text-sm sm:text-base">最關鍵・強烈建議提前訂位（2 家）</h4>
+            </div>
+            <span class="text-[10px] bg-rose-500 text-white font-bold px-2 py-0.5 rounded-full">避免大排長龍</span>
+          </div>
+
+          <!-- Card 1: 琉球的牛 -->
+          <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border-2 border-rose-200 shadow-card space-y-3 hover:shadow-lg transition">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-rose-600 text-white shadow-2xs">🥩 燒肉 琉球的牛 (那霸久茂地店)</span>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-rose-50 text-rose-700 border border-rose-200 font-mono">Day 3 晚餐 19:50</span>
+                <span class="text-[10px] bg-red-100 text-red-900 font-bold px-1.5 py-0.5 rounded">極上黑毛和牛</span>
+              </div>
+              <span class="text-xs font-mono font-bold text-slate-500">TEL: 098-988-3409</span>
+            </div>
+
+            <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-3 text-xs text-rose-950 space-y-1">
+              <div class="font-bold text-rose-900 flex items-center gap-1.5">
+                <span>⚠️ 訂位攻略與關鍵理由：</span>
+              </div>
+              <p class="leading-relaxed"><strong>【強烈建議出發前 1~2 週線上預訂】</strong>！琉球的牛在沖繩有三家店，之所以首推【久茂地店】，是因為剛好在 19:30 赤嶺還車後搭單軌直達縣廳前站，<strong>【全員可暢飲 Orion 生啤與泡盛梅酒，完全無自駕酒駕顧慮】</strong>！若未預約現場候補需等 30~50 分鐘以上。</p>
+            </div>
+
+            <div class="text-xs text-slate-700 space-y-1">
+              <p>• <strong>老饕點餐建議：</strong>雙人必點「頂級特選上等牛五花盛合套餐」，油花如大理石般細緻，炭火炙燒 5 秒入口即化；搭配炙燒和牛握壽司與石鍋拌飯極度滿足。</p>
+              <p>• <strong>老饕備案：</strong>WAGYU SUKIYAKI 極~GOKU~（黑毛和牛壽喜燒/支援線上預約）、沖繩麵 EIBUN、Buchi 久茂地炭火內臟燒肉、通堂拉麵。</p>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+              <a href="https://www.u-shi.net/" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[140px] px-3.5 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition">
+                <span>🔗</span>
+                <span>TableCheck 官網中文線上訂位</span>
+              </a>
+              <a href="tel:098-988-3409" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold font-mono flex items-center gap-1">
+                <span>📞</span>
+                <span>致電保留</span>
+              </a>
+              <button onclick="jumpFromDiningToSpot(2, 'd3-12')" class="px-3.5 py-2 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-xl text-xs font-bold flex items-center gap-1 transition">
+                <span>📍</span>
+                <span>查看 Day 3 行程卡片</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Card 2: テンダーロインステーキハウス (菲力牛排) -->
+          <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 sm:p-5 border-2 border-amber-200 shadow-card space-y-3 hover:shadow-lg transition">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div class="flex items-center gap-2 flex-wrap">
+                <span class="text-xs font-black px-2.5 py-1 rounded-lg bg-amber-600 text-white shadow-2xs">🥩 テンダーロインステーキハウス 那覇東町店</span>
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-50 text-amber-700 border border-amber-200 font-mono">Day 1 晚餐 20:50 (建議約 21:00)</span>
+                <span class="text-[10px] bg-amber-100 text-amber-900 font-bold px-1.5 py-0.5 rounded">厚切菲力</span>
+              </div>
+              <span class="text-xs font-mono font-bold text-slate-500">TEL: 098-971-4528</span>
+            </div>
+
+            <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3 text-xs text-amber-950 space-y-1">
+              <div class="font-bold text-amber-900 flex items-center gap-1.5">
+                <span>💡 訂位指引與省時秘訣：</span>
+              </div>
+              <p class="leading-relaxed"><strong>【可線上網路預約免排隊】</strong>：支援日本 Hotpepper / Tabelog 線上訂位，亦可電洽 098-971-4528。距離 Nest Hotel 步行僅 3 分鐘。比起鄰近的傑克牛排大排長龍 30~50 分鐘且無法預約，此店提前預約即可第一天下機出關直奔從容入座！</p>
+            </div>
+
+            <div class="text-xs text-slate-700 space-y-1">
+              <p>• <strong>肉質亮點：</strong>2026年盛大開幕高評價專門店，主打少油花負擔、軟嫩多汁的頂級厚切菲力牛排，鐵板滋滋作響。</p>
+              <p>• <strong>現場排隊備案：</strong>傑克牛排館（昭和美軍懷舊名店/現場抽號候位約 15~25 分鐘）、HANGERBAR CLAMP 美式漢堡、Miruku 阿古豬涮涮鍋。</p>
+            </div>
+
+            <div class="pt-2 border-t border-slate-100 flex flex-wrap items-center gap-2">
+              <a href="https://www.google.com/maps/dir/?api=1&destination=26.2132,127.6740&travelmode=walking" target="_blank" class="flex-1 min-w-[120px] px-3.5 py-2 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm active:scale-95 transition">
+                <span>🗺️</span>
+                <span>步行導航前往</span>
+              </a>
+              <a href="tel:098-971-4528" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold font-mono flex items-center gap-1">
+                <span>📞</span>
+                <span>電話預約</span>
+              </a>
+              <button onclick="jumpFromDiningToSpot(0, 'd1-4')" class="px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-800 rounded-xl text-xs font-bold flex items-center gap-1 transition">
+                <span>📍</span>
+                <span>查看 Day 1 行程卡片</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: 建議出發前電話預訂 / App 線上點單 -->
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between border-b border-slate-200/80 pb-1.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg">📞</span>
+              <h4 class="font-black text-slate-900 text-sm sm:text-base">建議出發前電話預訂 / App 線上點單（2 家）</h4>
+            </div>
+            <span class="text-[10px] bg-amber-500 text-white font-bold px-2 py-0.5 rounded-full">提早安排零壓力</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+            <!-- Card 3: 濱比嘉島 てぃーらぶい -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 border border-slate-200 shadow-card space-y-2.5">
+              <div class="flex items-center justify-between gap-1">
+                <span class="text-xs font-bold px-2 py-0.5 rounded-lg bg-emerald-600 text-white">🍱 てぃーらぶい (Tirabui)</span>
+                <span class="text-[10px] text-slate-400 font-mono">Day 3 12:30</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                <strong>神之島百年古民家食堂</strong>：隱身在咕咾石矮牆間，品嚐島野菜天婦羅與鹽炊阿古豬。座位少，建議出發前 1~2 天致電 <strong>098-977-7688</strong> 預訂 12:30 席位。
+              </p>
+              <div class="text-[11px] text-slate-500">
+                • <strong>客滿備案：</strong>海中道路中央「海之驛 2F 海景餐廳」(免排隊)、丸吉食品現炸小螃蟹天婦羅。
+              </div>
+              <div class="pt-1.5 flex items-center gap-1.5">
+                <a href="tel:098-977-7688" class="flex-1 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl text-center text-xs font-bold">
+                  📞 致電預訂
+                </a>
+                <button onclick="jumpFromDiningToSpot(2, 'd3-5')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-center text-xs font-semibold">
+                  📍 查看卡片
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 4: Potama 豬肉蛋飯糰 -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 border border-slate-200 shadow-card space-y-2.5">
+              <div class="flex items-center justify-between gap-1">
+                <span class="text-xs font-bold px-2 py-0.5 rounded-lg bg-orange-600 text-white">🍙 Potama 牧志本店</span>
+                <span class="text-[10px] text-slate-400 font-mono">Day 4 09:15</span>
+              </div>
+              <p class="text-xs text-slate-600 leading-relaxed">
+                <strong>免排隊密技</strong>：現場常排隊 40 分鐘。強烈建議手機下載官方<strong>「FastPick App」</strong>提早 30~60 分鐘線上點單付款，指定 09:30 取餐，直接到外帶窗口提領！
+              </p>
+              <div class="text-[11px] text-slate-500">
+                • <strong>特色推薦：</strong>現炸海老明太子厚蛋飯糰、苦瓜天婦羅飯糰。
+              </div>
+              <div class="pt-1.5 flex items-center gap-1.5">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=26.2146,127.6883&travelmode=walking" target="_blank" class="flex-1 py-1.5 bg-orange-50 hover:bg-orange-100 text-orange-800 rounded-xl text-center text-xs font-bold">
+                  🗺️ 步行前往
+                </a>
+                <button onclick="jumpFromDiningToSpot(3, 'd4-2')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-center text-xs font-semibold">
+                  📍 查看卡片
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: 熱門現場抽號名店（避雷攻略） -->
+        <div class="space-y-3 pt-2">
+          <div class="flex items-center justify-between border-b border-slate-200/80 pb-1.5">
+            <div class="flex items-center space-x-2">
+              <span class="text-lg">🎫</span>
+              <h4 class="font-black text-slate-900 text-sm sm:text-base">熱門現場抽號名店（避雷與錯峰攻略）</h4>
+            </div>
+            <span class="text-[10px] bg-sky-500 text-white font-bold px-2 py-0.5 rounded-full">現場抽號不開預約</span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="p-3 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-1">
+              <div class="flex items-center justify-between font-bold text-slate-900">
+                <span>🥢 百年古家 大家 阿古豬 (名護)</span>
+                <span class="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded">Day 2 14:05</span>
+              </div>
+              <p class="text-slate-600 text-[11px] leading-relaxed">
+                午餐（11:00-16:00）不開預約僅現場抽號。行程特意安排在 <strong>14:05 抵達</strong>，完美錯過中午尖峰，免大排長龍！
+              </p>
+            </div>
+
+            <div class="p-3 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-1">
+              <div class="flex items-center justify-between font-bold text-slate-900">
+                <span>🍤 古宇利蝦蝦飯 (KOURI SHRIMP)</span>
+                <span class="text-[10px] text-amber-700 bg-amber-50 px-1.5 py-0.2 rounded">Day 2 12:30</span>
+              </div>
+              <p class="text-slate-600 text-[11px] leading-relaxed">
+                全店採現場觸控式螢幕點餐機（可刷卡/現金）。12:30 抵達搶先點單，在頂樓露台吹海風等叫號。
+              </p>
+            </div>
+
+            <div class="p-3 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-1">
+              <div class="flex items-center justify-between font-bold text-slate-900">
+                <span>🥞 Seaside Cafe Hanon (美國村)</span>
+                <span class="text-[10px] text-indigo-700 bg-indigo-50 px-1.5 py-0.2 rounded">Day 3 16:35</span>
+              </div>
+              <p class="text-slate-600 text-[11px] leading-relaxed">
+                不開放訂位，於門口平板電腦登記取號，支援手機掃 QR Code 查看即時叫號進度，等候時可在 Depot Island 商店街漫步。
+              </p>
+            </div>
+
+            <div class="p-3 bg-slate-50/90 rounded-2xl border border-slate-200 space-y-1">
+              <div class="flex items-center justify-between font-bold text-slate-900">
+                <span>🥣 まるたま味噌早餐 (那霸泉崎)</span>
+                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded">Day 2 07:45</span>
+              </div>
+              <p class="text-slate-600 text-[11px] leading-relaxed">
+                清晨 07:30 開始供應朝食定食，早晨人潮多為在地客，07:45 抵達即可輕鬆入座享用 160 年玉那霸味噌熱湯。
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: 第一夜國際通行程 (雪塩霜淇淋 & 唐吉訶德) -->
+        <div class="bg-gradient-to-r from-sky-50/90 via-cyan-50/60 to-purple-50/80 rounded-3xl p-4 border border-sky-200/90 shadow-sm space-y-2 text-xs">
+          <div class="flex items-center justify-between font-bold text-slate-900">
+            <span class="flex items-center gap-1.5">
+              <span>🌙</span>
+              <span>第一晚國際通夜遊亮點 (Day 1 晚間)</span>
+            </span>
+            <span class="text-[10px] bg-sky-200/80 text-sky-900 px-2 py-0.5 rounded font-black">22:00~23:30</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px] text-slate-700 pt-1">
+            <div class="p-2.5 bg-white/90 rounded-xl border border-sky-200/80 space-y-0.5">
+              <strong class="text-sky-900 block font-bold">🍦 宮古島の雪塩 國際通松尾店 (22:00~22:30)：</strong>
+              <p>必吃雪塩霜淇淋！店內提供柚子鹽、抹茶鹽等多種風味鹽自行撒在霜淇淋上調味，兼購雪塩金楚糕伴手禮。</p>
+              <div class="pt-1">
+                <button onclick="jumpFromDiningToSpot(0, 'd1-5')" class="text-[10px] text-sky-700 bg-sky-50 hover:bg-sky-100 px-2 py-0.5 rounded font-bold transition">📍 查看卡片</button>
+              </div>
+            </div>
+            <div class="p-2.5 bg-white/90 rounded-xl border border-purple-200/80 space-y-0.5">
+              <strong class="text-purple-900 block font-bold">🐧 唐吉訶德 國際通店 (22:30~23:30)：</strong>
+              <p>全棟 24 小時不打烊！第一晚採購首夜啤酒宵夜與隨身藥妝，滿 ¥5,000 直接免稅，步行 10 分即可返回飯店。</p>
+              <div class="pt-1">
+                <button onclick="jumpFromDiningToSpot(0, 'd1-6')" class="text-[10px] text-purple-700 bg-purple-50 hover:bg-purple-100 px-2 py-0.5 rounded font-bold transition">📍 查看卡片</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: 深夜食堂神級推薦 ＆ 寶可夢官方旗艦 -->
+        <div class="bg-gradient-to-r from-rose-50/90 via-amber-50/60 to-yellow-50/80 rounded-3xl p-4 sm:p-5 border-2 border-amber-200/90 shadow-card space-y-3">
+          <div class="flex items-center justify-between border-b border-amber-200/70 pb-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-xl">🌟</span>
+              <h4 class="font-black text-slate-900 text-sm sm:text-base">新增私藏亮點：深夜神級拉麵 ＆ 寶可夢官方旗艦</h4>
+            </div>
+            <span class="text-[10px] bg-amber-500 text-white font-bold px-2 py-0.5 rounded-full">新入精選</span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <!-- Maruko Card -->
+            <div class="bg-white/95 rounded-2xl p-3.5 border border-amber-200 space-y-2 flex flex-col justify-between">
+              <div class="space-y-1">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="font-bold text-slate-900 flex items-center gap-1">
+                    <span>🍜</span>
+                    <span>Ramen Paradise Maruko (丸幸)</span>
+                  </span>
+                  <span class="text-[10px] bg-rose-100 text-rose-800 font-bold px-1.5 py-0.5 rounded">Day 2 宵夜 22:30</span>
+                </div>
+                <div class="text-[11px] text-amber-800 font-medium">★ Google 評價 4.9 分神級隱藏版・那霸松尾巷弄</div>
+                <p class="text-slate-600 text-[11px] leading-relaxed">
+                  專注單一品項濃厚豚骨醬油拉麵！湯頭濃醇甘甜、毫無腥臊味，叉燒厚切炙烤香氣逼人。推薦選細麵，吃完可加「替玉」！夜間 18:00 營業至深夜 24:00/01:00，長途自駕回飯店後的極致暖胃收尾。
+                </p>
+              </div>
+              <div class="pt-2 border-t border-slate-100 flex items-center gap-1.5">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=26.2142,127.6881&travelmode=walking" target="_blank" class="flex-1 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-xl text-center text-xs font-bold transition">
+                  🗺️ 步行前往
+                </a>
+                <button onclick="jumpFromDiningToSpot(1, 'd2-17')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-center text-xs font-bold transition">
+                  📍 查看 Day 2 卡片
+                </button>
+              </div>
+            </div>
+
+            <!-- Pokemon Center Card -->
+            <div class="bg-white/95 rounded-2xl p-3.5 border border-yellow-200 space-y-2 flex flex-col justify-between">
+              <div class="space-y-1">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="font-bold text-slate-900 flex items-center gap-1">
+                    <span>⚡</span>
+                    <span>沖繩寶可夢中心 (Pokémon Center)</span>
+                  </span>
+                  <span class="text-[10px] bg-yellow-100 text-yellow-900 font-bold px-1.5 py-0.5 rounded">Day 3 下午 14:40</span>
+                </div>
+                <div class="text-[11px] text-amber-800 font-medium">永旺夢樂城沖繩來客夢 1F • 全沖繩唯一官方旗艦</div>
+                <p class="text-slate-600 text-[11px] leading-relaxed">
+                  海中道路前往美國村的中途順路必訪！門口等身大「風速狗與衝浪皮卡丘」迎賓，直衝天花板阿羅拉椰蛋樹。必搶沖繩限定「花襯衫（Kariyushi）皮卡丘」與琉舞皮卡丘布偶！
+                </p>
+              </div>
+              <div class="pt-2 border-t border-slate-100 flex items-center gap-1.5">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=26.3145,127.7955&travelmode=driving" target="_blank" class="flex-1 py-1.5 bg-yellow-50 hover:bg-yellow-100 text-yellow-900 rounded-xl text-center text-xs font-bold transition">
+                  🗺️ 駕車導航
+                </a>
+                <button onclick="jumpFromDiningToSpot(2, 'd3-7')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-center text-xs font-bold transition">
+                  📍 查看 Day 3 卡片
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* =========================================================================
+       5. CUSTOM STOP ADDITION & LOCAL PERSISTENCE
        ========================================================================= */
     function openAddStopModal() {
       const day = tripData.days[currentDayIndex];
@@ -2174,10 +2572,16 @@
       const name = document.getElementById('stopNameInput').value.trim();
       const time = document.getElementById('stopTimeInput').value.trim() || '彈性時段';
       const category = document.getElementById('stopCategoryInput').value;
-      const lat = parseFloat(document.getElementById('stopLatInput').value) || (day.waypoints[0] ? day.waypoints[0].coords[0] : 26.2124);
-      const lng = parseFloat(document.getElementById('stopLngInput').value) || (day.waypoints[0] ? day.waypoints[0].coords[1] : 127.6809);
+      const rawLat = document.getElementById('stopLatInput').value.trim();
+      const rawLng = document.getElementById('stopLngInput').value.trim();
+      const hasCoords = rawLat !== '' && rawLng !== '' && !isNaN(parseFloat(rawLat)) && !isNaN(parseFloat(rawLng));
+      const lat = hasCoords ? parseFloat(rawLat) : (day.waypoints[0] ? day.waypoints[0].coords[0] : 26.2124);
+      const lng = hasCoords ? parseFloat(rawLng) : (day.waypoints[0] ? day.waypoints[0].coords[1] : 127.6809);
       const mapCode = document.getElementById('stopMapCodeInput').value.trim();
       const desc = document.getElementById('stopDescInput').value.trim();
+      const googleMapsUrl = hasCoords
+        ? `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`
+        : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(name + ' 沖繩')}&travelmode=driving`;
 
       const newWaypoint = {
         id: `custom-${Date.now()}`,
@@ -2186,7 +2590,7 @@
         time: time,
         coords: [lat, lng],
         mapCode: mapCode,
-        googleMapsUrl: `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}&travelmode=driving`,
+        googleMapsUrl: googleMapsUrl,
         color: '#06b6d4',
         icon: category === '美食' ? '🍜' : category === '購物' ? '🛍️' : '📍',
         parkingInfo: '自訂地點',
