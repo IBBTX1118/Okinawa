@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.3"></script>
+  <script src="itinerary-data.js?v=20261117-v3.4"></script>
 
   <script>
     tailwind.config = {
@@ -220,6 +220,10 @@
               <span>🎒</span>
               <span>清單</span>
               <span id="checklistBadge" class="bg-rose-500 text-[10px] text-white px-1.5 py-0.2 rounded-full font-bold">0</span>
+            </button>
+            <button onclick="openModal('taxFreeModal')" class="bg-amber-400/25 hover:bg-amber-400/35 border border-amber-300/50 px-2.5 py-1.5 rounded-xl text-xs font-bold text-amber-200 flex items-center gap-1 transition shadow-sm" title="2026/11 日本退稅新制流程與主流 App 下載">
+              <span>🧾</span>
+              <span>退稅新制</span>
             </button>
             <button onclick="openModal('drivingModal')" class="bg-white/15 hover:bg-white/25 border border-white/25 px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1 transition shadow-sm">
               <span>🚗</span>
@@ -739,6 +743,326 @@
     </div>
   </div>
 
+  <!-- 3.5. 2026/11 Japan Tax-Free New System & Mainstream Apps Modal -->
+  <div id="taxFreeModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
+    <div class="modal-backdrop fixed inset-0" onclick="closeModal('taxFreeModal')"></div>
+    <div class="bg-white rounded-3xl p-4 sm:p-6 w-full max-w-2xl z-10 shadow-2xl space-y-3.5 border border-slate-200 relative max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+      
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">🧾</span>
+          <div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <h3 class="font-black text-slate-900 text-base sm:text-lg">2026/11 日本退稅新制 ＆ 主流退稅 App</h3>
+              <span class="text-[10px] bg-rose-500 text-white font-black px-2 py-0.5 rounded-full">11/1 正式上路</span>
+            </div>
+            <p class="text-[11px] text-slate-500 mt-0.5">改採「先付含稅價、機場海關 KIOSK 查驗後退稅」• 百貨退稅 App 一鍵下載</p>
+          </div>
+        </div>
+        <button onclick="closeModal('taxFreeModal')" aria-label="關閉退稅新制視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
+      </div>
+
+      <!-- Segmented Tab Toggle -->
+      <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs shrink-0">
+        <button id="btnTaxTabFlow" onclick="switchTaxFreeTab('flow')" class="flex-1 py-2 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer">
+          📋 新制 4 步驟 ＆ 沖繩避坑
+        </button>
+        <button id="btnTaxTabApps" onclick="switchTaxFreeTab('apps')" class="flex-1 py-2 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer">
+          📲 4大主流退稅 App 下載 ＆ VJW
+        </button>
+      </div>
+
+      <!-- TAB 1: 2026/11 Tax-Free 4-Step Flow & Okinawa Shopping Stops -->
+      <div id="taxFreeTabFlowContent" class="overflow-y-auto flex-grow space-y-3.5 pr-1 text-xs">
+        
+        <!-- Critical Airport Warning Banner -->
+        <div class="bg-gradient-to-r from-rose-50 via-amber-50/80 to-rose-50 border-2 border-rose-300 rounded-2xl p-3.5 space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-black text-rose-900 text-xs sm:text-sm flex items-center gap-1.5">
+              <span>🚨</span>
+              <span>最關鍵死線：那霸機場出境「先刷海關 KIOSK、再託運行李」！</span>
+            </span>
+            <span class="text-[10px] bg-rose-600 text-white font-bold px-2 py-0.5 rounded-full shrink-0">Day 4 必看</span>
+          </div>
+          <p class="text-[11px] sm:text-xs text-slate-700 leading-relaxed">
+            回程抵達那霸機場國際線 3F 大廳時，<strong>絕對不能先把裝有退稅品的行李箱拿去航空公司託運！</strong>必須先推著行李到出發大廳的<strong>「海關免稅自助機 (KIOSK)」掃描護照驗證</strong>（螢幕亮<strong>綠燈</strong>即直接放行去託運；若亮<strong>紅燈</strong>須當場開箱給海關查驗實體商品）。若先託運導致無法驗貨，整筆退稅將直接失效！
+          </p>
+        </div>
+
+        <!-- 4-Step New Flow Cards -->
+        <div class="space-y-2">
+          <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center gap-1.5">
+            <span>🔄</span>
+            <span>2026/11 日本「先付後退 (Refund 制)」4 大核心步驟</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="p-3 rounded-2xl bg-sky-50/70 border border-sky-200 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-sky-900">STEP 1｜市區先付含稅全額</span>
+                <span class="text-[10px] bg-sky-200/80 text-sky-900 font-bold px-1.5 py-0.5 rounded">單日未稅滿 ¥5,000</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                同店同日未稅滿 ¥5,000 即可辦理（已廢除 50 萬日圓上限與一般品／消耗品分類）。結帳出示<strong>護照或 VJW 免稅 QR Code</strong>，先支付含 10%（食品 8%）消費稅全額。
+              </p>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-amber-900">STEP 2｜App 或掃碼綁定信用卡</span>
+                <span class="text-[10px] bg-amber-200/80 text-amber-900 font-bold px-1.5 py-0.5 rounded">選日圓刷退最省</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                依商場配合系統，使用 <strong>PIE VAT / Global Blue App</strong> 或用手機相機掃描退稅單 QR Code（<strong>J-TaxRefund / Smart Detax</strong>），首次登錄護照並綁定信用卡作為退款帳戶。
+              </p>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-emerald-50/70 border border-emerald-200 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-emerald-900">STEP 3｜免密封袋自由裝箱</span>
+                <span class="text-[10px] bg-emerald-200/80 text-emerald-900 font-bold px-1.5 py-0.5 rounded">境內吃喝須分開結</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                新制<strong>全面取消紅色防拆透明密封袋</strong>，藥妝零食可直接拆袋平整塞入大行李箱！但<strong>在日本境內要立刻吃喝使用的商品（如當晚 Orion 啤酒）務必分開結帳</strong>；高單價商品建議放行李箱上層備查。
+              </p>
+            </div>
+
+            <div class="p-3 rounded-2xl bg-indigo-50/70 border border-indigo-200 space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-indigo-900">STEP 4｜機場 KIOSK 刷護照退稅</span>
+                <span class="text-[10px] bg-indigo-200/80 text-indigo-900 font-bold px-1.5 py-0.5 rounded">託運行李前完成</span>
+              </div>
+              <p class="text-[11px] text-slate-600 leading-relaxed">
+                購買後 90 天內出境。於那霸機場託運前至海關 KIOSK 機台刷護照確認攜出（綠燈秒過），系統即自動將稅金退回您綁定的信用卡！
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison: General Tax-Free vs Okinawa DFS Duty-Free -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-2">
+          <div class="font-black text-slate-900 flex items-center justify-between">
+            <span>💡 沖繩獨有差異：一般商場退稅 (Tax-Free) vs. 歌町 DFS 免稅店 (Duty-Free)</span>
+            <span class="text-[10px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded font-bold">重要區別</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200">
+              <strong class="text-sky-800 block mb-0.5">🏬 一般商場／藥妝（ASHIBINAA、唐吉訶德、PARCO、來客夢、Main Place）：</strong>
+              <span class="text-slate-600">適用 2026/11 新制<strong>「先付含稅價 ＋ 數位登錄 ＋ 機場託運前刷海關 KIOSK 後退回信用卡」</strong>。商品當場帶走裝箱。</span>
+            </div>
+            <div class="p-2.5 bg-white rounded-xl border border-slate-200">
+              <strong class="text-emerald-800 block mb-0.5">💎 迪斐世 DFS 沖繩那霸店（Day 4 歌町站空橋直通）：</strong>
+              <span class="text-slate-600">全日本唯一市區關稅免稅店！<strong>結帳當下直接以免稅價付款</strong>，市區不拿貨，憑提貨單於<strong>那霸機場出境安檢後的管制區櫃台</strong>直接提領上飛機！</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Okinawa 4-Day Shopping Stops Quick Reference & Jump -->
+        <div class="space-y-2">
+          <div class="font-black text-slate-900 flex items-center justify-between">
+            <span>🗺️ 本次沖繩 4 天行程購物站點退稅對應表（點擊定位卡片）</span>
+            <button onclick="switchTaxFreeTab('apps')" class="text-[11px] text-sky-600 hover:underline font-bold">去下載 App ➔</button>
+          </div>
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-sky-50/70 border border-slate-200 transition gap-2">
+              <div class="min-w-0">
+                <div class="font-bold text-slate-900">Day 1 • 沖繩 ASHIBINAA Outlet (19:05~20:00)</div>
+                <div class="text-[11px] text-slate-500">Montbell 戶外裝備常採 <strong>PIE VAT App</strong>；Vivienne 與精品專櫃採 <strong>Global Blue / J-TaxRefund</strong>，請於 19:35 前結帳登錄。</div>
+              </div>
+              <button onclick="jumpFromTaxFreeToSpot(0, 'd1-2')" class="shrink-0 px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-xl font-bold text-[11px] cursor-pointer">定位 D1 ➔</button>
+            </div>
+
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-sky-50/70 border border-slate-200 transition gap-2">
+              <div class="min-w-0">
+                <div class="font-bold text-slate-900">Day 1 • 唐吉訶德 那霸國際通店 (22:30~23:30)</div>
+                <div class="text-[11px] text-slate-500">24H 免稅櫃台辦理數位退稅登錄（免密封袋好裝箱）；<strong>當晚要在飯店喝的 Orion 生啤與宵夜務必分開結帳！</strong></div>
+              </div>
+              <button onclick="jumpFromTaxFreeToSpot(0, 'd1-6')" class="shrink-0 px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-xl font-bold text-[11px] cursor-pointer">定位 D1 ➔</button>
+            </div>
+
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-sky-50/70 border border-slate-200 transition gap-2">
+              <div class="min-w-0">
+                <div class="font-bold text-slate-900">Day 2 • UNIQLO 浦添 PARCO CITY 店 (20:40~21:50)</div>
+                <div class="text-[11px] text-slate-500">UTme! 客製 T 恤與服飾合計未稅滿 ¥5,000，於 21:40 取件時出示護照／VJW 辦理先付後退登錄。</div>
+              </div>
+              <button onclick="jumpFromTaxFreeToSpot(1, 'd2-15')" class="shrink-0 px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-xl font-bold text-[11px] cursor-pointer">定位 D2 ➔</button>
+            </div>
+
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-sky-50/70 border border-slate-200 transition gap-2">
+              <div class="min-w-0">
+                <div class="font-bold text-slate-900">Day 3 • 沖繩寶可夢中心 • 永旺夢樂城來客夢 (14:40~15:45)</div>
+                <div class="text-[11px] text-slate-500">花襯衫皮卡丘與周邊滿 ¥5,000 結帳登錄；AEON 商場廣泛採用 <strong>Smart Detax (JPrefund) / J-TaxRefund</strong> 免下載掃碼系統。</div>
+              </div>
+              <button onclick="jumpFromTaxFreeToSpot(2, 'd3-7')" class="shrink-0 px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-xl font-bold text-[11px] cursor-pointer">定位 D3 ➔</button>
+            </div>
+
+            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-sky-50/70 border border-slate-200 transition gap-2">
+              <div class="min-w-0">
+                <div class="font-bold text-slate-900">Day 4 • San-A Main Place ＆ DFS 免稅店 ＆ 那霸機場出境</div>
+                <div class="text-[11px] text-slate-500">Main Place 超市伴手禮採新制退稅；14:50 抵達那霸機場國際線 3F <strong>先刷海關 KIOSK ➔ 再辦託運 ➔ 管制區領 DFS 精品</strong>。</div>
+              </div>
+              <button onclick="jumpFromTaxFreeToSpot(3, 'd4-7')" class="shrink-0 px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl font-bold text-[11px] cursor-pointer">機場死線 ➔</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- TAB 2: Mainstream Department Store Tax-Free Apps & Download Links -->
+      <div id="taxFreeTabAppsContent" class="hidden overflow-y-auto flex-grow space-y-3.5 pr-1 text-xs">
+        
+        <!-- Pro Tip on Refund Method & Fees -->
+        <div class="bg-amber-50/90 border border-amber-200 rounded-2xl p-3 space-y-1">
+          <div class="font-black text-amber-900 flex items-center gap-1.5">
+            <span>💳</span>
+            <span>省錢避坑重點：退款管道一律首選「信用卡（日圓 JPY 結算）」！</span>
+          </div>
+          <p class="text-[11px] text-slate-700 leading-relaxed">
+            在各大退稅 App 或網頁綁定退款方式時，請優先綁定<strong>海外高回饋信用卡或雙幣卡（選擇以日圓刷退）</strong>。<strong>千萬不要選擇「跨國銀行電匯回台灣台幣帳戶」</strong>，否則跨國電匯與台灣銀行外匯入帳手續費（約 NT$300~400）會直接把小額退稅金吃光！
+          </p>
+        </div>
+
+        <!-- Category A: Standalone Apps to Pre-Download -->
+        <div class="space-y-2.5">
+          <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center justify-between border-b border-slate-100 pb-1">
+            <span>📲 類別一：建議出國前預先下載註冊之獨立退稅 App（2 款）</span>
+            <span class="text-[10px] bg-sky-100 text-sky-800 px-2 py-0.5 rounded-full font-bold">支援 iOS / Android</span>
+          </div>
+
+          <!-- 1. PIE VAT -->
+          <div class="p-3.5 rounded-2xl bg-white border-2 border-sky-200/90 shadow-2xs space-y-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-base">🥧</span>
+                  <h4 class="font-black text-slate-900 text-sm">1. PIE VAT（大型 Outlet ＆ Montbell 戶外品牌主力）</h4>
+                  <span class="text-[10px] bg-rose-500 text-white font-bold px-2 py-0.5 rounded-full">強烈建議預載</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">適用百貨／商場：<strong>Montbell（Day 1 ASHIBINAA 必逛）</strong>、三井 Outlet Park 系列、LaLaport、東急 Plaza 等大型購物中心</p>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-700 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+              <strong>使用流程：</strong>出發前先下載 App 註冊並綁定信用卡 ➔ 結帳付含稅價並向店員索取<strong>含 QR Code 的退稅收據</strong> ➔ 打開 PIE VAT 掃描 QR Code、拍攝收據與護照上傳（大型商場亦設 PIE VAT Station 機台）➔ 機場海關 KIOSK 驗證後直接退回信用卡（平台手續費約 1.5%~3%）。
+            </p>
+            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+              <a href="https://apps.apple.com/app/pie-vat/id1438421140" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[135px] py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-center flex items-center justify-center gap-1.5 transition active:scale-95">
+                <span>🍎</span>
+                <span>iOS App Store 下載</span>
+              </a>
+              <a href="https://play.google.com/store/apps/details?id=io.piesystems.pie" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[135px] py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-center flex items-center justify-center gap-1.5 transition active:scale-95">
+                <span>🤖</span>
+                <span>Google Play 下載</span>
+              </a>
+              <a href="https://pievat.com/" target="_blank" rel="noopener noreferrer" class="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold text-center transition">
+                🌐 官網說明 ↗
+              </a>
+            </div>
+          </div>
+
+          <!-- 2. Global Blue -->
+          <div class="p-3.5 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-2.5">
+            <div class="flex items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2 flex-wrap">
+                  <span class="text-base">🌐</span>
+                  <h4 class="font-black text-slate-900 text-sm">2. Global Blue – Shop Tax Free（日本傳統高端百貨 ＆ 國際精品霸主）</h4>
+                  <span class="text-[10px] bg-indigo-100 text-indigo-800 font-bold px-2 py-0.5 rounded-full">精品百貨必備</span>
+                </div>
+                <p class="text-[11px] text-slate-500 mt-0.5">適用百貨／商場：<strong>高島屋、三越伊勢丹、大丸松坂屋、阪急百貨</strong> 及各大國際名牌精品專櫃</p>
+              </div>
+            </div>
+            <p class="text-[11px] text-slate-700 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+              <strong>使用流程：</strong>於 App 內掃描護照建立數位 Shop Tax Free 卡與預設退款信用卡 ➔ 於百貨退稅櫃台出示 App 條碼快速登錄，即時在手機追蹤每筆退稅入帳狀態（手續費約 1.5%~2.1%）。
+            </p>
+            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+              <a href="https://apps.apple.com/app/global-blue-shop-tax-free/id930773957" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[135px] py-2 px-3 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold text-center flex items-center justify-center gap-1.5 transition active:scale-95">
+                <span>🍎</span>
+                <span>iOS App Store 下載</span>
+              </a>
+              <a href="https://play.google.com/store/apps/details?id=com.globalblue.shopper" target="_blank" rel="noopener noreferrer" class="flex-1 min-w-[135px] py-2 px-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-center flex items-center justify-center gap-1.5 transition active:scale-95">
+                <span>🤖</span>
+                <span>Google Play 下載</span>
+              </a>
+              <a href="https://www.globalblue.com/" target="_blank" rel="noopener noreferrer" class="py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl font-semibold text-center transition">
+                🌐 官網說明 ↗
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category B: Web-based QR Platforms & Official VJW -->
+        <div class="space-y-2.5 pt-1">
+          <div class="font-black text-slate-900 text-xs sm:text-sm flex items-center justify-between border-b border-slate-100 pb-1">
+            <span>🔗 類別二：免下載 App • 手機掃碼自動歸戶平台 ＆ 官方 VJW（3 大系統）</span>
+            <span class="text-[10px] bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">網頁即開即用</span>
+          </div>
+
+          <!-- 3. J-TaxRefund -->
+          <div class="p-3 rounded-2xl bg-slate-50/90 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="font-black text-slate-900 text-xs sm:text-sm">3. J-TaxRefund / J&J Tax Free（JTB × JCB 合資 • 跨店自動歸戶）</div>
+              <span class="text-[10px] bg-amber-100 text-amber-900 font-bold px-2 py-0.5 rounded">免裝 App・市佔最高</span>
+            </div>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+              <strong>適用通路：</strong>多慶屋、松屋銀座、大型連鎖藥妝、電器行與沖繩各大複合商場。<br>
+              <strong>核心優勢：</strong>結帳後店員會給一張印有 QR Code 的憑證，用手機相機掃描即開啟網頁。<strong>只需在第一家店填寫一次護照與信用卡，後續在同系統店家掃碼會「自動跨店歸戶整合」</strong>！
+            </p>
+            <div>
+              <a href="https://j-taxfree.jp/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-sky-50 text-sky-700 border border-sky-200 rounded-xl font-bold transition">
+                <span>🌐</span>
+                <span>前往 J-TaxFree 官方退稅入口網 (j-taxfree.jp) ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 4. Smart Detax / JPrefund -->
+          <div class="p-3 rounded-2xl bg-slate-50/90 border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="font-black text-slate-900 text-xs sm:text-sm">4. Smart Detax / JPrefund（永旺 AEON ＆ 連鎖雜貨服飾主力）</div>
+              <span class="text-[10px] bg-emerald-100 text-emerald-900 font-bold px-2 py-0.5 rounded">Day 3 來客夢常用</span>
+            </div>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+              <strong>適用通路：</strong><strong>AEON Mall 永旺夢樂城（Day 3 沖繩來客夢）</strong>、3COINS、思夢樂（Shimamura）、MURASAKI SPORTS 等。<br>
+              <strong>核心優勢：</strong>免下載 App！結帳時由店員 POS 機直接連線，或用手機掃描收據專屬連結進入 <code>jprefund.jp</code> 登錄退款信用卡即可。
+            </p>
+            <div>
+              <a href="https://jprefund.jp/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl font-bold transition">
+                <span>🌐</span>
+                <span>前往 JPrefund 官方退稅入口網 (jprefund.jp) ↗</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- 5. Visit Japan Web (VJW) -->
+          <div class="p-3 rounded-2xl bg-sky-50/70 border border-sky-200 space-y-2">
+            <div class="flex items-center justify-between gap-2 flex-wrap">
+              <div class="font-black text-sky-950 text-xs sm:text-sm">5. Visit Japan Web (VJW) 官方「免稅 QR Code」</div>
+              <span class="text-[10px] bg-sky-600 text-white font-bold px-2 py-0.5 rounded">日本政府官方</span>
+            </div>
+            <p class="text-[11px] text-slate-600 leading-relaxed">
+              填寫入境申報時，請同步開啟 VJW 內的<strong>「免稅手續（建立免稅 QR 碼）」</strong>功能。在唐吉訶德、PARCO CITY、百貨專櫃結帳時出示 VJW 免稅條碼，店員一掃即可自動帶入護照與上陸許可資訊，大幅縮短排隊時間！
+            </p>
+            <div>
+              <a href="https://services.digital.go.jp/zh-cmn-hant/visit-japan-web/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-okinawa-ocean hover:bg-sky-700 text-white rounded-xl font-bold transition shadow-2xs">
+                <span>🇯🇵</span>
+                <span>開啟 Visit Japan Web 官方中文指南與登入 ↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 shrink-0">
+        <span>💡 提示：境內即食商品請與退稅品分開結帳</span>
+        <button onclick="closeModal('taxFreeModal')" class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold cursor-pointer">
+          關閉指南
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- 4. Add Custom Waypoint Modal -->
   <div id="addStopModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
     <div class="modal-backdrop fixed inset-0" onclick="closeModal('addStopModal')"></div>
@@ -829,6 +1153,7 @@
         <button onclick="fillSearchAndRun('鬆餅')" class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 shrink-0 font-medium">🥞 瀨長島鬆餅</button>
         <button onclick="fillSearchAndRun('波上宮')" class="px-2.5 py-1 bg-rose-50 text-rose-700 rounded-lg hover:bg-rose-100 shrink-0 font-medium">⛩️ 波上宮</button>
         <button onclick="fillSearchAndRun('Outlet')" class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 shrink-0 font-medium">🛍️ Outlet</button>
+        <button onclick="fillSearchAndRun('退稅')" class="px-2.5 py-1 bg-amber-100 text-amber-950 border border-amber-300 rounded-lg hover:bg-amber-200 shrink-0 font-bold">🧾 退稅新制</button>
       </div>
 
       <!-- Results Container -->
@@ -860,6 +1185,13 @@
       </div>
 
       <div class="space-y-2 text-xs">
+        <button onclick="closeModal('menuModal'); openModal('taxFreeModal');" class="w-full flex items-center justify-between p-3 bg-amber-50 hover:bg-amber-100 text-amber-950 border border-amber-200/80 rounded-2xl font-bold transition">
+          <div class="flex items-center gap-2.5">
+            <span class="text-lg">🧾</span>
+            <span>2026/11 日本退稅新制 ＆ App 下載</span>
+          </div>
+          <span class="text-xs text-amber-700 font-bold">必看 →</span>
+        </button>
         <button onclick="closeModal('menuModal'); switchLeftTab('dining'); document.getElementById('btnLeftTabDining').scrollIntoView({ behavior: 'smooth' });" class="w-full flex items-center justify-between p-3 bg-rose-50 hover:bg-rose-100 text-rose-900 rounded-2xl font-bold transition">
           <div class="flex items-center gap-2.5">
             <span class="text-lg">🍽️</span>
@@ -1573,6 +1905,14 @@
                 <span class="text-[10px] text-amber-700 bg-amber-200/70 px-1 py-0.2 rounded font-normal">複製</span>
               </button>
             ` : ''}
+
+            <!-- 2026/11 日本退稅新制快捷鍵 (購物站點 ＆ 機場出境託運前) -->
+            ${(wp.category === '購物' || wp.id === 'd4-7') ? `
+              <button type="button" onclick="openModal('taxFreeModal')" class="flex-initial px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99] shadow-2xs cursor-pointer" title="查看 2026/11 日本退稅新制流程與主流 App 下載">
+                <span>🧾</span>
+                <span>退稅指南</span>
+              </button>
+            ` : ''}
           </div>
 
           <!-- Secondary Info: Phone, Parking, Delete Custom Stop -->
@@ -1657,6 +1997,12 @@
                   <span>📞</span>
                   <span>電話</span>
                 </a>
+              ` : ''}
+              ${(wp.category === '購物' || wp.id === 'd4-7') ? `
+                <button type="button" onclick="openModal('taxFreeModal')" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
+                  <span>🧾</span>
+                  <span>退稅</span>
+                </button>
               ` : ''}
               <button type="button" onclick="toggleCard('${wp.id}')" class="ml-auto text-[11px] text-sky-600 hover:text-sky-800 font-semibold px-2 py-1 rounded-md hover:bg-sky-50 transition flex items-center gap-0.5">
                 <span>展開詳情</span>
@@ -2236,6 +2582,30 @@
     function jumpFromDiningToSpot(dayIndex, spotId) {
       switchLeftTab('timeline');
       jumpToSpot(dayIndex, spotId);
+    }
+
+    function jumpFromTaxFreeToSpot(dayIndex, spotId) {
+      closeModal('taxFreeModal');
+      jumpToSpot(dayIndex, spotId);
+    }
+
+    function switchTaxFreeTab(tabName) {
+      const btnFlow = document.getElementById('btnTaxTabFlow');
+      const btnApps = document.getElementById('btnTaxTabApps');
+      const contentFlow = document.getElementById('taxFreeTabFlowContent');
+      const contentApps = document.getElementById('taxFreeTabAppsContent');
+
+      if (tabName === 'flow') {
+        if (btnFlow) btnFlow.className = 'flex-1 py-2 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer';
+        if (btnApps) btnApps.className = 'flex-1 py-2 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer';
+        if (contentFlow) contentFlow.classList.remove('hidden');
+        if (contentApps) contentApps.classList.add('hidden');
+      } else {
+        if (btnApps) btnApps.className = 'flex-1 py-2 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer';
+        if (btnFlow) btnFlow.className = 'flex-1 py-2 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer';
+        if (contentFlow) contentFlow.classList.add('hidden');
+        if (contentApps) contentApps.classList.remove('hidden');
+      }
     }
 
     function renderDiningGuide() {

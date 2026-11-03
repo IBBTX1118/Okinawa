@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v38';
+const CACHE_NAME = 'okinawa-trip-v39';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -55,7 +55,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
-      console.log('[Service Worker] Caching static assets for offline use (v38)');
+      console.log('[Service Worker] Caching static assets for offline use (v39)');
       await Promise.allSettled(
         STATIC_ASSETS.map((asset) =>
           cache.add(asset).catch((err) => {
@@ -104,9 +104,9 @@ self.addEventListener('fetch', (event) => {
   // 2. App Code (HTML & JS): Network-first with cache fallback
   // Ensures fresh updates when online, seamless offline fallback
   const isAppCode = event.request.mode === 'navigate' ||
-                    url.pathname.endsWith('.html') ||
-                    url.pathname.endsWith('.js') ||
-                    url.pathname.endsWith('/');
+    url.pathname.endsWith('.html') ||
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('/');
 
   if (isAppCode && url.origin === location.origin) {
     event.respondWith(
