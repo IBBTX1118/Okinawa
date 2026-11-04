@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v3.7",
+    version: "20261117-v3.9",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -155,28 +155,42 @@ const OKINAWA_TRIP_DATA = {
           id: "d1-5",
           transitFromPrev: {
             mode: "walk",
-            duration: "約 8 分",
-            distance: "約 650 m",
-            route: "沿久茂地大街漫步進入國際通松尾段",
+            duration: "約 6 分",
+            distance: "約 450 m",
+            route: "牛排晚餐後沿久茂地大街直通國際通入口日本生命大樓",
             toll: "無料",
-            tips: "牛排晚餐後悠閒散步消食，直達雪塩專賣店"
+            tips: "牛排晚餐後步行消食，直達全沖繩最大雪塩旗艦總店"
           },
-          name: "宮古島の雪塩 國際通松尾店 (雪塩霜淇淋 ＆ 沖繩海鹽伴手禮)",
-          category: "美食",
+          name: "宮古島の雪塩 国際通り本店 ＆ 雪塩さんど本店 (【必去土產旗艦店】)",
+          category: "購物",
           image: "thumb-kokusaidori-night.jpg",
-          time: "22:00 ~ 22:30",
-          coords: [26.2158, 127.6865],
-          mapCode: "33 157 444*11",
-          phone: "098-860-6366",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2158,127.6865&travelmode=walking",
-          color: "#06b6d4",
-          icon: "🍦",
-          parkingInfo: "國際通商圈徒步街（建議自牛排館或飯店散步前往）",
-          tags: ["【國際通必吃】", "雪塩霜淇淋", "自選調味鹽體驗", "雪塩金楚糕", "海鹽餅乾"],
-          desc: "沖繩最具代表性的天然海鹽名店！必點人氣招牌「雪塩霜淇淋 (雪塩ソフトクリーム)」，純濃牛奶融合宮古島地下深層海鹽，甘甜中帶微鹹尾韻。店內自助調味吧備有多款特色風味鹽（柚子鹽、抹茶鹽、可可鹽、辣椒鹽等），撒在霜淇淋上迸發驚艷層次！亦可採買雪塩金楚糕、雪塩黑糖與雪塩洗顏保養明星伴手禮。",
-          tips: "【甜品朝聖攻略】：營業至 22:00~22:30，吃完牛排第一時間前往品嚐霜淇淋；店內雪鹽試吃體驗豐富，金楚糕更是連續多年伴手禮大賞得主！",
-          reservationInfo: "外帶內用皆免預約，現場點單出餐迅速。",
-          branchTip: "國際通有多家雪塩與塩屋門市，松尾店近唐吉訶德步行僅 1 分鐘，動線最順！"
+          time: "21:40 ~ 22:15",
+          coords: [26.2144, 127.6811],
+          mapCode: "33 156 204*11",
+          phone: "098-860-8670",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2144,127.6811&travelmode=walking",
+          color: "#0284c7",
+          icon: "🧂",
+          parkingInfo: "國際通商圈步行街（近單軌縣廳前站，自飯店或牛排館散步即達）",
+          tags: ["【必去土產旗艦店】", "雪塩さんど夾心餅乾", "雪塩霜淇淋", "自選調味鹽吧", "雪塩金楚糕", "雪塩費南雪"],
+          desc: "沖繩最具代表性的天然海鹽總旗艦店！全店專門店首推狂銷人氣王【雪塩さんど（雪鹽夾心餅乾）】，濃醇白巧克力融入宮古島天然雪鹽，內餡揉入卡滋玉米脆片，外層酥脆無比、鹹甜交織極度誘人！現場必吃招牌『雪塩霜淇淋』，可自由撒上香檬鹽、抹茶鹽、可可鹽、辣椒鹽等特製風味鹽試吃體驗。雪鹽費南雪、法蘭酥與黑糖金楚糕亦一應俱全，是整趟行程不可錯過的伴手禮第一指名！",
+          tips: "【必買清單 ＆ 營業攻略】：營業至 21:00/22:00。首推『雪塩さんど』盒裝（常溫保存極佳、送禮自用皆絕品）與現擠『雪塩霜淇淋』；單筆消費滿 ¥5,500 支援免稅結帳，買齊旅程所需特色伴手禮！",
+          reservationInfo: "外帶內用皆免預約，伴手禮選購流暢快速。",
+          branchTip: "【國際通總本店】：坐落於久茂地3-1-1（縣廳前站旁國際通起點），為全沖繩品項最齊全之雪塩さんど專門本店！若後續逛到唐吉訶德正對面亦有松尾分店可補貨。",
+          backupOptions: [
+            {
+              name: "Cat Café MOFF 沖縄国際通り店 (久茂地萌貓療癒咖啡館)",
+              tag: "久茂地3丁目 / 步行2分 / 營業至20:00",
+              desc: "距雪塩本店步行僅 2 分鐘（JMFビル 3F）！若國際通逛累、遇雨天或想放鬆吸貓，店內約 20 隻超親人品種貓咪與特製貓咪拉花拿鐵是極度療癒的室內休憩聖地。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Cat+Cafe+MOFF+Okinawa+Kokusai+Dori&travelmode=walking"
+            },
+            {
+              name: "宮古島の雪塩 國際通松尾店",
+              tag: "松尾段 / 唐吉訶德對面",
+              desc: "若本店人潮眾多，唐吉訶德正對面亦有松尾分店，同樣提供招牌霜淇淋與雪鹽伴手禮。",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2158,127.6865&travelmode=walking"
+            }
+          ]
         },
         {
           id: "d1-6",
@@ -434,6 +448,12 @@ const OKINAWA_TRIP_DATA = {
           reservationInfo: "不可預約。全店採現場觸控螢幕自助點餐機，取得號碼單後於露台等候叫號取餐。",
           branchTip: "全沖繩【僅此古宇利島一家總店，無其他分店】！12:30 抵達點餐最順暢，能避開最壅塞人潮。",
           backupOptions: [
+            {
+              name: "古宇利島 パリッティ (Cafe Paritti • 絕景庭園烤布蕾咖啡)",
+              tag: "古宇利島高台 / 營業11:00-18:00",
+              desc: "2024新開幕！佔地1,100坪的南國造園海景咖啡館，坐擁無敵古宇利藍海高台視野。招牌「古宇利島冰淇淋烤布蕾（ブリュレ）」外脆內滑，搭配手沖咖啡或熱壓三明治，是島上絕美甜品備案！",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Cafe+Paritti+Kouri&travelmode=driving"
+            },
             {
               name: "5910 sa-ta-cafe (古宇利沙翁咖啡)",
               tag: "清單名店 / 開車2分",
@@ -1094,6 +1114,12 @@ const OKINAWA_TRIP_DATA = {
           branchTip: "美國村僅此一家海景露台總店。下午抵達正好銜接下午茶至日落時段。",
           backupOptions: [
             {
+              name: "CC's Chicken & Waffles (美式靈魂炸雞格子鬆餅)",
+              tag: "北谷砂邊海岸 / 開車5分",
+              desc: "距美國村僅 5 分鐘！若 Hanon 鬆餅等候過久或想吃美式大份量鹹甜美食，首推這家美軍與在地人狂推的經典 Soul Food！金黃爆汁炸雞配現烤格子鬆餅淋楓糖奶油糖漿，極度過癮！",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=CC%27s+Chicken+%26+Waffles+Chatan&travelmode=driving"
+            },
+            {
               name: "Taco Rice Cafe Kijimuna (美國村店)",
               tag: "清單名店 / Depot Island 2F",
               desc: "Google My Maps 清單名店！若不想吃甜點鬆餅想吃鹹食，首推這家滑嫩歐姆蛋塔可飯（Omutaco），可自選中辣或照燒醬汁。",
@@ -1354,6 +1380,12 @@ const OKINAWA_TRIP_DATA = {
           tips: "Calbee+ 店內亦有販售限定包裝的石垣島辣油洋芋片與紅芋薯條伴手禮盒，適合隨手送禮。",
           reservationInfo: "現場點單現炸，製作約需 3~5 分鐘，免預約。",
           backupOptions: [
+            {
+              name: "Cat Café MOFF 沖縄国際通り店 (久茂地萌貓療癒咖啡館)",
+              tag: "國際通起點 / 營業10:00-20:00",
+              desc: "位於久茂地3丁目（近單軌縣廳前站）。店內約20隻親人品種貓咪，提供特製貓咪彩色拉花飲品，逛街疲憊或不想走動時的室內吸貓療癒首選！",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Cat+Cafe+MOFF+Okinawa+Kokusai+Dori&travelmode=walking"
+            },
             {
               name: "Ice Oasis (雪花冰專門店)",
               tag: "清單名店 / 消暑冰品",
