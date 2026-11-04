@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v3.9",
+    version: "20261117-v3.10",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [

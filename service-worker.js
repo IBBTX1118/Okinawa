@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v46';
+const CACHE_NAME = 'okinawa-trip-v47';
 const STATIC_ASSETS = [
   './',
   './index.html',

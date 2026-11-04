@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.9"></script>
+  <script src="itinerary-data.js?v=20261117-v3.10"></script>
 
   <script>
     tailwind.config = {
@@ -117,7 +117,7 @@
     }
     .leaflet-tile-pane {
       will-change: transform;
-      filter: contrast(1.04) brightness(1.02);
+      filter: contrast(1.02) brightness(1.01);
     }
     .leaflet-container {
       background-color: #f1f5f9 !important;
@@ -1731,14 +1731,42 @@
         scrollWheelZoom: false // Prevent mobile scroll capture
       });
 
-      // Modern Minimalist Clean Map Tiles (CartoDB Voyager - Soft ocean, crisp roads, elegant typography)
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-        subdomains: 'abcd',
-        maxZoom: 19,
+      // 100% Free & No API Key Modern Minimalist Map Layers
+      // Default: Japan GSI Pale Map (國土地理院・淡色地図 - Cleanest Japanese Minimalist Design)
+      const gsiPaleLayer = L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://maps.gsi.go.jp/development/ichiran.html" target="_blank" rel="noopener">國土地理院 (GSI)</a>',
+        maxZoom: 18,
+        minZoom: 5,
         keepBuffer: 8,
         crossOrigin: true
-      }).addTo(map);
+      });
+
+      // Alternative 1: OSM Japan (Clean vector-style with crisp blue ocean)
+      const osmJpLayer = L.tileLayer('https://tile.openstreetmap.jp/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap JP</a>',
+        maxZoom: 18,
+        keepBuffer: 8,
+        crossOrigin: true
+      });
+
+      // Alternative 2: Esri Light Gray Canvas (Ultra-minimal monochromatic gray)
+      const esriGrayLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ',
+        maxZoom: 16,
+        keepBuffer: 8,
+        crossOrigin: true
+      });
+
+      // Add default GSI Pale to map
+      gsiPaleLayer.addTo(map);
+
+      // Layer Control (Allows user to seamlessly switch between modern minimalist styles)
+      const baseMaps = {
+        '🌸 淡色極簡 (GSI Pale)': gsiPaleLayer,
+        '🌊 現代蔚藍 (OSM Japan)': osmJpLayer,
+        '🏢 極簡淺灰 (Esri Gray)': esriGrayLayer
+      };
+      L.control.layers(baseMaps, null, { position: 'topright', collapsed: true }).addTo(map);
 
       markersLayer = L.layerGroup().addTo(map);
 
