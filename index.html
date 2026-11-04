@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.4"></script>
+  <script src="itinerary-data.js?v=20261117-v3.7"></script>
 
   <script>
     tailwind.config = {
@@ -163,6 +163,186 @@
       background: rgba(15, 23, 42, 0.6);
       backdrop-filter: blur(4px);
     }
+  
+    /* =========================================================================
+       MOTION LIBRARY ENHANCEMENTS (Zero-dependency Pure CSS 60fps Micro-interactions)
+       ========================================================================= */
+
+    /* 1. Segmented Control & Pill Transitions (ID 242) */
+    .segmented-tab-btn {
+      transition: all 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+    }
+    .segmented-tab-btn:active {
+      transform: scale(0.96);
+    }
+
+    /* 2. Card Stagger Entrance (ID 104) */
+    @keyframes cardStaggerIn {
+      0% {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .spot-card-stagger {
+      animation: cardStaggerIn 0.38s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: calc(var(--stagger-idx, 0) * 0.042s);
+      will-change: transform, opacity;
+    }
+
+    /* 3. Card Lift & Chip Bounce Feedback (ID 112) */
+    .spot-card-lift {
+      transition: transform 0.22s cubic-bezier(0.34, 1.3, 0.64, 1), box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    @media (hover: hover) {
+      .spot-card-lift:hover {
+        transform: translateY(-2.5px);
+        box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.10), 0 6px 12px -4px rgba(15, 23, 42, 0.04);
+        border-color: rgba(56, 189, 248, 0.5);
+      }
+    }
+    .spot-card-lift:active {
+      transform: translateY(0) scale(0.992);
+      transition-duration: 0.08s;
+    }
+
+    .chip-bounce {
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, filter 0.2s ease;
+    }
+    .chip-bounce:hover {
+      transform: translateY(-2px) scale(1.03);
+      filter: brightness(1.05);
+    }
+    .chip-bounce:active {
+      transform: translateY(1px) scale(0.96);
+    }
+
+    /* 4. Checkbox Bounce & Strikethrough Animation (ID 241) */
+    @keyframes checkBounce {
+      0% { transform: scale(0.8); }
+      50% { transform: scale(1.22); }
+      100% { transform: scale(1); }
+    }
+    .chk-bounce-input {
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease, background-color 0.2s ease;
+      cursor: pointer;
+    }
+    .chk-bounce-input:checked {
+      animation: checkBounce 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .chk-item-text {
+      position: relative;
+      transition: color 0.25s ease, opacity 0.25s ease;
+    }
+    .chk-item-text.is-checked {
+      color: #94a3b8;
+      text-decoration: line-through;
+      text-decoration-color: #0284c7;
+      text-decoration-thickness: 1.5px;
+      opacity: 0.75;
+    }
+
+    /* 5. Mobile Bottom Sheet Spring Modal (ID 143) */
+    .modal-backdrop-anim {
+      animation: backdropFadeIn 0.22s ease-out forwards;
+    }
+    @keyframes backdropFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (min-width: 641px) {
+      .modal-sheet-panel {
+        animation: modalScaleIn 0.26s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes modalScaleIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.96) translateY(10px);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) translateY(0);
+        }
+      }
+    }
+
+    @media (max-width: 640px) {
+      .modal-bottom-sheet-container {
+        align-items: flex-end !important;
+        padding: 0 !important;
+      }
+      .modal-sheet-panel {
+        border-bottom-left-radius: 0 !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-left-radius: 1.5rem !important;
+        border-top-right-radius: 1.5rem !important;
+        max-height: 88vh !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        animation: sheetSlideUp 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      }
+      @keyframes sheetSlideUp {
+        0% {
+          transform: translateY(100%);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    }
+
+    /* 6. Shine Sweep Glint (ID 109) */
+    .shine-sweep {
+      position: relative;
+      overflow: hidden;
+    }
+    .shine-sweep::after {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -75%;
+      width: 45%;
+      height: 200%;
+      background: linear-gradient(
+        60deg,
+        rgba(255, 255, 255, 0) 15%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0) 85%
+      );
+      transform: rotate(25deg);
+      animation: shineSweep 4.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+      pointer-events: none;
+    }
+    @keyframes shineSweep {
+      0%, 65% {
+        left: -75%;
+        opacity: 0;
+      }
+      70% {
+        opacity: 1;
+      }
+      85%, 100% {
+        left: 155%;
+        opacity: 0;
+      }
+    }
+
+    /* Accessibility: Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      .spot-card-stagger,
+      .chk-bounce-input:checked,
+      .modal-sheet-panel,
+      .shine-sweep::after {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
   </style>
 </head>
 <body class="okinawa-ambient-bg text-slate-800 font-sans min-h-screen antialiased flex flex-col selection:bg-sky-500 selection:text-white pb-24 lg:pb-8">
@@ -221,7 +401,7 @@
               <span>清單</span>
               <span id="checklistBadge" class="bg-rose-500 text-[10px] text-white px-1.5 py-0.2 rounded-full font-bold">0</span>
             </button>
-            <button onclick="openModal('taxFreeModal')" class="bg-amber-400/25 hover:bg-amber-400/35 border border-amber-300/50 px-2.5 py-1.5 rounded-xl text-xs font-bold text-amber-200 flex items-center gap-1 transition shadow-sm" title="2026/11 日本退稅新制流程與主流 App 下載">
+            <button onclick="openModal('taxFreeModal')" class="bg-amber-400/25 hover:bg-amber-400/35 border border-amber-300/50 px-2.5 py-1.5 rounded-xl text-xs font-bold text-amber-200 flex items-center gap-1 transition shadow-sm shine-sweep chip-bounce" title="2026/11 日本退稅新制流程與主流 App 下載">
               <span>🧾</span>
               <span>退稅新制</span>
             </button>
@@ -262,7 +442,7 @@
 
         <!-- Top Badges (Single-line on mobile) -->
         <div class="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-1.5 pointer-events-none">
-          <span class="bg-amber-400/95 backdrop-blur-md text-amber-950 text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 sm:py-1 rounded-full shadow-md tracking-wider flex items-center gap-1 pointer-events-auto whitespace-nowrap shrink-0">
+          <span class="bg-amber-400/95 backdrop-blur-md text-amber-950 text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 sm:py-1 rounded-full shadow-md tracking-wider flex items-center gap-1 pointer-events-auto whitespace-nowrap shrink-0 shine-sweep">
             <span>🌺</span>
             <span>琉球迎賓</span>
             <span class="text-[9px] opacity-85 font-normal hidden xs:inline">めんそーれ！</span>
@@ -297,7 +477,7 @@
             <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scroll-smooth" style="scrollbar-width: none;">
               
               <!-- Sign 1: 古宇利島 -->
-              <button onclick="jumpToSpot(1, 'd2-6')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(1, 'd2-6')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
                 <span>🌉</span>
                 <span>古宇利島</span>
                 <span class="text-[10px] text-amber-300 font-mono">D2</span>
@@ -332,7 +512,7 @@
               </button>
 
               <!-- Sign 6: ASHIBINAA -->
-              <button onclick="jumpToSpot(0, 'd1-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(0, 'd1-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
                 <span>🛍️</span>
                 <span>奧特萊斯</span>
                 <span class="text-[10px] text-amber-300 font-mono">D1</span>
@@ -589,9 +769,9 @@
        ========================================================================= -->
 
   <!-- 1. Currency Exchange Converter Modal -->
-  <div id="currencyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div id="currencyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-bottom-sheet-container">
     <div class="modal-backdrop fixed inset-0" onclick="closeModal('currencyModal')"></div>
-    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-md z-10 shadow-2xl space-y-4 border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200">
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-md z-10 shadow-2xl space-y-4 border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200 modal-sheet-panel">
       <div class="flex items-center justify-between border-b border-slate-100 pb-3">
         <div class="flex items-center space-x-2">
           <span class="text-2xl">💴</span>
@@ -647,9 +827,9 @@
   </div>
 
   <!-- 2. Checklist & Shopping List Modal -->
-  <div id="checklistModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div id="checklistModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-bottom-sheet-container">
     <div class="modal-backdrop fixed inset-0" onclick="closeModal('checklistModal')"></div>
-    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-lg z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col">
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-lg z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col modal-sheet-panel">
       
       <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
         <div class="flex items-center space-x-2">
@@ -704,9 +884,9 @@
   </div>
 
   <!-- 3. Driving Guide & MapCode Quick Reference Modal -->
-  <div id="drivingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div id="drivingModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-bottom-sheet-container">
     <div class="modal-backdrop fixed inset-0" onclick="closeModal('drivingModal')"></div>
-    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-2xl z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col">
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-2xl z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col modal-sheet-panel">
       
       <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
         <div class="flex items-center space-x-2">
@@ -734,6 +914,79 @@
         </div>
       </div>
 
+      <!-- 2026 Speed Camera & Road Monitoring Section -->
+      <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-3.5 space-y-2.5 shrink-0 text-xs">
+        <div class="flex items-center justify-between">
+          <div class="font-bold text-rose-900 flex items-center gap-1.5 text-xs sm:text-sm">
+            <span>📷</span>
+            <span>2026 沖繩本島最新測速照相 ＆ 道路監控地圖</span>
+            <span class="text-[10px] bg-rose-500 text-white font-extrabold px-1.5 py-0.2 rounded-full">實測確認</span>
+          </div>
+          <span class="text-[10px] text-rose-700 font-bold hidden sm:inline">⚠️ 罰金重且影響行程，請全程嚴守速限</span>
+        </div>
+
+        <!-- Map Image with Lightbox Zoom -->
+        <div class="relative group rounded-xl overflow-hidden border border-rose-200 bg-slate-900 cursor-pointer shadow-xs" onclick="openSpeedCameraLightbox()">
+          <img src="speed-camera-map-2026.jpg" alt="2026沖繩本島測速照相地圖" class="w-full h-36 sm:h-44 object-cover object-top filter brightness-[0.96] group-hover:scale-102 group-hover:brightness-100 transition duration-300">
+          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end justify-between p-2.5">
+            <span class="text-white text-[11px] font-bold flex items-center gap-1 drop-shadow-sm">
+              <span>🔍</span>
+              <span>點擊查看完整高解析設置地圖</span>
+            </span>
+            <span class="text-[10px] bg-white/20 text-white backdrop-blur-md px-2 py-0.5 rounded-full border border-white/30 font-mono">
+              3大半固定式機座 + N系統
+            </span>
+          </div>
+        </div>
+
+        <!-- 3 Major Orbis Locations & Route Impact -->
+        <div class="space-y-1.5 text-[11px] text-slate-700">
+          <div class="font-bold text-slate-900 flex items-center gap-1 text-[11px]">
+            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+            <span>沖繩自動車道（高速公路）3 大「半固定式白色鐵籠」測速相機：</span>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-[10px]">
+            <!-- Camera 3 -->
+            <div class="p-2 rounded-xl bg-white border border-rose-200 shadow-2xs space-y-0.5 ring-1 ring-rose-400/40">
+              <div class="font-bold text-rose-800 flex items-center gap-1">
+                <span class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-900 font-black">③</span>
+                <span>金武 ～ 宜野座 (KP46)</span>
+              </div>
+              <div class="text-slate-600 font-semibold">方向：下行（往許田 / 北上）</div>
+              <div class="text-[9px] text-rose-600 font-bold">⚠️ Day 2 往水族館必經！</div>
+              <div class="text-[9px] text-slate-500">2025/12 設置，白色金屬網狀罩，直路極易超速。</div>
+            </div>
+
+            <!-- Camera 2 -->
+            <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-0.5">
+              <div class="font-bold text-slate-800 flex items-center gap-1">
+                <span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-800 font-black">②</span>
+                <span>沖繩北 ～ 沖繩南 (KP19.4)</span>
+              </div>
+              <div class="text-slate-600 font-semibold">方向：上行（往那霸 / 南下）</div>
+              <div class="text-[9px] text-slate-500">2026/3 設置，八重島1丁目，注意 80km/h。</div>
+            </div>
+
+            <!-- Camera 1 -->
+            <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-0.5">
+              <div class="font-bold text-slate-800 flex items-center gap-1">
+                <span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-800 font-black">①</span>
+                <span>中城 PA ～ 西原 IC (KP8)</span>
+              </div>
+              <div class="text-slate-600 font-semibold">方向：上行（往那霸 / 南下）</div>
+              <div class="text-[9px] text-amber-700 font-semibold">⚠️ Day 3 若高速還車會經過！</div>
+              <div class="text-[9px] text-slate-500">2026/3 設置，中城村南上原。</div>
+            </div>
+          </div>
+
+          <div class="pt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-slate-500">
+            <span>• <strong>車牌識別 (N 系統)：</strong> 國道 58 號（宜野灣 bypass、讀谷比謝），記錄軌跡非測速。</span>
+            <span>• <strong>道路管理相機：</strong> 國道 332 那霸安次嶺 (機場旁)、國道 329、331 等，純車流監控。</span>
+          </div>
+        </div>
+      </div>
+
       <!-- MapCode Table -->
       <div class="overflow-y-auto flex-grow space-y-2 pr-1 text-xs">
         <div class="font-bold text-slate-800 text-xs pb-1">📍 4天3夜全行程導航代碼速查表：</div>
@@ -751,9 +1004,9 @@
   </div>
 
   <!-- 3.5. 2026/11 Japan Tax-Free New System & Mainstream Apps Modal -->
-  <div id="taxFreeModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4">
+  <div id="taxFreeModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-bottom-sheet-container">
     <div class="modal-backdrop fixed inset-0" onclick="closeModal('taxFreeModal')"></div>
-    <div class="bg-white rounded-3xl p-4 sm:p-6 w-full max-w-2xl z-10 shadow-2xl space-y-3.5 border border-slate-200 relative max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
+    <div class="bg-white rounded-3xl p-4 sm:p-6 w-full max-w-2xl z-10 shadow-2xl space-y-3.5 border border-slate-200 relative max-h-[90vh] flex flex-col modal-sheet-panel">
       
       <!-- Modal Header -->
       <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
@@ -1071,7 +1324,7 @@
   </div>
 
   <!-- 4. Add Custom Waypoint Modal -->
-  <div id="addStopModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+  <div id="addStopModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-bottom-sheet-container">
     <div class="modal-backdrop fixed inset-0" onclick="closeModal('addStopModal')"></div>
     <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-md z-10 shadow-2xl space-y-4 border border-slate-200 relative animate-in fade-in zoom-in-95 duration-200">
       
@@ -1392,6 +1645,22 @@
     /* =========================================================================
        1. INITIALIZATION ON LOAD
        ========================================================================= */
+    
+    function openSpeedCameraLightbox() {
+      const box = document.getElementById('speedCameraLightbox');
+      if (box) {
+        box.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+      }
+    }
+    function closeSpeedCameraLightbox() {
+      const box = document.getElementById('speedCameraLightbox');
+      if (box) {
+        box.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       // 1. Prioritize UI layout rendering (tabs and timeline cards)
       try {
@@ -1727,7 +1996,7 @@
           ? `background-color: ${day.themeColor}; box-shadow: 0 4px 16px ${day.themeColor}55;` 
           : '';
         return `
-          <button onclick="switchDay(${idx})" style="${activeStyle}" class="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-300 ${
+          <button onclick="switchDay(${idx})" style="${activeStyle}" class="flex items-center space-x-1.5 sm:space-x-2 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-300 segmented-tab-btn chip-bounce ${
             isActive 
               ? 'text-white ring-2 ring-white/60' 
               : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
@@ -2171,12 +2440,12 @@
         // Category 1: 交通 / 住宿 (Transit & Lodging) -> Compact streamlined pill card
         if (wp.category === '交通' || wp.category === '住宿') {
           cards.push(`
-            <div class="relative group" id="timeline-card-${wp.id}">
+            <div class="relative group spot-card-stagger" id="timeline-card-${wp.id}" style="--stagger-idx: ${idx};">
               <div class="absolute -left-[31px] sm:-left-[39px] top-3 w-7 h-7 rounded-full bg-white border-4 flex items-center justify-center shadow-xs z-10" style="border-color: ${wp.color || day.themeColor}">
                 <span class="text-xs">${wp.icon || (wp.category === '交通' ? '🚗' : '🏨')}</span>
               </div>
 
-              <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-3.5 border border-slate-200/90 shadow-xs hover:shadow-md transition space-y-2">
+              <div class="bg-white/95 backdrop-blur-sm rounded-2xl p-3.5 border border-slate-200/90 shadow-xs hover:shadow-md transition space-y-2 spot-card-lift">
                 <div class="flex items-center justify-between gap-2">
                   <div class="flex items-center space-x-2 flex-wrap gap-y-1">
                     <span class="text-[11px] font-bold px-2 py-0.5 rounded-md text-white" style="background-color: ${wp.color || day.themeColor}">
@@ -2704,12 +2973,12 @@
       const contentApps = document.getElementById('taxFreeTabAppsContent');
 
       if (tabName === 'flow') {
-        if (btnFlow) btnFlow.className = 'flex-1 py-2 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer';
+        if (btnFlow) btnFlow.className = 'flex-1 py-2 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer segmented-tab-btn';
         if (btnApps) btnApps.className = 'flex-1 py-2 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer';
         if (contentFlow) contentFlow.classList.remove('hidden');
         if (contentApps) contentApps.classList.add('hidden');
       } else {
-        if (btnApps) btnApps.className = 'flex-1 py-2 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer';
+        if (btnApps) btnApps.className = 'flex-1 py-2 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer segmented-tab-btn';
         if (btnFlow) btnFlow.className = 'flex-1 py-2 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer';
         if (contentFlow) contentFlow.classList.add('hidden');
         if (contentApps) contentApps.classList.remove('hidden');
@@ -3173,12 +3442,12 @@
         return `
           <div class="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition text-xs">
             <label class="flex items-center space-x-2.5 cursor-pointer flex-grow">
-              <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${item.id}')" class="w-4 h-4 rounded text-okinawa-ocean focus:ring-sky-500">
-              <span class="${item.checked ? 'line-through text-slate-400 font-normal' : 'text-slate-800 font-semibold'} transition">
+              <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${item.id}')" class="w-4 h-4 rounded text-okinawa-ocean focus:ring-sky-500 chk-bounce-input">
+              <span class="chk-item-text ${item.checked ? 'is-checked' : 'text-slate-800 font-semibold'} transition">
                 ${item.text}
               </span>
             </label>
-            <button onclick="deleteChecklistItem('${item.id}')" class="text-slate-300 hover:text-rose-500 p-1 text-xs">✕</button>
+            <button onclick="deleteChecklistItem('${item.id}')" class="text-slate-300 hover:text-rose-500 p-1 text-xs chip-bounce">✕</button>
           </div>
         `;
       }).join('');
@@ -3539,6 +3808,15 @@
       <p>結合 PWA 離線快取、Leaflet 互動軌跡、Google Maps 一鍵導航、日本 MapCode 與日圓匯率換算</p>
     </div>
   </footer>
+
+  <!-- Speed Camera Map Lightbox Modal -->
+  <div id="speedCameraLightbox" class="hidden fixed inset-0 z-[60] bg-black/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-in fade-in duration-200" onclick="closeSpeedCameraLightbox()">
+    <div class="relative max-w-4xl max-h-[95vh] w-full flex flex-col items-center justify-center" onclick="event.stopPropagation()">
+      <button onclick="closeSpeedCameraLightbox()" class="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white font-bold flex items-center justify-center text-lg backdrop-blur-md transition">✕</button>
+      <img src="speed-camera-map-2026.jpg" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/20" alt="2026 沖繩本島測速照相機實際設置地圖">
+      <p class="text-white/80 text-xs mt-2.5 font-medium text-center">2026 沖繩本島測速照相機・車牌識別・道路監控系統 實際設置地圖 (點擊右上角或背景關閉)</p>
+    </div>
+  </div>
 
 </body>
 </html>
