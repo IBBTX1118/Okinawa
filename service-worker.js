@@ -1,4 +1,4 @@
-const CACHE_NAME = 'okinawa-trip-v39';
+const CACHE_NAME = 'okinawa-trip-v40';
 const STATIC_ASSETS = [
   './',
   './index.html',
@@ -55,7 +55,7 @@ const STATIC_ASSETS = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(async (cache) => {
-      console.log('[Service Worker] Caching static assets for offline use (v39)');
+      console.log('[Service Worker] Caching static assets for offline use (v40)');
       await Promise.allSettled(
         STATIC_ASSETS.map((asset) =>
           cache.add(asset).catch((err) => {
