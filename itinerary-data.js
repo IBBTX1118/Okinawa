@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v3.10",
+    version: "20261117-v3.12",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -22,51 +22,51 @@ const OKINAWA_TRIP_DATA = {
       date: "2026/11/16",
       weekday: "週一",
       title: "抵達沖繩 ＆ 奧特萊斯快攻 ＆ 國際通夜遊",
-      subtitle: "落地出關 • ASHIBINAA • 那霸飯店 • 菲力牛排 • 雪塩霜淇淋 • 24H唐吉訶德",
+      subtitle: "無託運快速出關 • ASHIBINAA鎖定5大專櫃 • 全程連住NEST免搬行李 • 菲力牛排 • 雪塩伴手禮大採購 • 24H唐吉訶德",
       themeColor: "#0284c7",
       highlightNotice: {
-        type: "warning",
-        title: "17:50 班機落地出境推算 ＆ ASHIBINAA 20:00 打烊應變 ＆ 國際通夜遊",
-        content: "國際線出關約需 45-55 分，出境預估 18:35~18:45。建議直接搭計程車爭取 19:05 前抵達 Outlet 快攻；隨後 Check-in 並享用厚切菲力牛排，夜間漫步國際通品嚐雪塩霜淇淋並狂掃 24H 唐吉訶德免稅伴手禮！"
+        type: "tip",
+        title: "✈️ 去程無託運行李！直奔計程車 18:40 抵達 Outlet 快攻 80 分鐘 ＆ 全程連住那霸 NEST 伴手禮安心買！",
+        content: "去程無託運行李免等轉盤，手提通關預估 18:15~18:25 出境直上排班計程車，爭取 18:40 抵達 ASHIBINAA！鎖定 ABC-MART (#800)、ASICS (#260)、New Balance (#940/#270)、Vivienne (#540)、COACH (#330/#340) 五大櫃位高效率快攻。更棒的是，全行程 3 晚連住 THE NEST 那霸無須中途換房，今晚買齊的雪塩與伴手禮直接放回飯店房間，完全不佔車廂空間、安心大採購！"
       },
       transitSummary: {
-        totalDrivingTime: "約 45 分",
+        totalDrivingTime: "約 40 分",
         totalDistance: "約 16 km",
         mode: "計程車 ＆ 步行",
-        tips: "那霸機場 ➔ Outlet ➔ 飯店 ➔ 菲力牛排 ➔ 雪塩霜淇淋 ➔ 國際通唐吉訶德"
+        tips: "免等行李直奔 Outlet (18:40~20:00) ➔ 飯店 Check-in ➔ 菲力牛排 ➔ 雪塩霜淇淋 ➔ 國際通唐吉訶德"
       },
       waypoints: [
         {
           id: "d1-1",
-          name: "那霸機場 (OKA) 國際線航廈",
+          name: "那霸機場 (OKA) 國際線航廈 (無託運快速通關)",
           category: "交通",
           image: "thumb-airport.jpg",
-          time: "17:50 降落 ~ 18:45 出關",
+          time: "17:50 降落 ~ 18:25 快速出關",
           coords: [26.2064, 127.6465],
           mapCode: "33 123 279*00",
           phone: "098-840-1179",
           googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2064,127.6465&travelmode=driving",
           color: "#0284c7",
           icon: "✈️",
-          parkingInfo: "機場立體停車場 P1-P3（計程收費）",
-          tags: ["入境審查", "領行李", "VJW申報"],
-          desc: "班機於 17:50 觸地。下機後備妥 Visit Japan Web (VJW) QR Code，依指標前往入國審查、海關檢驗並提領行李。",
-          tips: "國際線大廳一樓有 Lawson 便利商店與外幣提款機，出大門即為計程車站牌。"
+          parkingInfo: "機場計程車排班區直達 Outlet",
+          tags: ["【無託運行李】", "免等行李轉盤", "VJW快速通關", "直奔計程車站"],
+          desc: "班機於 17:50 觸地。因無托運行李，下機後備妥 Visit Japan Web (VJW) QR Code，直接進行入國審查與海關電子申報，省去行李轉盤枯等 30~40 分鐘的寶貴時間！預估 18:15~18:25 即可步出航廈大廳直奔計程車站牌。",
+          tips: "國際線大廳一樓出門即為計程車站牌，直接搭車走國道 331 號豐見城道路，約 15 分鐘（車資約 ¥2,000）直達 ASHIBINAA！"
         },
         {
           id: "d1-2",
           transitFromPrev: {
             mode: "taxi",
-            duration: "約 18 分",
+            duration: "約 15 分",
             distance: "約 7.2 km",
             route: "經國道 331 號豐見城道路直達",
             toll: "無料",
-            tips: "航廈外搭乘排班計程車或叫車，車資約 ¥2,000~2,300，最快抵達 Outlet"
+            tips: "無託運行李出關極速！搭計程車爭取 18:40 抵達 Outlet，足足有 80 分鐘快攻時間"
           },
-          name: "沖繩 ASHIBINAA Outlet",
+          name: "沖繩 ASHIBINAA Outlet (鎖定5大專櫃快攻)",
           category: "購物",
           image: "thumb-ashibinaa.jpg",
-          time: "19:05 ~ 20:00 (閉店)",
+          time: "18:40 ~ 20:00 (閉店)",
           coords: [26.1593, 127.6582],
           mapCode: "232 544 452*22",
           phone: "098-891-6000",
@@ -74,9 +74,11 @@ const OKINAWA_TRIP_DATA = {
           color: "#f59e0b",
           icon: "🛍️",
           parkingInfo: "園區免費大型停車場 (約1000台)",
-          tags: ["【外國人Coupon Book】", "Vivienne", "Montbell", "2026退稅新制", "PIE VAT登錄"],
-          desc: "沖繩唯一大型名牌暢貨中心。大件行李可寄放於 1F 諮詢中心投幣櫃。直奔 2100 區 Vivienne Westwood、Montbell 戶外裝備。配合 2026/11 日本退稅新制，結帳採「先付含稅價、離境機場退稅」。",
-          tips: "【外國人優惠券 ＆ 2026退稅提醒】：① 先至 1F 中央「綜合諮詢服務中心」出示護照與實體 JCB 卡，免費兌換【外國人專屬 Coupon Book】（各大運動休閒品牌享額外 5%~10% 折扣或贈品）；② 各櫃位 20:00 打烊，請於 19:35 前結帳並出示護照／VJW 免稅條碼；Montbell 等品牌支援 PIE VAT 或 J-TaxRefund 掃碼退稅登錄！"
+          tags: ["【鎖定5大專櫃】", "ABC-MART #800", "ASICS #260", "New Balance #940", "Vivienne #540", "COACH #330", "1F平面地圖導覽"],
+          desc: "沖繩唯一大型暢貨中心！今晚鎖定 5 大目標專櫃進行高效率精準採購：①【ABC-MART】(1F 區塊 800)；②【ASICS Factory Outlet】(1F 區塊 260)；③【New Balance】(1F 區塊 940 VANS/NB 複合店 ＆ 270 NB Golf)；④【Vivienne Westwood】(1F 區塊 540 中央大道)；⑤【COACH / COACH MENS】(1F 區塊 330/340)。全專櫃皆集中於 1F，可點擊下方按鈕直接彈出高解析平面地圖定位各櫃位！",
+          tips: "【5大專櫃位置導覽 ＆ 2026退稅攻略】：\n• 👟 ABC-MART：1F 800 號（近西側入口／大面積球鞋展示）\n• 🏃‍♂️ ASICS：1F 260 號（東側運動專區，緊鄰 270 NB Golf 與 250 TaylorMade）\n• 👟 New Balance：1F 940 號（VANS / NB 複合專賣）與 1F 270 號（NB Golf 高爾夫服飾配件）\n• 🪐 Vivienne Westwood：1F 540 號（中央精品大道，近 550 新秀麗）\n• 👜 COACH：1F 330 號（女裝精品包款）＆ 340 號（男士專門店）\n• 🎁 抵達先至 1F 綜合諮詢台出示護照/JCB卡換領【外國人專屬 Coupon Book】享額外 5%~10% 折扣！20:00 閉店，建議於 19:40 前完成結帳。",
+          reservationInfo: "全區自由入園。點擊下方「🗺️ 查看專櫃平面圖」可即時縮放切換 1F / 2F 平面位置圖。",
+          branchTip: "5 個目標櫃位全部分布在 1F，不必上下樓梯，動線沿著中央大道與東側走廊即可一氣呵成！"
         },
         {
           id: "d1-3",
@@ -86,9 +88,9 @@ const OKINAWA_TRIP_DATA = {
             distance: "約 8.5 km",
             route: "沿國道 331 號往那霸市區久茂地",
             toll: "無料",
-            tips: "提行李搭計程車直接進飯店辦理 Check-in（約 ¥2,500）"
+            tips: "搭計程車直接進飯店辦理 Check-in，戰利品直接放房間"
           },
-          name: "THE NEST 那霸 (飯店 Check-in)",
+          name: "THE NEST 那霸 (飯店 Check-in ＆ 全程連住免搬行李)",
           category: "住宿",
           image: "thumb-nesthotel.jpg",
           time: "20:25 ~ 20:45",
@@ -99,8 +101,8 @@ const OKINAWA_TRIP_DATA = {
           color: "#6366f1",
           icon: "🏨",
           parkingInfo: "高CP推薦：步行2分「ザ・パーク西町第3 (夜間最大¥400)」或「タイムズ西1丁目 (夜間最大¥500)」",
-          tags: ["飯店入住", "卸行李", "周邊高CP停車", "平價過夜車位"],
-          desc: "ASHIBINAA 閉店後抵達飯店辦理入住。飯店自營立體車位每晚約 ¥1,500 且有高度限制；自駕強烈推薦停放周邊走路 2 分鐘的平面收費停車場，夜間僅需 ¥400~¥500！",
+          tags: ["飯店入住", "全程3晚連住", "無需中途換房", "戰利品放房間", "平價過夜車位"],
+          desc: "ASHIBINAA 閉店後抵達飯店辦理入住。特別提醒：【本行程全程 3 晚皆連住 THE NEST 那霸，中途完全不換飯店】！今晚在 Outlet、雪塩本店與唐吉訶德採購的伴手禮、免稅商品直接放回客房，後續兩天輕裝自駕北上，完全不用每天收拾打包或塞滿跑車後車廂，極度輕鬆！",
           tips: "【飯店周邊超值停車攻略】：①「ザ・パーク西町第3」(西1-4-14，步2分，20:00-08:00夜間最大僅¥400，全平地超便宜首選)；②「タイムズ西1丁目/第2」(西1-14，步2分，18:00-08:00夜間最大¥500，24H上限¥1,000，支援刷卡)；③「西パーキング」(西1-3-9，步1分過馬路即達，20:00-09:00過夜¥600)。"
         },
         {
@@ -173,17 +175,11 @@ const OKINAWA_TRIP_DATA = {
           icon: "🧂",
           parkingInfo: "國際通商圈步行街（近單軌縣廳前站，自飯店或牛排館散步即達）",
           tags: ["【必去土產旗艦店】", "雪塩さんど夾心餅乾", "雪塩霜淇淋", "自選調味鹽吧", "雪塩金楚糕", "雪塩費南雪"],
-          desc: "沖繩最具代表性的天然海鹽總旗艦店！全店專門店首推狂銷人氣王【雪塩さんど（雪鹽夾心餅乾）】，濃醇白巧克力融入宮古島天然雪鹽，內餡揉入卡滋玉米脆片，外層酥脆無比、鹹甜交織極度誘人！現場必吃招牌『雪塩霜淇淋』，可自由撒上香檬鹽、抹茶鹽、可可鹽、辣椒鹽等特製風味鹽試吃體驗。雪鹽費南雪、法蘭酥與黑糖金楚糕亦一應俱全，是整趟行程不可錯過的伴手禮第一指名！",
+          desc: "沖繩最具代表性的天然海鹽總旗艦店！因全程連住 THE NEST 那霸無須中途換房，首夜即可安心大買特買！全店專門店首推狂銷人氣王【雪塩さんど（雪鹽夾心餅乾）】，濃醇白巧克力融入宮古島天然雪鹽，內餡揉入卡滋玉米脆片，外層酥脆無比、鹹甜交織極度誘人！現場必吃招牌『雪塩霜淇淋』，可自由撒上香檬鹽、抹茶鹽、可可鹽、辣椒鹽等特製風味鹽試吃體驗。雪鹽費南雪、法蘭酥與黑糖金楚糕亦一應俱全，是整趟行程不可錯過的伴手禮第一指名！",
           tips: "【必買清單 ＆ 營業攻略】：營業至 21:00/22:00。首推『雪塩さんど』盒裝（常溫保存極佳、送禮自用皆絕品）與現擠『雪塩霜淇淋』；單筆消費滿 ¥5,500 支援免稅結帳，買齊旅程所需特色伴手禮！",
           reservationInfo: "外帶內用皆免預約，伴手禮選購流暢快速。",
           branchTip: "【國際通總本店】：坐落於久茂地3-1-1（縣廳前站旁國際通起點），為全沖繩品項最齊全之雪塩さんど專門本店！若後續逛到唐吉訶德正對面亦有松尾分店可補貨。",
           backupOptions: [
-            {
-              name: "Cat Café MOFF 沖縄国際通り店 (久茂地萌貓療癒咖啡館)",
-              tag: "久茂地3丁目 / 步行2分 / 營業至20:00",
-              desc: "距雪塩本店步行僅 2 分鐘（JMFビル 3F）！若國際通逛累、遇雨天或想放鬆吸貓，店內約 20 隻超親人品種貓咪與特製貓咪拉花拿鐵是極度療癒的室內休憩聖地。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Cat+Cafe+MOFF+Okinawa+Kokusai+Dori&travelmode=walking"
-            },
             {
               name: "宮古島の雪塩 國際通松尾店",
               tag: "松尾段 / 唐吉訶德對面",
@@ -226,18 +222,18 @@ const OKINAWA_TRIP_DATA = {
       date: "2026/11/17",
       weekday: "週二",
       title: "中北部奔馳 ＆ 跑車海岸極致巡禮 ＆ 深夜丸幸拉麵",
-      subtitle: "まるたま味噌早餐 • 波上宮 • 赤嶺取跑車 • .uki 世界冠軍咖啡 • 道の駅許田 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • BLUE SEAL • PARCO CITY UTme! • 丸幸拉麵宵夜",
+      subtitle: "まるたま味噌早餐 • 波上宮 • hana hana取花 • 赤嶺取跑車 • .uki 世界冠軍咖啡 • 道の駅許田 • 古宇利大橋 • 水族館 • 萬座毛夕陽 • A&W • BLUE SEAL • PARCO CITY UTme! • 丸幸拉麵宵夜",
       themeColor: "#059669",
       highlightNotice: {
         type: "info",
-        title: "自駕長途日：まるたま元氣早餐、赤嶺取跑車、.uki咖啡、水族館、萬座毛、PARCO UTme! ＆ 深夜丸幸拉麵",
-        content: "早晨 07:45 漫步享用「まるたま味噌飯屋」道地早餐，09:30 於赤嶺取敞篷跑車出發，沿國道58號朝聖 2024 WCTC 世界盃冠軍「.uki coffee」；隨後馳騁古宇利跨海大橋、14:55 直擊水族館 15:00 鯨鯊進食秀，傍晚萬座毛捕捉落日，夜間接連造訪 A&W、BLUE SEAL 牧港旗艦雙店並於 PARCO CITY 客製 UTme! 紀念 T 恤；返抵那霸後，直奔松尾巷內 4.9 星「Ramen Paradise 丸幸」享用深夜濃郁豚骨拉麵宵夜！"
+        title: "自駕長途日：まるたま元氣早餐、波上宮參拜、hana hana取花、赤嶺取跑車、.uki咖啡、水族館、萬座毛、PARCO UTme! ＆ 深夜丸幸拉麵",
+        content: "早晨 07:45 漫步享用「まるたま味噌飯屋」道地早餐，08:45 前往波上宮參拜求御守，09:15 漫步至若狹「花の店 はなはな」提領預訂花束；隨後 09:45 於赤嶺取敞篷跑車出發，將鮮花安放副駕，沿國道58號朝聖 2024 WCTC 世界盃冠軍「.uki coffee」；隨後馳騁古宇利跨海大橋、14:55 直擊水族館 15:00 鯨鯊進食秀，傍晚萬座毛捕捉落日，夜間接連造訪 A&W、BLUE SEAL 牧港旗艦雙店並於 PARCO CITY 客製 UTme! 紀念 T 恤；返抵那霸後，直奔松尾巷內 4.9 星「Ramen Paradise 丸幸」享用深夜濃郁豚骨拉麵宵夜！"
       },
       transitSummary: {
         totalDrivingTime: "約 3.5 小時",
         totalDistance: "約 175 km",
-        mode: "自駕 (ETC 高速＋國道58) ＆ 步行宵夜",
-        tips: "全日自駕核心！國道58號北上經宜野灣 .uki ➔ 許田 IC 串連名護古宇利、美ら海與萬座毛，夜間返抵那霸卸戰利品後漫步品嚐松尾丸幸拉麵宵夜"
+        mode: "自駕 (ETC 高速＋國道58) ＆ 晨間若狹散策取花 ＆ 步行宵夜",
+        tips: "全日自駕核心！晨間波上宮與花店散策取花 ➔ 赤嶺取敞篷跑車 ➔ 國道58號北上經宜野灣 .uki ➔ 許田 IC 串連名護古宇利、美ら海與萬座毛，夜間返抵那霸卸戰利品後漫步品嚐松尾丸幸拉麵宵夜"
       },
       waypoints: [
         {
@@ -283,7 +279,7 @@ const OKINAWA_TRIP_DATA = {
           category: "景點",
           period: "晨間出發",
           image: "thumb-naminoue.jpg",
-          time: "08:45 ~ 09:20",
+          time: "08:45 ~ 09:15",
           coords: [26.2207, 127.6713],
           mapCode: "33 185 022*41",
           phone: "098-868-3697",
@@ -298,18 +294,44 @@ const OKINAWA_TRIP_DATA = {
         {
           id: "d2-3",
           transitFromPrev: {
+            mode: "walk",
+            duration: "約 5 分",
+            distance: "約 450 m",
+            route: "出波上宮鳥居沿若狹大通向東南散策至若狹2丁目",
+            toll: "無料",
+            tips: "自波上宮漫步約 5 分鐘即達花店，早晨 09:00 已開門營業"
+          },
+          name: "花の店 はなはな (hana hana 浪漫取花 • 鮮花花束)",
+          category: "購物",
+          period: "晨間散策",
+          image: "thumb-naminoue.jpg",
+          time: "09:20 ~ 09:35",
+          coords: [26.2199, 127.6757],
+          mapCode: "33 186 075*00",
+          phone: "098-995-8987",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.219883,127.675728&travelmode=walking",
+          color: "#ec4899",
+          icon: "💐",
+          parkingInfo: "步行前往 / 若狹周邊臨停或收費停車場",
+          tags: ["【取花專用站】", "步行5分鐘", "浪漫花束", "跑車自駕儀式感", "09:00營業", "預約取件"],
+          desc: "位於那霸市若狹 2 丁目的在地質感花店「花の店 はなはな」。自波上宮參拜結束後，漫步約 5 分鐘（450m）即可輕鬆抵達。早晨 09:00 即開始營業，提前預約之精緻鮮花花束、浪漫捧花於此提領，為接下來的敞篷跑車海岸巡禮注入滿滿儀式感與浪漫氛圍！",
+          tips: "【取花與自駕銜接指引】：① 地址：那霸市若狹2丁目2-16（電話：098-995-8987，營業時間 09:00~21:30）；② 從波上宮鳥居出發，沿若狹大通向東南散步僅約 5 分鐘即達；③ 提領花束後，可直接於花店門口使用 Uber / GO App 叫車或路邊攔計程車（車程約 12 分鐘、車資約 ¥1,500）直奔赤嶺 Heat Sports 租車行取敞篷跑車；④ 將花束小心安放在跑車副駕駛座，沿國道 58 號奔馳向北，拍照氛圍感直接拉滿！"
+        },
+        {
+          id: "d2-4",
+          transitFromPrev: {
             mode: "taxi",
             duration: "約 12 分",
             distance: "約 5.2 km",
-            route: "搭計程車直達赤嶺門市 (或自旭橋站搭單軌電車)",
+            route: "自花店門口搭計程車經若狹／久茂地直上國道 331 號直達赤嶺門市",
             toll: "車資約 ¥1,500 或 單軌 ¥270",
-            tips: "準時 09:30 前往赤嶺取車，出示台灣駕照日文譯本與正本"
+            tips: "取花後自門口搭計程車直達赤嶺取跑車，出示台灣駕照日文譯本與正本"
           },
           name: "Heat Sports Car Rental (赤嶺取車點檢)",
           category: "交通",
           period: "晨間出發",
           image: "thumb-heatsports.jpg",
-          time: "09:30 ~ 09:55",
+          time: "09:50 ~ 10:15",
           coords: [26.1928, 127.6603],
           mapCode: "33 064 748*88",
           phone: "098-857-0819",
@@ -318,11 +340,11 @@ const OKINAWA_TRIP_DATA = {
           icon: "🏎️",
           parkingInfo: "租車站出發（赤嶺站旁步行 5 分鐘）",
           tags: ["跑車租賃", "租期至11/18 19:30", "外觀檢查", "ETC插卡", "敞篷操作"],
-          desc: "沖繩專業特色跑車與敞篷車租賃。租車時程自 11/17 09:30 至 11/18 19:30（租滿 34 小時！）。辦理交車手續、檢查全車刮痕拍照錄影、確認油種（Regular紅色油槍）與敞篷開關操作，準備向北狂飆！",
-          tips: "務必出示：台灣駕照正本 + 監理所日文譯本 + 護照！09:55 準時出發，沿國道 58 號北上前往宜野灣 .uki 冠軍咖啡。"
+          desc: "沖繩專業特色跑車與敞篷車租賃。租車時程自 11/17 09:50 至 11/18 19:30（租滿 34 小時！）。辦理交車手續、檢查全車刮痕拍照錄影、確認油種（Regular紅色油槍）與敞篷開關操作，準備向北狂飆！",
+          tips: "務必出示：台灣駕照正本 + 監理所日文譯本 + 護照！10:15 準時出發，將鮮花安放副駕，沿國道 58 號北上前往宜野灣 .uki 冠軍咖啡。"
         },
         {
-          id: "d2-4",
+          id: "d2-5",
           transitFromPrev: {
             mode: "car",
             duration: "約 25 分",
@@ -335,7 +357,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "晨光咖啡",
           image: "thumb-uki.jpg",
-          time: "10:20 ~ 10:50",
+          time: "10:40 ~ 11:10",
           coords: [26.2764, 127.7478],
           mapCode: "33 374 745*55",
           phone: "098-943-0974",
@@ -358,7 +380,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-5",
+          id: "d2-6",
           transitFromPrev: {
             mode: "car",
             duration: "約 40 分",
@@ -371,7 +393,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "古宇利跳島",
           image: "thumb-kyoda.jpg",
-          time: "11:35 ~ 12:00",
+          time: "11:50 ~ 12:15",
           coords: [26.5414, 127.9682],
           mapCode: "206 476 706*66",
           phone: "098-054-0880",
@@ -394,7 +416,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-6",
+          id: "d2-7",
           transitFromPrev: {
             mode: "car",
             duration: "約 15 分",
@@ -420,7 +442,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "過橋前可在南詰停車場短暫停車，以跨海長橋與跑車為背景拍下經典紀念照。"
         },
         {
-          id: "d2-7",
+          id: "d2-8",
           transitFromPrev: {
             mode: "car",
             duration: "約 2 分",
@@ -469,7 +491,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-8",
+          id: "d2-9",
           transitFromPrev: {
             mode: "car",
             duration: "約 5 分",
@@ -495,7 +517,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "前往沙灘的小石坡路稍微傾斜，建議換穿好走的平底鞋或涼鞋；停留約 30 分鐘後驅車啟程。"
         },
         {
-          id: "d2-9",
+          id: "d2-10",
           transitFromPrev: {
             mode: "car",
             duration: "約 20 分",
@@ -538,7 +560,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-10",
+          id: "d2-11",
           transitFromPrev: {
             mode: "car",
             duration: "約 10 分",
@@ -564,7 +586,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "【避坑時段 ＆ 拍照出片祕技】：① **千萬別中午去！** 中午時段觀光團客與親子家庭爆滿，拍照全擠滿人頭且室內悶熱；② **最佳黃金時間：下午 3 點後入場！** 此時團客大巴紛紛散去，光線轉為柔和，15:00 正好趕上黑潮之海「鯨鯊垂直站立進食秀」，大水槽前拍照極易拍出唯美大片！③ 現場原價成人 ¥2,180（若在許田休息站買特惠票約 ¥1,850~2,000，直接刷條碼入場免排隊購票）。"
         },
         {
-          id: "d2-11",
+          id: "d2-12",
           transitFromPrev: {
             mode: "car",
             duration: "約 5 分",
@@ -590,7 +612,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "點杯沖繩限定飲品或抹茶星冰樂，在二樓戶外木平台吹風打卡，身心徹底充飽電。"
         },
         {
-          id: "d2-12",
+          id: "d2-13",
           transitFromPrev: {
             mode: "car",
             duration: "約 45 分",
@@ -616,7 +638,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "【私房拍照角 ＆ 避開人潮攻略】：① **不要傻傻停留在大觀景台！** 入口正前方的主觀景台永遠擠滿拍照人潮與自拍棒遮擋；② **往前走側邊小步道：** 順著單向步道稍微往前走一小段的側邊視野，人潮大幅減少，角度更能拍出「完整象鼻岩 🏖️ ＋ 無邊海景 🌊 ＋ 絕美夕陽金光」的經典神照！③ 步道門票每人 ¥100（遊客中心自動售票機購票，支援現金或交通 IC 卡，大型停車場免費）。"
         },
         {
-          id: "d2-13",
+          id: "d2-14",
           transitFromPrev: {
             mode: "car",
             duration: "約 45 分",
@@ -659,7 +681,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-14",
+          id: "d2-15",
           transitFromPrev: {
             mode: "car",
             duration: "約 2 分",
@@ -696,7 +718,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-15",
+          id: "d2-16",
           transitFromPrev: {
             mode: "car",
             duration: "約 10 分",
@@ -722,7 +744,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "【UTme! 客製 ＆ 商場優惠退稅攻略】：① 一進店直奔 2F UTme! 機台平板設計排版（現場印製需 20 分，21:15 截止收單）；② 採買後於 21:40 取件並辦理退稅（UNIQLO 為專櫃獨立免稅）；③ 全館其他專櫃當日累計滿 ¥5,500 可至 1F 免稅服務台統一辦理；若有逛 1F「EDION 愛電王」買家電，可出示外國人電子優惠券享 10% 免稅 + 最高 7% 折扣！"
         },
         {
-          id: "d2-16",
+          id: "d2-17",
           transitFromPrev: {
             mode: "car",
             duration: "約 15 分",
@@ -748,7 +770,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "【今晚跑車停車推薦】：首推「ザ・パーク西町第3」(那霸市西1-4-14，夜間20:00-08:00僅¥400，全平地免卡底盤)；停妥後搭計程車或散步前往松尾丸幸拉麵。"
         },
         {
-          id: "d2-17",
+          id: "d2-18",
           transitFromPrev: {
             mode: "taxi",
             duration: "約 5 分",
@@ -791,7 +813,7 @@ const OKINAWA_TRIP_DATA = {
           ]
         },
         {
-          id: "d2-18",
+          id: "d2-19",
           transitFromPrev: {
             mode: "walk",
             duration: "約 12 分",
@@ -1375,15 +1397,15 @@ const OKINAWA_TRIP_DATA = {
           color: "#f59e0b",
           icon: "🍟",
           parkingInfo: "單軌牧志站步行 5 分鐘 / 美榮橋站步行 6 分鐘",
-          tags: ["奇蹟的一哩", "現炸紅芋波浪薯條", "ポテりこ", "黑糖洋芋片", "散步美食"],
+          tags: ["奇蹟的一哩", "Cat Café MOFF萌貓", "現炸紅芋波浪薯條", "ポテりこ", "黑糖洋芋片", "散步美食"],
           desc: "漫步在沖繩最繁華的「奇蹟的一哩」國際通。不可錯過 Calbee+ 專賣店限定現炸熱點心——招牌「ポテりこ 紅芋薯條」，剛起鍋外皮酥脆滾燙、內餡如泥般綿密香甜，搭配沖繩黑糖洋芋片，邊走邊吃極度過癮！",
           tips: "Calbee+ 店內亦有販售限定包裝的石垣島辣油洋芋片與紅芋薯條伴手禮盒，適合隨手送禮。",
           reservationInfo: "現場點單現炸，製作約需 3~5 分鐘，免預約。",
           backupOptions: [
             {
               name: "Cat Café MOFF 沖縄国際通り店 (久茂地萌貓療癒咖啡館)",
-              tag: "國際通起點 / 營業10:00-20:00",
-              desc: "位於久茂地3丁目（近單軌縣廳前站）。店內約20隻親人品種貓咪，提供特製貓咪彩色拉花飲品，逛街疲憊或不想走動時的室內吸貓療癒首選！",
+              tag: "國際通起點 / 營業10:00-20:00 / 療癒吸貓",
+              desc: "自 Day 1 移至今日上午的專屬療癒站點！位於久茂地 3 丁目（近單軌縣廳前站，JMFビル 3F）。店內約 20 隻超親人品種貓咪與特製彩色拉花拿鐵，早晨在國際通逛街若想歇腳放鬆吸貓，此處是絕佳室內享受！",
               googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Cat+Cafe+MOFF+Okinawa+Kokusai+Dori&travelmode=walking"
             },
             {

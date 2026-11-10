@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.10"></script>
+  <script src="itinerary-data.js?v=20261117-v3.12"></script>
 
   <script>
     tailwind.config = {
@@ -477,21 +477,21 @@
             <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scroll-smooth" style="scrollbar-width: none;">
               
               <!-- Sign 1: 古宇利島 -->
-              <button onclick="jumpToSpot(1, 'd2-6')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
+              <button onclick="jumpToSpot(1, 'd2-7')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
                 <span>🌉</span>
                 <span>古宇利島</span>
                 <span class="text-[10px] text-amber-300 font-mono">D2</span>
               </button>
 
               <!-- Sign 2: 美ら海水族館 -->
-              <button onclick="jumpToSpot(1, 'd2-10')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(1, 'd2-11')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>🐟</span>
                 <span>美ら海水族館</span>
                 <span class="text-[10px] text-sky-300 font-mono">D2</span>
               </button>
 
               <!-- Sign 3: .uki 冠軍咖啡 -->
-              <button onclick="jumpToSpot(1, 'd2-4')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-100 rounded-xl text-xs font-bold border border-emerald-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
+              <button onclick="jumpToSpot(1, 'd2-5')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-100 rounded-xl text-xs font-bold border border-emerald-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
                 <span>☕</span>
                 <span>.uki 冠軍咖啡</span>
                 <span class="text-[10px] text-emerald-300 font-mono">D2</span>
@@ -502,6 +502,13 @@
                 <span>⛩️</span>
                 <span>波上宮海灘</span>
                 <span class="text-[10px] text-rose-300 font-mono">D2</span>
+              </button>
+
+              <!-- Sign 4b: hana hana 取花 -->
+              <button onclick="jumpToSpot(1, 'd2-3')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-pink-950/80 hover:bg-pink-900 text-pink-100 rounded-xl text-xs font-bold border border-pink-400/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
+                <span>💐</span>
+                <span>hana hana取花</span>
+                <span class="text-[10px] text-pink-300 font-mono">D2</span>
               </button>
 
               <!-- Sign 5: 首里城公園 -->
@@ -1145,7 +1152,7 @@
                 <div class="font-bold text-slate-900">Day 2 • UNIQLO 浦添 PARCO CITY 店 (20:40~21:50)</div>
                 <div class="text-[11px] text-slate-500">UTme! 客製 T 恤與服飾合計未稅滿 ¥5,000，於 21:40 取件時出示護照／VJW 辦理先付後退登錄。</div>
               </div>
-              <button onclick="jumpFromTaxFreeToSpot(1, 'd2-15')" class="shrink-0 px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-xl font-bold text-[11px] cursor-pointer">定位 D2 ➔</button>
+              <button onclick="jumpFromTaxFreeToSpot(1, 'd2-16')" class="shrink-0 px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-xl font-bold text-[11px] cursor-pointer">定位 D2 ➔</button>
             </div>
 
             <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-sky-50/70 border border-slate-200 transition gap-2">
@@ -1646,6 +1653,42 @@
        1. INITIALIZATION ON LOAD
        ========================================================================= */
     
+    let currentAshibinaaFloor = '1f';
+    function openAshibinaaFloorModal(floor = '1f') {
+      const modal = document.getElementById('ashibinaaFloorModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        switchAshibinaaFloor(floor);
+      }
+    }
+    function closeAshibinaaFloorModal() {
+      const modal = document.getElementById('ashibinaaFloorModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        document.body.style.overflow = '';
+      }
+    }
+    function switchAshibinaaFloor(floor) {
+      currentAshibinaaFloor = floor;
+      const img = document.getElementById('ashibinaaFloorImg');
+      const tab1 = document.getElementById('ashibinaaTab1F');
+      const tab2 = document.getElementById('ashibinaaTab2F');
+      const storeBar = document.getElementById('ashibinaaStoreBar');
+
+      if (floor === '1f') {
+        if (img) img.src = 'ashibinaa-floor-1f.jpg';
+        if (tab1) tab1.className = 'px-3 py-1 rounded-lg bg-amber-500 text-white shadow-xs transition';
+        if (tab2) tab2.className = 'px-3 py-1 rounded-lg text-white/70 hover:text-white transition';
+        if (storeBar) storeBar.classList.remove('hidden');
+      } else {
+        if (img) img.src = 'ashibinaa-floor-2f.jpg';
+        if (tab2) tab2.className = 'px-3 py-1 rounded-lg bg-amber-500 text-white shadow-xs transition';
+        if (tab1) tab1.className = 'px-3 py-1 rounded-lg text-white/70 hover:text-white transition';
+        if (storeBar) storeBar.classList.add('hidden');
+      }
+    }
+
     function openSpeedCameraLightbox() {
       const box = document.getElementById('speedCameraLightbox');
       if (box) {
@@ -2312,6 +2355,14 @@
               </button>
             ` : ''}
 
+            <!-- ASHIBINAA 專櫃平面地圖快捷按鈕 -->
+            ${wp.id === 'd1-2' ? `
+              <button type="button" onclick="openAshibinaaFloorModal('1f')" class="flex-initial px-3.5 py-2 bg-gradient-to-r from-amber-500 via-rose-500 to-amber-600 hover:from-amber-600 hover:to-rose-600 text-white border border-amber-400/50 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99] shadow-sm cursor-pointer" title="查看 5 大專櫃高解析平面位置圖">
+                <span>🗺️</span>
+                <span>專櫃平面圖 (1F/2F)</span>
+              </button>
+            ` : ''}
+
             <!-- 2026/11 日本退稅新制快捷鍵 (購物站點 ＆ 機場出境託運前) -->
             ${(wp.category === '購物' || wp.id === 'd4-7') ? `
               <button type="button" onclick="openModal('taxFreeModal')" class="flex-initial px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99] shadow-2xs cursor-pointer" title="查看 2026/11 日本退稅新制流程與主流 App 下載">
@@ -2403,6 +2454,12 @@
                   <span>📞</span>
                   <span>電話</span>
                 </a>
+              ` : ''}
+              ${wp.id === 'd1-2' ? `
+                <button type="button" onclick="openAshibinaaFloorModal('1f')" class="px-2.5 py-1 bg-amber-500 hover:bg-amber-600 text-white rounded-lg text-xs font-bold flex items-center gap-1 shadow-2xs active:scale-95 transition">
+                  <span>🗺️</span>
+                  <span>專櫃地圖</span>
+                </button>
               ` : ''}
               ${(wp.category === '購物' || wp.id === 'd4-7') ? `
                 <button type="button" onclick="openModal('taxFreeModal')" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
@@ -2609,6 +2666,51 @@
                   <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
                     ${wp.desc || ''}
                   </p>
+
+                  <!-- ASHIBINAA 5 Major Stores Box -->
+                  ${wp.id === 'd1-2' ? `
+                    <div class="p-3.5 rounded-2xl bg-gradient-to-r from-amber-50 via-rose-50 to-amber-50 border-2 border-amber-300 space-y-2.5 shadow-xs">
+                      <div class="flex items-center justify-between gap-2">
+                        <span class="text-xs sm:text-sm font-black text-amber-950 flex items-center gap-1.5">
+                          <span>🏬</span>
+                          <span>鎖定 5 大核心專櫃 ＆ 櫃位編號</span>
+                        </span>
+                        <button type="button" onclick="openAshibinaaFloorModal('1f')" class="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-rose-500 hover:from-amber-600 hover:to-rose-600 text-white text-xs font-bold shadow-xs active:scale-95 transition flex items-center gap-1 cursor-pointer">
+                          <span>🗺️</span>
+                          <span>查看專櫃平面圖</span>
+                          <span class="text-[10px]">↗</span>
+                        </button>
+                      </div>
+                      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 text-xs">
+                        <div class="bg-white/95 p-2.5 rounded-xl border border-amber-200/90 shadow-2xs flex items-center justify-between">
+                          <span class="font-bold text-slate-800">👟 ABC-MART</span>
+                          <span class="text-amber-900 font-mono font-extrabold px-2 py-0.5 rounded-md bg-amber-100 text-[11px]">1F #800</span>
+                        </div>
+                        <div class="bg-white/95 p-2.5 rounded-xl border border-amber-200/90 shadow-2xs flex items-center justify-between">
+                          <span class="font-bold text-slate-800">🏃‍♂️ ASICS Outlet</span>
+                          <span class="text-amber-900 font-mono font-extrabold px-2 py-0.5 rounded-md bg-amber-100 text-[11px]">1F #260</span>
+                        </div>
+                        <div class="bg-white/95 p-2.5 rounded-xl border border-amber-200/90 shadow-2xs flex items-center justify-between">
+                          <span class="font-bold text-slate-800">👟 New Balance</span>
+                          <span class="text-amber-900 font-mono font-extrabold px-2 py-0.5 rounded-md bg-amber-100 text-[11px]">1F #940 / #270</span>
+                        </div>
+                        <div class="bg-white/95 p-2.5 rounded-xl border border-amber-200/90 shadow-2xs flex items-center justify-between">
+                          <span class="font-bold text-slate-800">🪐 Vivienne Westwood</span>
+                          <span class="text-amber-900 font-mono font-extrabold px-2 py-0.5 rounded-md bg-amber-100 text-[11px]">1F #540</span>
+                        </div>
+                        <div class="bg-white/95 p-2.5 rounded-xl border border-amber-200/90 shadow-2xs flex items-center justify-between">
+                          <span class="font-bold text-slate-800">👜 COACH / MENS</span>
+                          <span class="text-amber-900 font-mono font-extrabold px-2 py-0.5 rounded-md bg-amber-100 text-[11px]">1F #330 / #340</span>
+                        </div>
+                        <div class="bg-amber-500/10 hover:bg-amber-500/20 p-2.5 rounded-xl border border-amber-300 flex items-center justify-center cursor-pointer transition active:scale-95" onclick="openAshibinaaFloorModal('1f')">
+                          <span class="text-amber-950 font-black text-xs flex items-center gap-1">
+                            <span>🔍</span>
+                            <span>點擊縮放全螢幕平面圖 ➔</span>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ` : ''}
 
                   <!-- Tips / Gourmet Warning -->
                   ${wp.tips ? `
@@ -3296,7 +3398,7 @@
                 <a href="https://www.google.com/maps/dir/?api=1&destination=26.2142,127.6881&travelmode=walking" target="_blank" class="flex-1 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-800 rounded-xl text-center text-xs font-bold transition">
                   🗺️ 步行前往
                 </a>
-                <button onclick="jumpFromDiningToSpot(1, 'd2-17')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-center text-xs font-bold transition">
+                <button onclick="jumpFromDiningToSpot(1, 'd2-18')" class="flex-1 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-center text-xs font-bold transition">
                   📍 查看 Day 2 卡片
                 </button>
               </div>
@@ -3837,6 +3939,54 @@
       <p>結合 PWA 離線快取、Leaflet 互動軌跡、Google Maps 一鍵導航、日本 MapCode 與日圓匯率換算</p>
     </div>
   </footer>
+
+  <!-- ASHIBINAA Floor Guide Modal -->
+  <div id="ashibinaaFloorModal" class="hidden fixed inset-0 z-[65] bg-black/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-in fade-in duration-200" onclick="closeAshibinaaFloorModal()">
+    <div class="relative max-w-4xl max-h-[96vh] w-full bg-slate-900/90 rounded-3xl border border-white/20 shadow-2xl flex flex-col overflow-hidden" onclick="event.stopPropagation()">
+      
+      <!-- Modal Header -->
+      <div class="p-3.5 sm:p-4 border-b border-white/10 flex items-center justify-between gap-2 shrink-0">
+        <div class="flex items-center gap-2">
+          <span class="text-xl">🏬</span>
+          <div>
+            <h3 class="text-sm sm:text-base font-black text-white">沖繩 ASHIBINAA Outlet 專櫃平面配置圖</h3>
+            <p class="text-[11px] text-amber-300 font-medium">5 大目標專櫃全集中於 1F（可切換樓層與縮放檢視）</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <!-- Floor Switch Tabs -->
+          <div class="flex items-center bg-white/10 p-1 rounded-xl border border-white/20 text-xs font-bold">
+            <button id="ashibinaaTab1F" type="button" onclick="switchAshibinaaFloor('1f')" class="px-3 py-1 rounded-lg bg-amber-500 text-white shadow-xs transition">1F (目標專櫃)</button>
+            <button id="ashibinaaTab2F" type="button" onclick="switchAshibinaaFloor('2f')" class="px-3 py-1 rounded-lg text-white/70 hover:text-white transition">2F (美食生活)</button>
+          </div>
+
+          <button onclick="closeAshibinaaFloorModal()" class="w-9 h-9 rounded-full bg-white/20 hover:bg-white/40 text-white font-bold flex items-center justify-center text-base backdrop-blur-md transition cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <!-- Target Stores Pill Bar -->
+      <div id="ashibinaaStoreBar" class="px-3.5 py-2 bg-amber-950/60 border-b border-amber-500/20 flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs overflow-x-auto shrink-0">
+        <span class="text-[10px] uppercase font-bold text-amber-400 shrink-0">📍 核心櫃位：</span>
+        <span class="px-2 py-0.5 rounded-md bg-white/10 text-white font-medium border border-white/15">👟 ABC-MART <strong class="text-amber-300">#800</strong></span>
+        <span class="px-2 py-0.5 rounded-md bg-white/10 text-white font-medium border border-white/15">🏃‍♂️ ASICS <strong class="text-amber-300">#260</strong></span>
+        <span class="px-2 py-0.5 rounded-md bg-white/10 text-white font-medium border border-white/15">👟 New Balance <strong class="text-amber-300">#940 / #270</strong></span>
+        <span class="px-2 py-0.5 rounded-md bg-white/10 text-white font-medium border border-white/15">🪐 Vivienne <strong class="text-amber-300">#540</strong></span>
+        <span class="px-2 py-0.5 rounded-md bg-white/10 text-white font-medium border border-white/15">👜 COACH <strong class="text-amber-300">#330 / #340</strong></span>
+      </div>
+
+      <!-- Image Area (Scrollable / Zoomable) -->
+      <div class="flex-grow overflow-auto p-2 sm:p-4 flex items-center justify-center bg-slate-950/50 min-h-[300px]">
+        <img id="ashibinaaFloorImg" src="ashibinaa-floor-1f.jpg" class="max-w-full max-h-[72vh] object-contain rounded-xl shadow-lg border border-white/10 transition-transform duration-200" alt="ASHIBINAA 1F 平面圖">
+      </div>
+
+      <!-- Footer Info -->
+      <div class="px-4 py-2 border-t border-white/10 flex items-center justify-between text-[11px] text-white/60 shrink-0 bg-slate-900/60">
+        <span>💡 點選上方頁籤切換 1F / 2F，手勢或雙指可放大檢視詳細區塊</span>
+        <span class="text-amber-300 font-mono">ASHIBINAA 營業時間 10:00 ~ 20:00</span>
+      </div>
+    </div>
+  </div>
 
   <!-- Speed Camera Map Lightbox Modal -->
   <div id="speedCameraLightbox" class="hidden fixed inset-0 z-[60] bg-black/90 backdrop-blur-md flex items-center justify-center p-2 sm:p-4 animate-in fade-in duration-200" onclick="closeSpeedCameraLightbox()">
