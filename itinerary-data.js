@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v3.14",
+    version: "20261117-v3.16",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -176,7 +176,7 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "國際通商圈步行街（近單軌縣廳前站，自飯店或牛排館散步即達）",
           tags: ["【必去土產旗艦店】", "雪塩さんど夾心餅乾", "雪塩霜淇淋", "自選調味鹽吧", "雪塩金楚糕", "雪塩費南雪"],
           desc: "沖繩最具代表性的天然海鹽總旗艦店！因全程連住 THE NEST 那霸無須中途換房，首夜即可安心大買特買！全店專門店首推狂銷人氣王【雪塩さんど（雪鹽夾心餅乾）】，濃醇白巧克力融入宮古島天然雪鹽，內餡揉入卡滋玉米脆片，外層酥脆無比、鹹甜交織極度誘人！現場必吃招牌『雪塩霜淇淋』，可自由撒上香檬鹽、抹茶鹽、可可鹽、辣椒鹽等特製風味鹽試吃體驗。雪鹽費南雪、法蘭酥與黑糖金楚糕亦一應俱全，是整趟行程不可錯過的伴手禮第一指名！",
-          tips: "【必買清單 ＆ 營業攻略】：營業至 21:00/22:00。首推『雪塩さんど』盒裝（常溫保存極佳、送禮自用皆絕品）與現擠『雪塩霜淇淋』；單筆消費滿 ¥5,500 支援免稅結帳，買齊旅程所需特色伴手禮！",
+          tips: "【必買清單 ＆ 營業攻略】：營業至 21:00/22:00。首推『雪塩さんど』盒裝（常溫保存極佳、送禮自用皆絕品）與現擠『雪塩霜淇淋』；單筆消費未稅滿 ¥5,000 適用 2026/11 退稅新制結帳，買齊旅程所需特色伴手禮！",
           reservationInfo: "外帶內用皆免預約，伴手禮選購流暢快速。",
           branchTip: "【國際通總本店】：坐落於久茂地3-1-1（縣廳前站旁國際通起點），為全沖繩品項最齊全之雪塩さんど專門本店！若後續逛到唐吉訶德正對面亦有松尾分店可補貨。",
           backupOptions: [
@@ -785,7 +785,6 @@ const OKINAWA_TRIP_DATA = {
           bookingTime: "現場排隊入座 (營業至深夜 24:00/01:00)",
           coords: [26.2142, 127.6881],
           mapCode: "33 157 325*14",
-          phone: "無 (現場直接入座)",
           googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2142,127.6881&travelmode=walking",
           color: "#f43f5e",
           icon: "🍜",
@@ -862,6 +861,7 @@ const OKINAWA_TRIP_DATA = {
           name: "麥當勞 姬百合通壺屋店 (早晨元氣滿福堡)",
           category: "美食",
           period: "晨間出發",
+          image: "thumb-mcdonalds.jpg",
           time: "08:30 ~ 09:20",
           bookingTime: "現場點餐 / App手機預訂",
           coords: [26.2109, 127.6934],
@@ -982,6 +982,7 @@ const OKINAWA_TRIP_DATA = {
           name: "濱比嘉島 てぃーらぶい (Tirabui 百年古民家食堂)",
           category: "美食",
           period: "海中跳島",
+          image: "thumb-tirabui.jpg",
           time: "12:30 ~ 13:25",
           bookingTime: "建議電話預約 12:30",
           coords: [26.3195, 127.9575],
@@ -1123,7 +1124,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3168, 127.7543],
           mapCode: "33 525 892*11",
           phone: "098-989-5788",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3168,127.7543&travelmode=driving",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3168,127.7543&travelmode=walking",
           color: "#f59e0b",
           icon: "🥞",
           parkingInfo: "停放於美國村 Depot Island 免費停車場，步行 3 分鐘",
@@ -1143,7 +1144,7 @@ const OKINAWA_TRIP_DATA = {
               name: "Taco Rice Cafe Kijimuna (美國村店)",
               tag: "清單名店 / Depot Island 2F",
               desc: "Google My Maps 清單名店！若不想吃甜點鬆餅想吃鹹食，首推這家滑嫩歐姆蛋塔可飯（Omutaco），可自選中辣或照燒醬汁。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Taco+Rice+Cafe+Kijimuna+Depot+Island&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Taco+Rice+Cafe+Kijimuna+Depot+Island&travelmode=walking"
             },
             {
               name: "Gourmet 迴轉壽司市場 美濱店",
@@ -1155,7 +1156,7 @@ const OKINAWA_TRIP_DATA = {
               name: "ZHYVAGO COFFEE WORKS OKINAWA",
               tag: "濱海步道旁",
               desc: "美式西海岸工業風海景咖啡館，外帶一杯冰滴拿鐵坐在防波堤邊吹風等日落極度愜意。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=ZHYVAGO+COFFEE+WORKS+OKINAWA&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=ZHYVAGO+COFFEE+WORKS+OKINAWA&travelmode=walking"
             }
           ]
         },
@@ -1177,7 +1178,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.3159, 127.7532],
           mapCode: "33 525 803*77",
           phone: "098-936-8273",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3159,127.7532&travelmode=driving",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.3159,127.7532&travelmode=walking",
           color: "#e11d48",
           icon: "🌅",
           parkingInfo: "美國村 Sunset Beach 專用停車場 (免費)",
@@ -1284,7 +1285,7 @@ const OKINAWA_TRIP_DATA = {
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
-          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=driving",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2127,127.6745&travelmode=walking",
           color: "#6366f1",
           icon: "🏨",
           parkingInfo: "飯店客房（自燒肉店散步回飯店僅 10 分鐘）",
@@ -1299,18 +1300,18 @@ const OKINAWA_TRIP_DATA = {
       date: "2026/11/19",
       weekday: "週四",
       title: "那霸最後採買 ＆ 16:50 滿載返程",
-      subtitle: "牧志公設市場 • 豬肉蛋飯糰 • 國際通Calbee+ • 新都心Main Place & DFS • 機場國內線",
+      subtitle: "牧志公設市場 Potama • 國際通 Calbee+ • 千台扭蛋森林 • 新都心 Main Place & DFS • 機場伴手禮",
       themeColor: "#ea580c",
       highlightNotice: {
         type: "warning",
         title: "16:50 返程航班 ＆ 2026退稅新制死線：14:40 前「先刷海關 KIOSK 再託運行李」！",
-        content: "班機於 16:50 起飛、16:20 開始登機。今日搭乘單軌電車（Yui Rail）精準避開塞車！14:10 抵達機場逛完國內線 2F 伴手禮後，【務必先至國際線出發大廳「海關免稅自助機 (KIOSK)」刷護照完成退稅驗證（綠燈放行／紅燈抽檢）】，確認通過後再前往航空公司櫃台託運行李！"
+        content: "班機於 16:50 起飛、16:20 開始登機。上午早點出門巡禮牧志市場與國際通 Calbee+，10:45 接續朝聖千台扭蛋「カプセルジャングル 国際通り店」，再由美榮橋站搭單軌直衝歌町站 Main Place ＆ DFS！14:10 抵達機場逛完國內線 2F 伴手禮後，【務必先至國際線出發大廳「海關免稅自助機 (KIOSK)」刷護照完成退稅驗證（綠燈放行／紅燈抽檢）】，確認通過後再前往航空公司櫃台託運行李！"
       },
       transitSummary: {
         totalDrivingTime: "無自駕 (市區無車日)",
-        totalDistance: "步行約 3.5 km ｜ 單軌 3 趟",
+        totalDistance: "步行約 3.9 km ｜ 單軌 3 趟",
         mode: "單軌電車 ＆ 悠閒徒步",
-        tips: "全日單軌＋徒步漫遊！牧志市場 ➔ 國際通 ➔ 新都心 Main Place ➔ 旭橋取行李 ➔ 機場"
+        tips: "全日單軌＋徒步順路不走回頭路！牧志市場 ➔ Calbee+ ➔ カプセルジャングル扭蛋 ➔ 美榮橋赴 Main Place ➔ 旭橋取行李 ➔ 機場"
       },
       waypoints: [
         {
@@ -1319,7 +1320,7 @@ const OKINAWA_TRIP_DATA = {
           category: "住宿",
           period: "早晨整裝",
           image: "thumb-nesthotel.jpg",
-          time: "08:30 ~ 09:00",
+          time: "08:25 ~ 08:50",
           coords: [26.2127, 127.6745],
           mapCode: "33 156 363*88",
           phone: "098-868-1118",
@@ -1345,7 +1346,7 @@ const OKINAWA_TRIP_DATA = {
           category: "美食",
           period: "早晨美食",
           image: "thumb-makishi.jpg",
-          time: "09:15 ~ 10:30",
+          time: "09:05 ~ 10:00",
           coords: [26.2146, 127.6883],
           mapCode: "33 157 264*82",
           phone: "098-867-9550",
@@ -1355,7 +1356,7 @@ const OKINAWA_TRIP_DATA = {
           parkingInfo: "單軌美榮橋站步行 8 分鐘 / 牧志站步行 9 分鐘",
           tags: ["沖繩人的廚房", "元祖豬肉蛋飯糰", "炸蝦明太子", "清單必吃", "在地市場巡禮"],
           desc: "走進全新現代化改建的「第一牧志公設市場」，一樓活海鮮水族箱林立，五彩斑斕的夜光貝與石斑魚令人目不暇給。市場對面即是全沖繩最強人氣早點「Potama 豬肉蛋飯糰牧志本店」，厚切午餐肉搭配軟嫩玉子燒與現炸酥脆海老，香氣撲鼻！",
-          tips: "【排隊避雷密技】：Potama 早晨現場人潮眾多，強烈建議出發前使用官方 FastPick App 線上點餐付款，指定 09:30 取餐即可免排隊直接提領！",
+          tips: "【排隊避雷密技】：Potama 早晨現場人潮眾多，強烈建議出發前使用官方 FastPick App 線上點餐付款，指定 09:15~09:25 取餐即可免排隊直接提領，預留時間接續逛 Calbee+ 與扭蛋專賣店！",
           reservationInfo: "無桌位預約，但支援官方 FastPick App 提前 30~60 分鐘線上下單，到店直接取餐外帶免排隊。",
           branchTip: "【分店比較】：除了牧志市場本店外，那霸機場國內線 1F 也有分店，但機場店排隊人龍極長（常需等 40~60 分鐘），因此在牧志本店提早取餐最為從容！",
           backupOptions: [
@@ -1363,13 +1364,13 @@ const OKINAWA_TRIP_DATA = {
               name: "JEF Sunrise Naha (JEF サンライズ那覇店)",
               tag: "清單名店 / 沖繩限定苦瓜漢堡",
               desc: "Google My Maps 清單名店！全日本僅沖繩才有的連鎖速食店，距離牧志市場步行 3 分鐘。招牌現點現煎『苦瓜歐姆蛋漢堡』與苦瓜香檬汁，風味獨特清爽！",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=JEF+Sunrise+Naha&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=JEF+Sunrise+Naha&travelmode=walking"
             },
             {
               name: "第一牧志公設市場 2F 燕鄉亭食堂",
               tag: "市場現炒 / 鮮魚刺身",
               desc: "位於公設市場 2 樓，可在 1 樓挑選鮮魚直接上樓代客料理，或直接單點海葡萄、沖繩炒苦瓜與生魚片丼飯。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Makishi+Public+Market+2F&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Makishi+Public+Market+2F&travelmode=walking"
             }
           ]
         },
@@ -1387,7 +1388,7 @@ const OKINAWA_TRIP_DATA = {
           category: "購物",
           period: "上午散策",
           image: "thumb-calbee.jpg",
-          time: "10:30 ~ 11:20",
+          time: "10:05 ~ 10:40",
           coords: [26.2164, 127.6891],
           mapCode: "33 157 414*55",
           phone: "098-867-6254",
@@ -1410,31 +1411,66 @@ const OKINAWA_TRIP_DATA = {
               name: "Ice Oasis (雪花冰專門店)",
               tag: "清單名店 / 消暑冰品",
               desc: "Google My Maps 清單名店！平和通商店街內，主打濃郁芒果雪花冰與黑糖豆花，逛累了可進店吹冷氣歇腳。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ice+Oasis+Naha&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Ice+Oasis+Naha&travelmode=walking"
             },
             {
               name: "唐吉訶德 國際通店",
               tag: "免稅地標 / 24小時營業",
               desc: "國際通正中心地標，B1 至 4F 囊括沖繩限定零食、面膜藥妝與紀念品，可迅速補齊清單漏買的小物。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Don+Quijote+Kokusai+Dori&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Don+Quijote+Kokusai+Dori&travelmode=walking"
             }
           ]
         },
         {
           id: "d4-4",
           transitFromPrev: {
+            mode: "walk",
+            duration: "約 5 分",
+            distance: "約 400 m",
+            route: "沿國際通往久茂地方向漫步至牧志 1-2-31（巨大風獅爺「おきなわ屋」2F）",
+            toll: "無料",
+            tips: "Calbee+ 散步過來只需 5 分鐘，且離等會搭單軌的美榮橋站僅 400m，全程零折返！"
+          },
+          name: "カプセルジャングル 国際通り店 (Capsule Jungle • 千台扭蛋森林)",
+          category: "購物",
+          period: "上午散策",
+          image: "thumb-capsulejungle.jpg",
+          time: "10:45 ~ 11:25",
+          coords: [26.2156, 127.6851],
+          phone: "080-9855-8330",
+          googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2156,127.6851&travelmode=walking",
+          color: "#ec4899",
+          icon: "🕹️",
+          parkingInfo: "〒900-0013 那霸市牧志 1-2-31 ハイサイおきなわビル 2F（單軌美榮橋站步行 5 分）",
+          tags: ["【1,000+台扭蛋機】", "營業 09:30~22:00", "大風獅爺2F地標", "沖繩限定轉蛋", "免自備零錢兌幣機"],
+          desc: "全沖繩縣內最大規模的扭蛋專門店「Capsule Jungle 國際通店」！認明國際通沿線門口佇立「巨大風獅爺」的特產店「おきなわ屋 本店」上 2 樓，整層樓整齊陳列超過 1,000 台最新動漫聯名、三麗鷗、療癒微縮模型與沖繩限定版扭蛋機。轉完扭蛋直接沿沖映通向北步行 5 分鐘抵達單軌美榮橋站前往新都心，動線超順暢！",
+          tips: "【營業 ＆ 扭蛋打包秘訣】：每日 **09:30 ~ 22:00 年中無休**（10:45 進店避開午後人潮、拍照好選機）。場內備有多台**百圓硬幣兌換機**可隨時換零錢，亦有拆封桌與蛋殼回收箱；建議只保留公仔與蛋紙裝袋攜帶，不佔下午裝箱空間！",
+          reservationInfo: "免費自由入場挑選投幣（單次約 ¥300 ~ ¥500），免預約。",
+          branchTip: "位在國際通核心段『大きなシーサー』ハイサイおきなわビル 2F，1F 即為琉球伴手禮商場，距離「單軌美榮橋站」僅步行 5 分鐘。",
+          backupOptions: [
+            {
+              name: "ガシャポンのデパート 駿河屋 那覇沖映通り店 (D-naha B1F)",
+              tag: "往美榮橋站必經 / 步行 4 分 / 約 400 台",
+              desc: "就在往單軌美榮橋站必經的沖映通上（淳久堂書店樓下 B1F），除了約 400 面萬代官方扭蛋機外，駿河屋亦販售大量動漫景品與二手模型，時間有餘裕可順路挖寶！",
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=26.2179,127.6845&travelmode=walking"
+            }
+          ]
+        },
+        {
+          id: "d4-5",
+          transitFromPrev: {
             mode: "monorail",
-            duration: "約 18 分",
-            distance: "約 1.8 km",
-            route: "單軌牧志站 → おもろまち站徒步 5 分",
-            toll: "單軌車票 ¥270",
-            tips: "新都心核心百貨，超市伴手禮與免稅店一網打盡"
+            duration: "約 15 分",
+            distance: "約 1.9 km",
+            route: "扭蛋店向北步行 5 分至單軌美榮橋站 → 搭 2 站至おもろまち站徒步 5 分",
+            toll: "單軌車票 ¥230~270（適用一日券）",
+            tips: "自美榮橋站僅搭 2 站（約 4 分鐘車程）直達新都心，完全不繞路"
           },
           name: "單軌歌町站：San-A Naha Main Place 採買 ＆ 美食午餐 ＆ 迪斐世 DFS 免稅店",
           category: "購物",
           period: "中午採買",
           image: "thumb-mainplace.jpg",
-          time: "11:30 ~ 13:30",
+          time: "11:40 ~ 13:30",
           coords: [26.2253, 127.6949],
           mapCode: "33 188 559*22",
           phone: "098-951-3300",
@@ -1445,24 +1481,24 @@ const OKINAWA_TRIP_DATA = {
           tags: ["在地人最愛商場", "生鮮食品超市", "Loft生活雜貨", "免稅精品", "美食午餐"],
           desc: "搭乘單軌直達新都心歌町站！【San-A Naha Main Place】是沖繩在地人最推崇的旗艦級商場，一樓大型超級市場售價比觀光區更親民，沖繩泡盛、黑糖、伴手禮盒品項齊全；同棟還有 Loft、無印良品與日系服飾。旁邊空橋直連【迪斐世 DFS 沖繩那霸店 (T Galleria)】，全日本唯一市區免稅店，採購精品後直接於那霸機場管制區輕鬆提貨！商場內亦設有和風洋食、壽司與美食街，可在此從容享用登機前的豐盛午餐。",
           tips: "【2026 退稅新制 vs. DFS 差異提醒】：① Main Place 為一般免稅商場（Tax-Free），未稅滿 ¥5,000 採 2026/11 新制「先付含稅價＋服務台數位登錄，於那霸機場海關機台查驗後退回信用卡」；② 隔壁 DFS 為全日本唯一市區關稅免稅店（Duty-Free），結帳當下直接免稅價付款，請妥善保留提貨單，於機場出境安檢後的管制區專屬櫃台憑護照提領！",
-          reservationInfo: "商場美食街及 1F/2F 餐廳現場候位（和風亭、大阪王將、星乃咖啡等），午間 11:30~12:15 人潮較少無需排隊。",
+          reservationInfo: "商場美食街及 1F/2F 餐廳現場候位（和風亭、大阪王將、星乃咖啡等），11:40 抵達正好避開正午 12:30 後上班族尖峰！",
           backupOptions: [
             {
               name: "和風亭 那霸 Main Place 店",
               tag: "商場內人氣日式定食",
               desc: "位於 Main Place 1 樓，提供頂級天婦羅、鰻魚飯、蕎麥麵與花籃握壽司套餐，環境舒適寬敞，長輩喜愛。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Wafutei+Naha+Main+Place&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Wafutei+Naha+Main+Place&travelmode=walking"
             },
             {
               name: "沖繩麵 EIBUN",
               tag: "清單名店 / 若提早至市區用餐",
               desc: "Google My Maps 清單名店！那霸頂級文青沖繩麵，特製炙燒軟骨與清爽高湯無懈可擊，若喜愛文青小店可於離開國際通時順道朝聖。",
-              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Okinawa+Soba+EIBUN&travelmode=driving"
+              googleMapsUrl: "https://www.google.com/maps/dir/?api=1&destination=Okinawa+Soba+EIBUN&travelmode=walking"
             }
           ]
         },
         {
-          id: "d4-5",
+          id: "d4-6",
           transitFromPrev: {
             mode: "monorail",
             duration: "約 20 分",
@@ -1488,7 +1524,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "單軌電車準點率 100%，完全避開午後進入機場路段的地面公車塞車風險！"
         },
         {
-          id: "d4-6",
+          id: "d4-7",
           transitFromPrev: {
             mode: "monorail",
             duration: "約 12 分",
@@ -1514,7 +1550,7 @@ const OKINAWA_TRIP_DATA = {
           tips: "【動線小提醒】：國內線 2F 與國際線 2F 設有寬敞明亮的室內連通道，全程推行李車僅需步行 3 分鐘即可抵達國際線出發大廳！"
         },
         {
-          id: "d4-7",
+          id: "d4-8",
           transitFromPrev: {
             mode: "walk",
             duration: "約 15 分",
@@ -1558,7 +1594,7 @@ const OKINAWA_TRIP_DATA = {
     ],
     shopping: [
       { id: "shp-1", text: "Vivienne Westwood (Outlet 飾品/開襟衫)", checked: false },
-      { id: "shp-2", text: "Montbell (超輕防風雨外套/排汗衣)", checked: false },
+      { id: "shp-2", text: "ASHIBINAA Outlet (ABC-MART / ASICS / NB / COACH)", checked: false },
       { id: "shp-3", text: "御菓子御殿 元祖紅芋塔", checked: false },
       { id: "shp-4", text: "宮古島雪鹽 ＆ 雪鹽金楚糕", checked: false },
       { id: "shp-5", text: "Royce' 石垣島黑糖生巧克力", checked: false },

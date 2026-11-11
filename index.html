@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.14"></script>
+  <script src="itinerary-data.js?v=20261117-v3.16"></script>
 
   <script>
     tailwind.config = {
@@ -429,19 +429,19 @@
   <main class="flex-grow max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-3 sm:py-5 space-y-4 sm:space-y-5">
     
     <!-- =========================================================================
-         RESORT HERO SHOWCASE BANNER (Matching Screenshot Theme & Signposts)
+         RESORT HERO SHOWCASE BANNER & DOCKED DAY TABS SELECTOR
          ========================================================================= -->
-    <section class="relative rounded-3xl overflow-hidden shadow-xl border border-white/80 bg-slate-900 group">
+    <section class="relative rounded-3xl overflow-hidden shadow-xl border border-white/80 bg-white group">
       <!-- Background Artwork (hero-art.jpg) -->
-      <div class="relative h-60 sm:h-72 md:h-88 w-full overflow-hidden">
-        <img src="hero-art.jpg" class="w-full h-full object-cover object-top filter brightness-[0.98] group-hover:scale-102 transition duration-700 ease-out" alt="沖繩 Okinawa">
+      <div class="relative h-36 sm:h-44 md:h-52 w-full overflow-hidden bg-slate-900">
+        <img src="hero-art.jpg" class="w-full h-full object-cover object-center filter brightness-[0.98] group-hover:scale-102 transition duration-700 ease-out" alt="沖繩 Okinawa">
         
         <!-- Multi-layer gradient overlays for contrast & island aesthetic -->
-        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-900/35 to-transparent"></div>
-        <div class="absolute inset-0 bg-gradient-to-r from-sky-950/60 via-transparent to-slate-950/30"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/30 to-transparent"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-sky-950/55 via-transparent to-slate-950/25"></div>
 
         <!-- Top Badges (Single-line on mobile) -->
-        <div class="absolute top-2.5 left-2.5 right-2.5 sm:top-4 sm:left-4 sm:right-4 flex items-center justify-between gap-1.5 pointer-events-none">
+        <div class="absolute top-2.5 left-2.5 right-2.5 sm:top-3.5 sm:left-4 sm:right-4 flex items-center justify-between gap-1.5 pointer-events-none">
           <span class="bg-amber-400/95 backdrop-blur-md text-amber-950 text-[10px] sm:text-[11px] font-black px-2.5 py-0.5 sm:py-1 rounded-full shadow-md tracking-wider flex items-center gap-1 pointer-events-auto whitespace-nowrap shrink-0 shine-sweep">
             <span>🌺</span>
             <span>琉球迎賓</span>
@@ -453,123 +453,39 @@
           </span>
         </div>
 
-        <!-- Center & Bottom Content: Calligraphy Title + Wooden Signpost Waypoint Quick Jumps -->
-        <div class="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-5 sm:right-5 text-white space-y-2 sm:space-y-2.5">
-          <div>
-            <div class="flex items-center gap-2">
-              <h2 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-wide drop-shadow-md flex items-center gap-1.5">
-                <span>沖縄</span>
-                <span class="text-lg sm:text-2xl font-serif italic text-amber-300">OKINAWA</span>
-                <span class="text-xl sm:text-2xl animate-pulse">🌺</span>
-              </h2>
-            </div>
-            <p class="text-xs sm:text-sm text-sky-100/95 font-medium tracking-wide drop-shadow mt-0.5">
-              — 美しい島、また行きたくなる —
-            </p>
+        <!-- Bottom Content: Calligraphy Title -->
+        <div class="absolute bottom-3 left-3.5 right-3.5 sm:bottom-4 sm:left-5 sm:right-5 text-white">
+          <div class="flex items-center gap-2">
+            <h2 class="text-2xl sm:text-3xl md:text-4xl font-black tracking-wide drop-shadow-md flex items-center gap-1.5">
+              <span>沖縄</span>
+              <span class="text-lg sm:text-2xl font-serif italic text-amber-300">OKINAWA</span>
+              <span class="text-xl sm:text-2xl animate-pulse">🌺</span>
+            </h2>
           </div>
+          <p class="text-xs sm:text-sm text-sky-100/95 font-medium tracking-wide drop-shadow mt-0.5">
+            — 美しい島、また行きたくなる —
+          </p>
+        </div>
+      </div>
 
-          <!-- Interactive Wooden Signposts (Directly referencing screenshot wooden arrow signs) -->
-          <div class="pt-0.5">
-            <div class="text-[10px] font-bold text-sky-200 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-              <span>🪵 木牌景點直達</span>
-              <span class="text-[9px] text-amber-300 font-normal">（點選定位卡片）</span>
-            </div>
-            <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 scroll-smooth" style="scrollbar-width: none;">
-              
-              <!-- Sign 1: 古宇利島 -->
-              <button onclick="jumpToSpot(1, 'd2-7')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
-                <span>🌉</span>
-                <span>古宇利島</span>
-                <span class="text-[10px] text-amber-300 font-mono">D2</span>
-              </button>
+      <!-- Multi-Day Tabs Selector & Mobile-Responsive Action Bar (Moved Up & Docked) -->
+      <div class="bg-white/95 backdrop-blur-md p-2.5 sm:p-3 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+        <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scroll-smooth" id="dayTabsContainer" style="scrollbar-width: none;">
+          <!-- Injected via JavaScript renderDayTabs() -->
+        </div>
 
-              <!-- Sign 2: 美ら海水族館 -->
-              <button onclick="jumpToSpot(1, 'd2-11')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-sky-950/80 hover:bg-sky-900 text-sky-100 rounded-xl text-xs font-bold border border-sky-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>🐟</span>
-                <span>美ら海水族館</span>
-                <span class="text-[10px] text-sky-300 font-mono">D2</span>
-              </button>
-
-              <!-- Sign 3: .uki 冠軍咖啡 -->
-              <button onclick="jumpToSpot(1, 'd2-5')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-emerald-950/80 hover:bg-emerald-900 text-emerald-100 rounded-xl text-xs font-bold border border-emerald-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>☕</span>
-                <span>.uki 冠軍咖啡</span>
-                <span class="text-[10px] text-emerald-300 font-mono">D2</span>
-              </button>
-
-              <!-- Sign 4: 波上宮海灘 -->
-              <button onclick="jumpToSpot(1, 'd2-1')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-rose-950/80 hover:bg-rose-900 text-rose-100 rounded-xl text-xs font-bold border border-rose-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>⛩️</span>
-                <span>波上宮海灘</span>
-                <span class="text-[10px] text-rose-300 font-mono">D2</span>
-              </button>
-
-              <!-- Sign 4b: hana hana 取花 -->
-              <button onclick="jumpToSpot(1, 'd2-3')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-pink-950/80 hover:bg-pink-900 text-pink-100 rounded-xl text-xs font-bold border border-pink-400/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
-                <span>💐</span>
-                <span>hana hana取花</span>
-                <span class="text-[10px] text-pink-300 font-mono">D2</span>
-              </button>
-
-              <!-- Sign 5: 首里城公園 -->
-              <button onclick="jumpToSpot(2, 'd3-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-teal-950/80 hover:bg-teal-900 text-teal-100 rounded-xl text-xs font-bold border border-teal-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>🏯</span>
-                <span>首里城公園</span>
-                <span class="text-[10px] text-teal-300 font-mono">D3</span>
-              </button>
-
-              <!-- Sign 6: ASHIBINAA -->
-              <button onclick="jumpToSpot(0, 'd1-2')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-amber-900/80 hover:bg-amber-800 text-amber-100 rounded-xl text-xs font-bold border border-amber-500/50 shadow-md flex items-center gap-1 active:scale-95 transition chip-bounce">
-                <span>🛍️</span>
-                <span>奧特萊斯</span>
-                <span class="text-[10px] text-amber-300 font-mono">D1</span>
-              </button>
-
-              <!-- Sign 7: 寶可夢中心 -->
-              <button onclick="jumpToSpot(2, 'd3-7')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-yellow-950/80 hover:bg-yellow-900 text-yellow-100 rounded-xl text-xs font-bold border border-yellow-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>⚡</span>
-                <span>寶可夢中心</span>
-                <span class="text-[10px] text-yellow-300 font-mono">D3</span>
-              </button>
-
-              <!-- Sign 8: 美國村夜景 -->
-              <button onclick="jumpToSpot(2, 'd3-8')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-indigo-950/80 hover:bg-indigo-900 text-indigo-100 rounded-xl text-xs font-bold border border-indigo-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>🎡</span>
-                <span>美國村夜景</span>
-                <span class="text-[10px] text-indigo-300 font-mono">D3</span>
-              </button>
-
-              <!-- Sign 9: 菲力牛排 -->
-              <button onclick="jumpToSpot(0, 'd1-4')" class="shrink-0 px-2.5 sm:px-3 py-1.5 bg-red-950/80 hover:bg-red-900 text-red-100 rounded-xl text-xs font-bold border border-red-400/50 shadow-md flex items-center gap-1 active:scale-95 transition">
-                <span>🥩</span>
-                <span>菲力牛排</span>
-                <span class="text-[10px] text-red-300 font-mono">D1</span>
-              </button>
-
-            </div>
-          </div>
-
+        <!-- Quick Action Buttons on Tab Bar -->
+        <div class="flex items-center justify-between sm:justify-end gap-2 text-xs shrink-0 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+          <button onclick="openAddStopModal()" class="flex-1 sm:flex-initial px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition font-bold flex items-center justify-center gap-1.5 shadow-xs">
+            <span>➕</span>
+            <span>自訂站點</span>
+          </button>
+          <button onclick="resetDayCustomStops()" class="px-2.5 py-1.5 text-slate-400 hover:text-slate-600 transition text-[11px]" title="重置為預設行程">
+            重置當日
+          </button>
         </div>
       </div>
     </section>
-    
-    <!-- Multi-Day Tabs Selector & Mobile-Responsive Action Bar -->
-    <div class="bg-white/90 backdrop-blur-md p-2.5 sm:p-3 rounded-2xl border border-white/80 shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
-      <div class="flex items-center gap-1.5 sm:gap-2 overflow-x-auto pb-1 sm:pb-0 scroll-smooth" id="dayTabsContainer" style="scrollbar-width: none;">
-        <!-- Injected via JavaScript renderDayTabs() -->
-      </div>
-
-      <!-- Quick Action Buttons on Tab Bar -->
-      <div class="flex items-center justify-between sm:justify-end gap-2 text-xs shrink-0 pt-1.5 sm:pt-0 border-t sm:border-t-0 border-slate-100">
-        <button onclick="openAddStopModal()" class="flex-1 sm:flex-initial px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 rounded-xl transition font-bold flex items-center justify-center gap-1.5 shadow-xs">
-          <span>➕</span>
-          <span>自訂站點</span>
-        </button>
-        <button onclick="resetDayCustomStops()" class="px-2.5 py-1.5 text-slate-400 hover:text-slate-600 transition text-[11px]" title="重置為預設行程">
-          重置當日
-        </button>
-      </div>
-    </div>
 
     <!-- Active Day Strategic Highlight Banner -->
     <div id="dayNoticeBanner" class="rounded-2xl p-4 sm:p-5 border-2 shadow-xs transition-all duration-300">
@@ -1133,8 +1049,8 @@
           <div class="space-y-1.5">
             <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 hover:bg-sky-50/70 border border-slate-200 transition gap-2">
               <div class="min-w-0">
-                <div class="font-bold text-slate-900">Day 1 • 沖繩 ASHIBINAA Outlet (19:05~20:00)</div>
-                <div class="text-[11px] text-slate-500">Montbell 戶外裝備常採 <strong>PIE VAT App</strong>；Vivienne 與精品專櫃採 <strong>Global Blue / J-TaxRefund</strong>，請於 19:35 前結帳登錄。</div>
+                <div class="font-bold text-slate-900">Day 1 • 沖繩 ASHIBINAA Outlet (18:40~20:00)</div>
+                <div class="text-[11px] text-slate-500">鎖定 1F <strong>ABC-MART (#800)、ASICS (#260)、New Balance (#940)、Vivienne (#540)、COACH (#330)</strong>，多採 <strong>Global Blue / J-TaxRefund / PIE VAT</strong>，請於 19:40 前結帳登錄。</div>
               </div>
               <button onclick="jumpFromTaxFreeToSpot(0, 'd1-2')" class="shrink-0 px-2.5 py-1.5 bg-white hover:bg-sky-100 text-sky-700 border border-sky-200 rounded-xl font-bold text-[11px] cursor-pointer">定位 D1 ➔</button>
             </div>
@@ -1168,7 +1084,7 @@
                 <div class="font-bold text-slate-900">Day 4 • San-A Main Place ＆ DFS 免稅店 ＆ 那霸機場出境</div>
                 <div class="text-[11px] text-slate-500">Main Place 超市伴手禮採新制退稅；14:50 抵達那霸機場國際線 3F <strong>先刷海關 KIOSK ➔ 再辦託運 ➔ 管制區領 DFS 精品</strong>。</div>
               </div>
-              <button onclick="jumpFromTaxFreeToSpot(3, 'd4-7')" class="shrink-0 px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl font-bold text-[11px] cursor-pointer">機場死線 ➔</button>
+              <button onclick="jumpFromTaxFreeToSpot(3, 'd4-8')" class="shrink-0 px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 rounded-xl font-bold text-[11px] cursor-pointer">機場死線 ➔</button>
             </div>
           </div>
         </div>
@@ -1202,10 +1118,10 @@
               <div>
                 <div class="flex items-center gap-2 flex-wrap">
                   <span class="text-base">🥧</span>
-                  <h4 class="font-black text-slate-900 text-sm">1. PIE VAT（大型 Outlet ＆ Montbell 戶外品牌主力）</h4>
+                  <h4 class="font-black text-slate-900 text-sm">1. PIE VAT（大型 Outlet ＆ 百貨專櫃主力）</h4>
                   <span class="text-[10px] bg-rose-500 text-white font-bold px-2 py-0.5 rounded-full">強烈建議預載</span>
                 </div>
-                <p class="text-[11px] text-slate-500 mt-0.5">適用百貨／商場：<strong>Montbell（Day 1 ASHIBINAA 必逛）</strong>、三井 Outlet Park 系列、LaLaport、東急 Plaza 等大型購物中心</p>
+                <p class="text-slate-500 mt-0.5 text-[11px]">適用百貨／商場：<strong>大型暢貨中心（如 ASHIBINAA 運動＆精品專櫃）</strong>、三井 Outlet Park 系列、LaLaport、東急 Plaza 等大型購物中心</p>
               </div>
             </div>
             <p class="text-[11px] text-slate-700 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
@@ -1417,7 +1333,7 @@
         <button onclick="fillSearchAndRun('水族館')" class="px-2.5 py-1 bg-sky-50 text-sky-700 rounded-lg hover:bg-sky-100 shrink-0 font-medium">🐟 水族館</button>
         <button onclick="fillSearchAndRun('牛排')" class="px-2.5 py-1 bg-red-50 text-red-700 rounded-lg hover:bg-red-100 shrink-0 font-medium">🥩 牛排</button>
         <button onclick="fillSearchAndRun('古宇利')" class="px-2.5 py-1 bg-amber-50 text-amber-800 rounded-lg hover:bg-amber-100 shrink-0 font-medium">🌉 古宇利</button>
-        <button onclick="fillSearchAndRun('鬆餅')" class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 shrink-0 font-medium">🥞 瀨長島鬆餅</button>
+        <button onclick="fillSearchAndRun('鬆餅')" class="px-2.5 py-1 bg-teal-50 text-teal-700 rounded-lg hover:bg-teal-100 shrink-0 font-medium">🥞 美國村鬆餅</button>
         <button onclick="fillSearchAndRun('波上宮')" class="px-2.5 py-1 bg-rose-50 text-rose-700 rounded-lg hover:bg-rose-100 shrink-0 font-medium">⛩️ 波上宮</button>
         <button onclick="fillSearchAndRun('Outlet')" class="px-2.5 py-1 bg-slate-100 text-slate-700 rounded-lg hover:bg-slate-200 shrink-0 font-medium">🛍️ Outlet</button>
         <button onclick="fillSearchAndRun('退稅')" class="px-2.5 py-1 bg-amber-100 text-amber-950 border border-amber-300 rounded-lg hover:bg-amber-200 shrink-0 font-bold">🧾 退稅新制</button>
@@ -1514,10 +1430,6 @@
       <span class="text-lg">🗺️</span>
       <span class="text-[10px] font-semibold mt-0.5 whitespace-nowrap">地圖</span>
     </a>
-    <button onclick="toggleRouteAnimation()" class="flex-1 flex flex-col items-center justify-center text-okinawa-ocean font-bold py-1 active:scale-95 transition">
-      <span class="text-lg">▶️</span>
-      <span class="text-[10px] font-bold mt-0.5 whitespace-nowrap">路線</span>
-    </button>
     <button onclick="openModal('currencyModal')" class="flex-1 flex flex-col items-center justify-center text-amber-700 hover:text-amber-800 py-1 active:scale-95 transition">
       <span class="text-lg">💴</span>
       <span class="text-[10px] font-semibold mt-0.5 whitespace-nowrap">匯率</span>
@@ -1534,10 +1446,20 @@
       <span class="text-lg">📲</span>
       <span class="text-[10px] font-bold mt-0.5 whitespace-nowrap">安裝</span>
     </button>
+    <button type="button" onclick="scrollToTop()" aria-label="跳回最頂端" class="flex-1 flex flex-col items-center justify-center text-okinawa-ocean hover:text-sky-700 py-1 active:scale-95 transition">
+      <span class="text-lg">⬆️</span>
+      <span class="text-[10px] font-bold mt-0.5 whitespace-nowrap">頂端</span>
+    </button>
   </nav>
 
+  <!-- Desktop Floating Back-to-Top Button -->
+  <button type="button" onclick="scrollToTop()" aria-label="跳回最頂端" title="回到最頂端" class="hidden lg:inline-flex fixed bottom-5 right-5 z-40 items-center gap-1.5 px-3.5 py-2.5 rounded-full bg-white/95 hover:bg-sky-50 text-okinawa-ocean border border-sky-200/90 shadow-lg backdrop-blur-md text-xs font-extrabold transition-all active:scale-95 cursor-pointer">
+    <span>⬆️</span>
+    <span>頂端</span>
+  </button>
+
   <!-- Toast Notification Pill -->
-  <div id="toastNotification" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md text-white px-4 py-3 rounded-2xl shadow-2xl text-xs flex items-center space-x-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 max-w-[90vw]">
+  <div id="toastNotification" class="fixed bottom-20 lg:bottom-20 right-4 sm:right-6 bg-slate-900/90 backdrop-blur-md text-white px-4 py-3 rounded-2xl shadow-2xl text-xs flex items-center space-x-2.5 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none z-50 max-w-[90vw]">
     <span id="toastIcon" class="text-lg">🌺</span>
     <span id="toastMsg" class="font-medium">訊息通知</span>
   </div>
@@ -2327,9 +2249,14 @@
       }).join('');
     }
 
+    function isValidPhoneNumber(phone) {
+      return Boolean(phone && /^[0-9+\-() ]+$/.test(String(phone).trim()));
+    }
+
     /* Common action buttons helper for timeline cards */
     function renderActionButtons(wp) {
       const parkingSearchUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(wp.name + ' 停車場 駐車場 parking')}`;
+      const hasPhone = isValidPhoneNumber(wp.phone);
 
       return `
         <div class="space-y-2 pt-1">
@@ -2364,7 +2291,7 @@
             ` : ''}
 
             <!-- 2026/11 日本退稅新制快捷鍵 (購物站點 ＆ 機場出境託運前) -->
-            ${(wp.category === '購物' || wp.id === 'd4-7') ? `
+            ${((wp.category === '購物' && wp.id !== 'd4-4') || wp.id === 'd4-8') ? `
               <button type="button" onclick="openModal('taxFreeModal')" class="flex-initial px-3 py-2 bg-amber-100 hover:bg-amber-200 text-amber-950 border border-amber-300 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition active:scale-[0.99] shadow-2xs cursor-pointer" title="查看 2026/11 日本退稅新制流程與主流 App 下載">
                 <span>🧾</span>
                 <span>退稅指南</span>
@@ -2373,9 +2300,9 @@
           </div>
 
           <!-- Secondary Info: Phone, Parking, Delete Custom Stop -->
-          ${(wp.phone || wp.parkingInfo || wp.isCustom) ? `
+          ${(hasPhone || wp.parkingInfo || wp.isCustom) ? `
             <div class="flex flex-wrap items-center gap-2 text-xs pt-0.5">
-              ${wp.phone ? `
+              ${hasPhone ? `
                 <a href="tel:${wp.phone}" aria-label="撥打電話 ${wp.phone}" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-mono transition flex items-center gap-1.5">
                   <span aria-hidden="true">📞</span>
                   <span>${wp.phone}</span>
@@ -2449,7 +2376,7 @@
                   <span>MC: ${wp.mapCode}</span>
                 </button>
               ` : ''}
-              ${wp.phone ? `
+              ${isValidPhoneNumber(wp.phone) ? `
                 <a href="tel:${wp.phone}" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-mono transition flex items-center gap-1">
                   <span>📞</span>
                   <span>電話</span>
@@ -2461,7 +2388,7 @@
                   <span>專櫃地圖</span>
                 </button>
               ` : ''}
-              ${(wp.category === '購物' || wp.id === 'd4-7') ? `
+              ${((wp.category === '購物' && wp.id !== 'd4-4') || wp.id === 'd4-8') ? `
                 <button type="button" onclick="openModal('taxFreeModal')" class="px-2 py-1 bg-amber-100 hover:bg-amber-200 text-amber-900 rounded-lg text-xs font-bold transition flex items-center gap-1">
                   <span>🧾</span>
                   <span>退稅</span>
@@ -2656,7 +2583,7 @@
                       <div class="absolute bottom-2.5 left-3 right-3 flex items-center justify-between text-white">
                         <span class="text-[11px] font-bold bg-black/50 backdrop-blur-md px-2 py-0.5 rounded-lg">${isFood ? '🍽️' : '🛍️'} ${wp.name.split(' ')[0]}</span>
                         <span class="text-[10px] bg-black/50 backdrop-blur-md text-white font-bold px-2 py-0.5 rounded-full shadow-xs">
-                          ${isFood ? '在地必吃' : '免稅熱門'}
+                          ${isFood ? '在地必吃' : wp.id === 'd4-4' ? '千台扭蛋' : '免稅熱門'}
                         </span>
                       </div>
                     </div>
@@ -2932,40 +2859,40 @@
       
       if (day.day === 1) {
         box.innerHTML = `
-          <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div class="flex items-center justify-between border-b border-slate-100 pb-3 gap-2">
             <div class="flex items-center space-x-2">
               <span class="text-xl">🛍️</span>
               <div>
-                <h4 class="font-bold text-slate-900 text-sm sm:text-base">ASHIBINAA 必逛專櫃推薦</h4>
-                <p class="text-xs text-slate-500">20:00 閉店前 50 分鐘快攻清單</p>
+                <h4 class="font-bold text-slate-900 text-sm sm:text-base">ASHIBINAA 必逛 5 大專櫃快攻</h4>
+                <p class="text-xs text-slate-500">18:40~20:00 鎖定 1F 櫃位高效率採購</p>
               </div>
             </div>
-            <span class="text-[11px] bg-rose-50 text-rose-700 font-bold px-2 py-0.5 rounded-full">精選熱門</span>
+            <button type="button" onclick="openAshibinaaFloorModal('1f')" class="text-[11px] bg-amber-500 hover:bg-amber-600 text-white font-bold px-2.5 py-1 rounded-full shrink-0 transition cursor-pointer shadow-2xs">🗺️ 1F平面圖</button>
           </div>
 
           <div class="space-y-2 text-xs">
             <div class="p-2.5 bg-rose-50 rounded-xl border border-rose-200">
               <div class="flex items-center justify-between font-bold text-rose-900">
-                <span>⭐ Vivienne Westwood (2100區)</span>
-                <span class="text-[10px] bg-rose-600 text-white px-1.5 py-0.2 rounded">第一優先</span>
+                <span>🪐 Vivienne Westwood (1F #540)</span>
+                <span class="text-[10px] bg-rose-600 text-white px-1.5 py-0.2 rounded">中央大道</span>
               </div>
-              <p class="text-slate-600 text-[11px] mt-0.5">經典土星飾品、皮夾與開襟衫，普遍為定價 5~7 折。</p>
+              <p class="text-slate-600 text-[11px] mt-0.5">經典土星飾品、皮夾與服飾，近 550 區新秀麗。</p>
+            </div>
+
+            <div class="p-2.5 bg-amber-50 rounded-xl border border-amber-200">
+              <div class="flex items-center justify-between font-bold text-amber-950">
+                <span>👜 COACH / COACH MENS (1F #330 / #340)</span>
+                <span class="text-[10px] text-amber-900 bg-amber-200/70 px-1.5 py-0.2 rounded font-bold">男女專櫃</span>
+              </div>
+              <p class="text-slate-600 text-[11px] mt-0.5">暢貨價搭旅人 Coupon 券享額外折扣。</p>
             </div>
 
             <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
               <div class="flex items-center justify-between font-bold text-slate-800">
-                <span>Montbell (戶外登山裝備)</span>
-                <span class="text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.2 rounded">極大價差</span>
+                <span>👟 ABC-MART (#800) • ASICS (#260) • NB (#940)</span>
+                <span class="text-[10px] text-sky-700 bg-sky-50 px-1.5 py-0.2 rounded font-bold">運動鞋款</span>
               </div>
-              <p class="text-slate-600 text-[11px] mt-0.5">超輕防風雨外套、羽絨保暖衣，性價比極高。</p>
-            </div>
-
-            <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200">
-              <div class="flex items-center justify-between font-bold text-slate-800">
-                <span>BEAMS / United Arrows</span>
-                <span class="text-[10px] text-sky-700 bg-sky-50 px-1.5 py-0.2 rounded">日系剪裁</span>
-              </div>
-              <p class="text-slate-600 text-[11px] mt-0.5">日本質感選物店代表，秋冬大衣與休閒單品。</p>
+              <p class="text-slate-600 text-[11px] mt-0.5">全集中於 1F，免爬樓梯沿東側與中央走廊一氣呵成！</p>
             </div>
           </div>
         `;
@@ -3268,10 +3195,10 @@
             <div class="bg-white/95 backdrop-blur-md rounded-3xl p-4 border border-slate-200 shadow-card space-y-2.5">
               <div class="flex items-center justify-between gap-1">
                 <span class="text-xs font-bold px-2 py-0.5 rounded-lg bg-orange-600 text-white">🍙 Potama 牧志本店</span>
-                <span class="text-[10px] text-slate-400 font-mono">Day 4 09:15</span>
+                <span class="text-[10px] text-slate-400 font-mono">Day 4 09:05</span>
               </div>
               <p class="text-xs text-slate-600 leading-relaxed">
-                <strong>免排隊密技</strong>：現場常排隊 40 分鐘。強烈建議手機下載官方<strong>「FastPick App」</strong>提早 30~60 分鐘線上點單付款，指定 09:30 取餐，直接到外帶窗口提領！
+                <strong>免排隊密技</strong>：現場常排隊 40 分鐘。強烈建議手機下載官方<strong>「FastPick App」</strong>提早 30~60 分鐘線上點單付款，指定 09:15~09:25 取餐，直接到外帶窗口提領！
               </p>
               <div class="text-[11px] text-slate-500">
                 • <strong>特色推薦：</strong>現炸海老明太子厚蛋飯糰、苦瓜天婦羅飯糰。
@@ -3348,12 +3275,12 @@
               <span>🌙</span>
               <span>第一晚國際通夜遊亮點 (Day 1 晚間)</span>
             </span>
-            <span class="text-[10px] bg-sky-200/80 text-sky-900 px-2 py-0.5 rounded font-black">22:00~23:30</span>
+            <span class="text-[10px] bg-sky-200/80 text-sky-900 px-2 py-0.5 rounded font-black">21:40~23:30</span>
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[11px] text-slate-700 pt-1">
             <div class="p-2.5 bg-white/90 rounded-xl border border-sky-200/80 space-y-0.5">
-              <strong class="text-sky-900 block font-bold">🍦 宮古島の雪塩 國際通松尾店 (22:00~22:30)：</strong>
-              <p>必吃雪塩霜淇淋！店內提供柚子鹽、抹茶鹽等多種風味鹽自行撒在霜淇淋上調味，兼購雪塩金楚糕伴手禮。</p>
+              <strong class="text-sky-900 block font-bold">🍦 宮古島の雪塩 国際通り本店 ＆ 雪塩さんど本店 (21:40~22:15)：</strong>
+              <p>必買招牌雪塩さんど夾心餅乾與現擠雪塩霜淇淋！自由撒上柚子、抹茶、可可等風味鹽調味，松尾分店亦可順路補貨。</p>
               <div class="pt-1">
                 <button onclick="jumpFromDiningToSpot(0, 'd1-5')" class="text-[10px] text-sky-700 bg-sky-50 hover:bg-sky-100 px-2 py-0.5 rounded font-bold transition">📍 查看卡片</button>
               </div>
@@ -3877,6 +3804,10 @@
         toast.classList.add('translate-y-20', 'opacity-0');
         toast.classList.remove('translate-y-0', 'opacity-100');
       }, 3000);
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     /* =========================================================================
