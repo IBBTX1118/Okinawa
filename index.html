@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.16"></script>
+  <script src="itinerary-data.js?v=20261117-v3.17"></script>
 
   <script>
     tailwind.config = {
@@ -815,104 +815,332 @@
         <div class="flex items-center space-x-2">
           <span class="text-2xl">🚗</span>
           <div>
-            <h3 class="font-bold text-slate-900 text-base sm:text-lg">沖繩自駕備忘 ＆ 車機 MapCode 導航表</h3>
-            <p class="text-[11px] text-slate-500">日本汽車導航輸入專用（點擊即可一鍵複製）</p>
+            <h3 class="font-bold text-slate-900 text-base sm:text-lg">日本自駕指南 ＆ 停車・加油・MapCode</h3>
+            <p class="text-[11px] text-slate-500">臨停取締／最大料金判讀／自助加油顏色與步驟／測速地圖</p>
           </div>
         </div>
         <button onclick="closeModal('drivingModal')" aria-label="關閉自駕守則視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
       </div>
 
-      <!-- Driving Rules -->
-      <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3.5 space-y-2 shrink-0 text-xs">
-        <div class="font-bold text-amber-900 flex items-center gap-1.5">
-          <span>⚠️ 沖繩右駕 6 大核心守則</span>
+      <!-- Segmented Tab Toggle -->
+      <div class="flex items-center bg-slate-100 p-1 rounded-xl text-[11px] sm:text-xs shrink-0 gap-1">
+        <button id="btnDrivingTabRules" type="button" onclick="switchDrivingTab('rules')" class="flex-1 py-2 px-1.5 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer segmented-tab-btn whitespace-nowrap">
+          ⚠️ 守則・停車・測速
+        </button>
+        <button id="btnDrivingTabFuel" type="button" onclick="switchDrivingTab('fuel')" class="flex-1 py-2 px-1.5 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap">
+          ⛽ 自助加油 ＆ 油種
+        </button>
+        <button id="btnDrivingTabMapcode" type="button" onclick="switchDrivingTab('mapcode')" class="flex-1 py-2 px-1.5 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap">
+          📍 MapCode 導航表
+        </button>
+      </div>
+
+      <!-- TAB 1: Driving Rules, Parking Regulations, Maximum Fee Rules & Speed Cameras -->
+      <div id="drivingTabRulesContent" class="overflow-y-auto flex-grow space-y-3 pr-1 text-xs">
+        
+        <!-- Driving Rules -->
+        <div class="bg-amber-50/80 border border-amber-200 rounded-2xl p-3.5 space-y-2 text-xs">
+          <div class="font-bold text-amber-900 flex items-center gap-1.5">
+            <span>⚠️ 沖繩右駕 6 大核心守則</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-700">
+            <div>• <strong>右轉大彎、左轉小彎：</strong> 靠左行駛，方向燈在右側。</div>
+            <div>• <strong>行人與直行車絕對優先：</strong> 轉彎處務必停等行人。</div>
+            <div>• <strong>速限遵守：</strong> 高速公路 80 km/h，一般道路 40~50 km/h。</div>
+            <div>• <strong>ETC vs 一般車道：</strong> 無 ETC 卡走綠色「一般」領通行券。</div>
+            <div>• <strong>加油術語：</strong> Regular（紅槍）、満タン (Man-tan/滿杯)。</div>
+            <div>• <strong>事故處理：</strong> 無論多輕微碰撞，一律先打 110 報警備案。</div>
+          </div>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px] text-slate-700">
-          <div>• <strong>右轉大彎、左轉小彎：</strong> 靠左行駛，方向燈在右側。</div>
-          <div>• <strong>行人與直行車絕對優先：</strong> 轉彎處務必停等行人。</div>
-          <div>• <strong>速限遵守：</strong> 高速公路 80 km/h，一般道路 40~50 km/h。</div>
-          <div>• <strong>ETC vs 一般車道：</strong> 無 ETC 卡走綠色「一般」領通行券。</div>
-          <div>• <strong>加油術語：</strong> Regular（紅槍）、満タン (Man-tan/滿杯)。</div>
-          <div>• <strong>事故處理：</strong> 無論多輕微碰撞，一律先打 110 報警備案。</div>
+
+        <!-- No Roadside Parking Alert -->
+        <div class="bg-gradient-to-r from-rose-50 via-red-50/70 to-amber-50/60 border-2 border-rose-300 rounded-2xl p-3.5 space-y-1.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-black text-rose-900 flex items-center gap-1.5 text-xs sm:text-sm">
+              <span>🚫</span>
+              <span>切勿路邊臨停：民間巡邏員取締極嚴！</span>
+            </span>
+            <span class="text-[10px] bg-rose-600 text-white font-bold px-2 py-0.5 rounded-full shrink-0">高額罰鍰</span>
+          </div>
+          <p class="text-[11px] text-slate-700 leading-relaxed">
+            日本市區巷道與一般道路<strong>幾乎不允許隨意路邊暫停</strong>！民間委託的巡邏員（<strong>放置車輛確認事務員</strong>）巡查頻率極高，就算只臨停幾分鐘下車買杯咖啡或拿東西，也可能在短短一兩分鐘內直接被開單取締。<strong>停車請一律尋找收費停車場</strong>（如 Times、三井 Repark、ザ・パーク等），多付 ¥200~¥400 停車費遠比違停罰單划算且安心！
+          </p>
+        </div>
+
+        <!-- Japanese Coin Parking "Maximum Fee" Comparison -->
+        <div class="bg-indigo-50/70 border border-indigo-200 rounded-2xl p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-black text-indigo-950 flex items-center gap-1.5 text-xs sm:text-sm">
+              <span>🅿️</span>
+              <span>日本停車場看板「最大料金（上限收費）」必懂 2 大判讀</span>
+            </span>
+            <span class="text-[10px] bg-indigo-600 text-white font-bold px-2 py-0.5 rounded-full shrink-0">防踩雷</span>
+          </div>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            日本無人投幣式停車場（Coin Parking）常標示大字「最大料金 ¥XXX」，但後方小字的<strong>文字定義差異極大</strong>，過夜停車進場前務必確認以下兩組關鍵字：
+          </p>
+
+          <!-- Pair 1: 24時まで vs 24時間 -->
+          <div class="space-y-1.5">
+            <div class="text-[11px] font-black text-indigo-900">① 上限計算截止點：「當日 24 時まで」vs「入庫後 24 時間」</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+              <div class="p-2.5 bg-white rounded-xl border border-rose-200 space-y-1">
+                <div class="flex items-center justify-between font-bold text-rose-800">
+                  <span>🕛 當日 24 時まで</span>
+                  <span class="text-[9px] bg-rose-100 text-rose-700 px-1.5 py-0.2 rounded">跨夜需留意</span>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                  優惠<strong>只計算到當天午夜 24:00 為止</strong>。若晚上 <strong>23:00</strong> 進場停到隔天凌晨 <strong>01:00</strong>（雖僅停 2 小時），跨越午夜會被拆算為<strong>「今日＋隔日」兩個區間的費用</strong>！
+                </p>
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-emerald-200 space-y-1">
+                <div class="flex items-center justify-between font-bold text-emerald-800">
+                  <span>⏱️ 入庫後 24 時間</span>
+                  <span class="text-[9px] bg-emerald-100 text-emerald-700 px-1.5 py-0.2 rounded">過夜首選</span>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                  自車輛進場的那一刻起，<strong>足足算滿 24 小時</strong>內均適用該上限金額。<strong>最適合飯店周邊過夜停放</strong>，不怕半夜跨日跳表重新累計！
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pair 2: 1回限り vs 繰返し適用 -->
+          <div class="space-y-1.5">
+            <div class="text-[11px] font-black text-indigo-900">② 超過第一輪後：「1 回限り」vs「繰返し適用」</div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+              <div class="p-2.5 bg-white rounded-xl border border-amber-200 space-y-1">
+                <div class="flex items-center justify-between font-bold text-amber-900">
+                  <span>⚠️ 1 回限り（僅限一次）</span>
+                  <span class="text-[9px] bg-amber-100 text-amber-800 px-1.5 py-0.2 rounded">第25H無上限</span>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                  僅第一個 24 小時（或首輪時段）享上限保護；<strong>從第 25 小時起完全改為「無上限的原價累計」</strong>，若停放超過一天會累積驚人高額費用！
+                </p>
+              </div>
+              <div class="p-2.5 bg-white rounded-xl border border-sky-200 space-y-1">
+                <div class="flex items-center justify-between font-bold text-sky-900">
+                  <span>🔁 繰返し適用（反覆適用）</span>
+                  <span class="text-[9px] bg-sky-100 text-sky-800 px-1.5 py-0.2 rounded">循環封頂</span>
+                </div>
+                <p class="text-slate-600 leading-relaxed">
+                  <strong>每滿 24 小時即自動重新循環一次最高上限金額</strong>，適合連停多日，結帳金額好預期。另留意牌面是否註記「土日祝除外（週末例假日無上限）」。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2026 Speed Camera & Road Monitoring Section -->
+        <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-3.5 space-y-2.5 text-xs">
+          <div class="flex items-center justify-between">
+            <div class="font-bold text-rose-900 flex items-center gap-1.5 text-xs sm:text-sm">
+              <span>📷</span>
+              <span>2026 沖繩本島最新測速照相 ＆ 道路監控地圖</span>
+              <span class="text-[10px] bg-rose-500 text-white font-extrabold px-1.5 py-0.2 rounded-full">實測確認</span>
+            </div>
+            <span class="text-[10px] text-rose-700 font-bold hidden sm:inline">⚠️ 罰金重且影響行程，請全程嚴守速限</span>
+          </div>
+
+          <!-- Map Image with Lightbox Zoom -->
+          <div class="relative group rounded-xl overflow-hidden border border-rose-200 bg-slate-900 cursor-pointer shadow-xs" onclick="openSpeedCameraLightbox()">
+            <img src="speed-camera-map-2026.jpg" alt="2026沖繩本島測速照相地圖" class="w-full h-36 sm:h-44 object-cover object-top filter brightness-[0.96] group-hover:scale-102 group-hover:brightness-100 transition duration-300">
+            <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end justify-between p-2.5">
+              <span class="text-white text-[11px] font-bold flex items-center gap-1 drop-shadow-sm">
+                <span>🔍</span>
+                <span>點擊查看完整高解析設置地圖</span>
+              </span>
+              <span class="text-[10px] bg-white/20 text-white backdrop-blur-md px-2 py-0.5 rounded-full border border-white/30 font-mono">
+                3大半固定式機座 + N系統
+              </span>
+            </div>
+          </div>
+
+          <!-- 3 Major Orbis Locations & Route Impact -->
+          <div class="space-y-1.5 text-[11px] text-slate-700">
+            <div class="font-bold text-slate-900 flex items-center gap-1 text-[11px]">
+              <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+              <span>沖繩自動車道（高速公路）3 大「半固定式白色鐵籠」測速相機：</span>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-[10px]">
+              <!-- Camera 3 -->
+              <div class="p-2 rounded-xl bg-white border border-rose-200 shadow-2xs space-y-0.5 ring-1 ring-rose-400/40">
+                <div class="font-bold text-rose-800 flex items-center gap-1">
+                  <span class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-900 font-black">③</span>
+                  <span>金武 ～ 宜野座 (KP46)</span>
+                </div>
+                <div class="text-slate-600 font-semibold">方向：下行（往許田 / 北上）</div>
+                <div class="text-[9px] text-rose-600 font-bold">⚠️ Day 2 往水族館必經！</div>
+                <div class="text-[9px] text-slate-500">2025/12 設置，白色金屬網狀罩，直路極易超速。</div>
+              </div>
+
+              <!-- Camera 2 -->
+              <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-0.5">
+                <div class="font-bold text-slate-800 flex items-center gap-1">
+                  <span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-800 font-black">②</span>
+                  <span>沖繩北 ～ 沖繩南 (KP19.4)</span>
+                </div>
+                <div class="text-slate-600 font-semibold">方向：上行（往那霸 / 南下）</div>
+                <div class="text-[9px] text-slate-500">2026/3 設置，八重島1丁目，注意 80km/h。</div>
+              </div>
+
+              <!-- Camera 1 -->
+              <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-0.5">
+                <div class="font-bold text-slate-800 flex items-center gap-1">
+                  <span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-800 font-black">①</span>
+                  <span>中城 PA ～ 西原 IC (KP8)</span>
+                </div>
+                <div class="text-slate-600 font-semibold">方向：上行（往那霸 / 南下）</div>
+                <div class="text-[9px] text-amber-700 font-semibold">⚠️ Day 3 若高速還車會經過！</div>
+                <div class="text-[9px] text-slate-500">2026/3 設置，中城村南上原。</div>
+              </div>
+            </div>
+
+            <div class="pt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-slate-500">
+              <span>• <strong>車牌識別 (N 系統)：</strong> 國道 58 號（宜野灣 bypass、讀谷比謝），記錄軌跡非測速。</span>
+              <span>• <strong>道路管理相機：</strong> 國道 332 那霸安次嶺 (機場旁)、國道 329、331 等，純車流監控。</span>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- 2026 Speed Camera & Road Monitoring Section -->
-      <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-3.5 space-y-2.5 shrink-0 text-xs">
-        <div class="flex items-center justify-between">
-          <div class="font-bold text-rose-900 flex items-center gap-1.5 text-xs sm:text-sm">
-            <span>📷</span>
-            <span>2026 沖繩本島最新測速照相 ＆ 道路監控地圖</span>
-            <span class="text-[10px] bg-rose-500 text-white font-extrabold px-1.5 py-0.2 rounded-full">實測確認</span>
+      <!-- TAB 2: Self-Service Gas Station Guide & Nozzle Color Identification -->
+      <div id="drivingTabFuelContent" class="hidden overflow-y-auto flex-grow space-y-3.5 pr-1 text-xs">
+        
+        <!-- Nozzle Colors (Legal Uniform Standard in Japan) -->
+        <div class="bg-slate-50/90 border border-slate-200 rounded-2xl p-3.5 space-y-2.5">
+          <div class="flex items-center justify-between gap-2">
+            <span class="font-black text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
+              <span>🎨</span>
+              <span>日本加油站 4 大常見油種 ＆ 油槍顏色區分（全國統一）</span>
+            </span>
+            <span class="text-[10px] bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded-full shrink-0">消防法規定</span>
           </div>
-          <span class="text-[10px] text-rose-700 font-bold hidden sm:inline">⚠️ 罰金重且影響行程，請全程嚴守速限</span>
+          <p class="text-[11px] text-slate-600 leading-relaxed">
+            為防止加錯油，日本消防法統一規定所有自助加油站（セルフ）油槍顏色；取車時務必核對<strong>租車交車單 ＆ 油箱蓋內側貼紙</strong>標示！
+          </p>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+            <!-- Red: Regular -->
+            <div class="p-3 bg-white rounded-xl border-2 border-rose-300 shadow-2xs space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-rose-700 flex items-center gap-1.5">
+                  <span class="inline-block w-3.5 h-3.5 rounded-full bg-rose-600 shadow-xs"></span>
+                  <span>紅色油槍：レギュラー (Regular)</span>
+                </span>
+                <span class="text-[9px] bg-rose-600 text-white font-bold px-1.5 py-0.2 rounded">本次預設油種</span>
+              </div>
+              <p class="text-slate-600 leading-relaxed">
+                <strong>一般無鉛汽油</strong>，絕大多數日本國產車與一般自駕租車皆使用紅槍。Day 2 Heat Sports 取車時請再跟店員確認一次是否加紅槍！
+              </p>
+            </div>
+
+            <!-- Yellow: High-Octane -->
+            <div class="p-3 bg-white rounded-xl border-2 border-amber-300 shadow-2xs space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-amber-800 flex items-center gap-1.5">
+                  <span class="inline-block w-3.5 h-3.5 rounded-full bg-amber-400 border border-amber-600 shadow-xs"></span>
+                  <span>黃色油槍：ハイオク (High-Octane)</span>
+                </span>
+                <span class="text-[9px] bg-amber-100 text-amber-900 font-bold px-1.5 py-0.2 rounded">高辛烷值</span>
+              </div>
+              <p class="text-slate-600 leading-relaxed">
+                <strong>高級無鉛（高辛烷值汽油，常標示 プレミアム / 黃標）</strong>，歐系進口車、性能車或高壓縮比跑車指定使用（若實車貼黃標務必改選黃槍）。
+              </p>
+            </div>
+
+            <!-- Green: Diesel -->
+            <div class="p-3 bg-white rounded-xl border border-emerald-200 shadow-2xs space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-emerald-800 flex items-center gap-1.5">
+                  <span class="inline-block w-3.5 h-3.5 rounded-full bg-emerald-600 shadow-xs"></span>
+                  <span>綠色油槍：軽油 (Keiyu / 柴油)</span>
+                </span>
+                <span class="text-[9px] bg-emerald-100 text-emerald-800 font-bold px-1.5 py-0.2 rounded">Diesel 專用</span>
+              </div>
+              <p class="text-slate-600 leading-relaxed">
+                ⚠️ 注意中文易誤會為「輕質汽油」！<strong>「軽油」在日本就是柴油</strong>，僅限柴油車使用。汽油車誤加會直接導致引擎熄火嚴重損壞！
+              </p>
+            </div>
+
+            <!-- Blue: Kerosene -->
+            <div class="p-3 bg-white rounded-xl border border-sky-200 shadow-2xs space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="font-black text-sky-800 flex items-center gap-1.5">
+                  <span class="inline-block w-3.5 h-3.5 rounded-full bg-sky-600 shadow-xs"></span>
+                  <span>藍色油槍：灯油 (Toyu / 煤油)</span>
+                </span>
+                <span class="text-[9px] bg-rose-100 text-rose-700 font-bold px-1.5 py-0.2 rounded">汽車禁用</span>
+              </div>
+              <p class="text-slate-600 leading-relaxed">
+                家用暖爐與取暖設備專用的<strong>煤油</strong>，通常獨立機台或藍色標示。<strong>任何汽車絕對不可誤加藍色灯油！</strong>
+              </p>
+            </div>
+          </div>
         </div>
 
-        <!-- Map Image with Lightbox Zoom -->
-        <div class="relative group rounded-xl overflow-hidden border border-rose-200 bg-slate-900 cursor-pointer shadow-xs" onclick="openSpeedCameraLightbox()">
-          <img src="speed-camera-map-2026.jpg" alt="2026沖繩本島測速照相地圖" class="w-full h-36 sm:h-44 object-cover object-top filter brightness-[0.96] group-hover:scale-102 group-hover:brightness-100 transition duration-300">
-          <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end justify-between p-2.5">
-            <span class="text-white text-[11px] font-bold flex items-center gap-1 drop-shadow-sm">
-              <span>🔍</span>
-              <span>點擊查看完整高解析設置地圖</span>
-            </span>
-            <span class="text-[10px] bg-white/20 text-white backdrop-blur-md px-2 py-0.5 rounded-full border border-white/30 font-mono">
-              3大半固定式機座 + N系統
-            </span>
+        <!-- 7-Step Self-Service Fueling Flow -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-3.5 space-y-2.5 shadow-2xs">
+          <div class="font-black text-slate-900 flex items-center gap-1.5 text-xs sm:text-sm">
+            <span>⛽</span>
+            <span>日本「セルフ (Self)」自助加油 7 步驟標準流程</span>
+          </div>
+
+          <div class="space-y-1.5 text-[11px] text-slate-700">
+            <div class="flex items-start gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-okinawa-ocean text-white font-black text-[10px] flex items-center justify-center">1</span>
+              <div><strong>對準油箱側停車：</strong> 確認儀表板油槍旁小箭頭方向（左或右），駛入印有「セルフ (Self)」的加油車道停妥。</div>
+            </div>
+            <div class="flex items-start gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-okinawa-ocean text-white font-black text-[10px] flex items-center justify-center">2</span>
+              <div><strong>熄火 ＆ 拉手煞車：</strong> <strong>務必將引擎完全關閉 (Engine OFF)</strong>、拉緊手煞車、關閉所有車窗，在車內或駕駛座先彈開油箱外蓋。</div>
+            </div>
+            <div class="flex items-start gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-okinawa-ocean text-white font-black text-[10px] flex items-center justify-center">3</span>
+              <div><strong>螢幕選擇「付款方式」：</strong> 點選「クレジットカード（信用卡）」或「現金」。選現金時可先投大鈔（如 ¥10,000），加油結束再找零。</div>
+            </div>
+            <div class="flex items-start gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-okinawa-ocean text-white font-black text-[10px] flex items-center justify-center">4</span>
+              <div><strong>選擇「油種」＆「加油量」：</strong> 點選紅色的 <strong>レギュラー (Regular)</strong> 或車輛指定油種，數量點 <strong>「満タン（Man-tan / 加滿）」</strong> 最方便。</div>
+            </div>
+            <div class="flex items-start gap-2.5 p-2 rounded-xl bg-amber-50/90 border border-amber-300">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-amber-500 text-white font-black text-[10px] flex items-center justify-center">5</span>
+              <div><strong class="text-amber-950">觸摸「静電気除去シート（除靜電貼片）」：</strong> 舉槍前<strong>務必用手掌摸一下機台旁黑／黃色除靜電墊</strong>釋放身上靜電，防止火花引燃油氣！</div>
+            </div>
+            <div class="flex items-start gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-okinawa-ocean text-white font-black text-[10px] flex items-center justify-center">6</span>
+              <div><strong>插緊對應色油槍並按壓：</strong> 旋開油箱內蓋，拿取與螢幕相同顏色的油槍<strong>插到底</strong>，確認計價器為 <strong class="font-mono">0.00</strong> 後拉緊板機到底；加滿會自動「喀」一聲停住。</div>
+            </div>
+            <div class="flex items-start gap-2.5 p-2 rounded-xl bg-slate-50 border border-slate-100">
+              <span class="shrink-0 w-5 h-5 rounded-full bg-okinawa-ocean text-white font-black text-[10px] flex items-center justify-center">7</span>
+              <div><strong>掛槍 ➔ 蓋蓋 ➔ 領收據/找零：</strong> 掛回油槍、轉緊油箱內蓋聽到「喀喀」兩聲後關外蓋。務必領取列印<strong>紙本收據（給油領収書）</strong>作為還車憑證！</div>
+            </div>
           </div>
         </div>
 
-        <!-- 3 Major Orbis Locations & Route Impact -->
-        <div class="space-y-1.5 text-[11px] text-slate-700">
-          <div class="font-bold text-slate-900 flex items-center gap-1 text-[11px]">
-            <span class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
-            <span>沖繩自動車道（高速公路）3 大「半固定式白色鐵籠」測速相機：</span>
+        <!-- Fueling Safety Tips & Cashier Info -->
+        <div class="bg-rose-50/80 border border-rose-200 rounded-2xl p-3.5 space-y-2 text-[11px] text-slate-700">
+          <div class="font-black text-rose-900 flex items-center gap-1.5 text-xs">
+            <span>⚠️</span>
+            <span>日本自助加油必備注意事項</span>
           </div>
-          
-          <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5 text-[10px]">
-            <!-- Camera 3 -->
-            <div class="p-2 rounded-xl bg-white border border-rose-200 shadow-2xs space-y-0.5 ring-1 ring-rose-400/40">
-              <div class="font-bold text-rose-800 flex items-center gap-1">
-                <span class="px-1.5 py-0.2 rounded bg-rose-100 text-rose-900 font-black">③</span>
-                <span>金武 ～ 宜野座 (KP46)</span>
-              </div>
-              <div class="text-slate-600 font-semibold">方向：下行（往許田 / 北上）</div>
-              <div class="text-[9px] text-rose-600 font-bold">⚠️ Day 2 往水族館必經！</div>
-              <div class="text-[9px] text-slate-500">2025/12 設置，白色金屬網狀罩，直路極易超速。</div>
-            </div>
-
-            <!-- Camera 2 -->
-            <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-0.5">
-              <div class="font-bold text-slate-800 flex items-center gap-1">
-                <span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-800 font-black">②</span>
-                <span>沖繩北 ～ 沖繩南 (KP19.4)</span>
-              </div>
-              <div class="text-slate-600 font-semibold">方向：上行（往那霸 / 南下）</div>
-              <div class="text-[9px] text-slate-500">2026/3 設置，八重島1丁目，注意 80km/h。</div>
-            </div>
-
-            <!-- Camera 1 -->
-            <div class="p-2 rounded-xl bg-white border border-slate-200 shadow-2xs space-y-0.5">
-              <div class="font-bold text-slate-800 flex items-center gap-1">
-                <span class="px-1.5 py-0.2 rounded bg-slate-100 text-slate-800 font-black">①</span>
-                <span>中城 PA ～ 西原 IC (KP8)</span>
-              </div>
-              <div class="text-slate-600 font-semibold">方向：上行（往那霸 / 南下）</div>
-              <div class="text-[9px] text-amber-700 font-semibold">⚠️ Day 3 若高速還車會經過！</div>
-              <div class="text-[9px] text-slate-500">2026/3 設置，中城村南上原。</div>
-            </div>
-          </div>
-
-          <div class="pt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-[10px] text-slate-500">
-            <span>• <strong>車牌識別 (N 系統)：</strong> 國道 58 號（宜野灣 bypass、讀谷比謝），記錄軌跡非測速。</span>
-            <span>• <strong>道路管理相機：</strong> 國道 332 那霸安次嶺 (機場旁)、國道 329、331 等，純車流監控。</span>
-          </div>
+          <ul class="space-y-1.5 leading-relaxed list-disc pl-4">
+            <li><strong>跳停後嚴禁「補油（継ぎ足し）」：</strong> 油槍自動「喀」一聲停止即已滿箱，<strong>切勿為了湊整數硬按補充</strong>，極易造成油氣噴濺腐蝕烤漆甚至引起火災！</li>
+            <li><strong>現金找零要跑一趟「釣銭精算機」：</strong> 多數日本自助加油機不直接吐出找零紙鈔，而是先吐出一張帶條碼的找零券；<strong>務必拿去旁邊「精算機」掃描條碼領回找零現金</strong>！</li>
+            <li><strong>隨身攜帶日圓現鈔備用：</strong> 部分自助站不吃海外 Visa/Mastercard 或要求輸入 4 位數預借現金密碼，車上備 ¥5,000~¥10,000 現鈔最穩妥。</li>
+            <li><strong>人工加油站免緊張對話：</strong> 若駛入非「セルフ」人工服務站（フルサービス），只要搖下車窗說：<strong>「レギュラー、満タンで（Regular、Man-tan de / 常規汽油加滿）」</strong> ＋ <strong>「現金 (Genkin) / カード (Kaado)」</strong> 即可。</li>
+            <li><strong>嚴禁火源 ＆ 手機操作：</strong> 站區內全面禁菸、開啟油箱蓋期間禁止操作手機或讓幼童下車靠近油口；還車加滿後別忘保留收據交還門市確認（Day 3 <strong>19:30</strong> 還車前建議預留 15 分鐘完成補油）。</li>
+          </ul>
         </div>
       </div>
 
-      <!-- MapCode Table -->
-      <div class="overflow-y-auto flex-grow space-y-2 pr-1 text-xs">
-        <div class="font-bold text-slate-800 text-xs pb-1">📍 4天3夜全行程導航代碼速查表：</div>
+      <!-- TAB 3: MapCode Table -->
+      <div id="drivingTabMapcodeContent" class="hidden overflow-y-auto flex-grow space-y-2 pr-1 text-xs">
+        <div class="p-2.5 rounded-xl bg-amber-50/90 border border-amber-200 text-[11px] text-amber-950 flex items-center justify-between gap-2">
+          <span>💡 車用導航優先輸入 <strong>MapCode</strong>（比電話搜尋更精準直達入口或停車場）</span>
+          <span class="text-[10px] font-bold text-amber-700 shrink-0">點擊一鍵複製</span>
+        </div>
         <div class="space-y-1.5" id="drivingMapCodeList">
           <!-- Injected via JavaScript -->
         </div>
@@ -3659,6 +3887,24 @@
           </a>
         </div>
       `).join('');
+    }
+
+    function switchDrivingTab(tabName) {
+      const tabs = {
+        rules: { btn: 'btnDrivingTabRules', panel: 'drivingTabRulesContent' },
+        fuel: { btn: 'btnDrivingTabFuel', panel: 'drivingTabFuelContent' },
+        mapcode: { btn: 'btnDrivingTabMapcode', panel: 'drivingTabMapcodeContent' }
+      };
+      const activeCls = 'flex-1 py-2 px-1.5 rounded-lg font-bold transition bg-white text-okinawa-ocean shadow-xs cursor-pointer segmented-tab-btn whitespace-nowrap';
+      const inactiveCls = 'flex-1 py-2 px-1.5 rounded-lg font-bold transition text-slate-600 hover:text-slate-900 cursor-pointer whitespace-nowrap';
+
+      Object.entries(tabs).forEach(([key, ids]) => {
+        const isActive = key === tabName;
+        const btn = document.getElementById(ids.btn);
+        const panel = document.getElementById(ids.panel);
+        if (btn) btn.className = isActive ? activeCls : inactiveCls;
+        if (panel) panel.classList.toggle('hidden', !isActive);
+      });
     }
 
     function initDrivingModal() {
