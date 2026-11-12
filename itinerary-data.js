@@ -6,7 +6,7 @@
 const OKINAWA_TRIP_DATA = {
   meta: {
     title: "煥然一新 • 沖繩4天3夜動態行程",
-    version: "20261117-v3.17",
+    version: "20261117-v3.19",
     dateRange: "2026/11/16 (一) ~ 2026/11/19 (四)",
     defaultRate: 0.215, // JPY to TWD 參考匯率
     emergencyContacts: [
@@ -1593,13 +1593,21 @@ const OKINAWA_TRIP_DATA = {
       { id: "chk-9", text: "下載日本退稅 App (PIE VAT / Global Blue) 並完成註冊綁卡", checked: false }
     ],
     shopping: [
-      { id: "shp-1", text: "Vivienne Westwood (Outlet 飾品/開襟衫)", checked: false },
-      { id: "shp-2", text: "ASHIBINAA Outlet (ABC-MART / ASICS / NB / COACH)", checked: false },
-      { id: "shp-3", text: "御菓子御殿 元祖紅芋塔", checked: false },
-      { id: "shp-4", text: "宮古島雪鹽 ＆ 雪鹽金楚糕", checked: false },
-      { id: "shp-5", text: "Royce' 石垣島黑糖生巧克力", checked: false },
-      { id: "shp-6", text: "日本藥妝（EVE止痛、合利他命、眼藥水）", checked: false },
-      { id: "shp-7", text: "沖繩琉球泡盛古酒 / Orion 生啤", checked: false }
+      { id: "shop-1", text: "Orion THE DRAFT 啤酒酵母保濕面膜 (5枚入／オリオンフェイスマスク)", image: "shop-orion-mask.jpg", buyAt: ["Day 1 唐吉訶德國際通店", "Day 4 國際通伴手禮店", "Day 4 那霸機場國內線2F"], note: "久米島海洋深層水＋啤酒酵母萃取、清新海洋香；整盒建議放託運行李", checked: false },
+      { id: "shop-2", text: "Atelier Plage「OKINAWA under the sea」琉球海沙玻璃杯 (青／綠)", image: "shop-seaglass.jpg", buyAt: ["Day 4 那霸機場 2F「GAJUMARU」(首里城復興広場常設櫃位)"], note: "封入宮古島白沙與石垣島星砂的流沙玻璃杯；建議做好防撞保護或隨身手提上機", checked: false },
+      { id: "shop-3", text: "Royce' 石垣島 黑糖巧克力 (ロイズ石垣島 黒糖チョコレート)", image: "shop-royce-kokutoh.jpg", buyAt: ["Day 4 San-A Main Place 1F", "Day 4 國際通伴手禮店", "Day 4 那霸機場國內線2F"], note: "32枚入獨立包裝、常溫保存忌高溫；留待 Day 4 採買最省行李空間", checked: false },
+      { id: "shop-4", text: "OKINAWA CERRADO COFFEE「DARK ROAST BLEND」深烘焙咖啡豆／粉", image: "shop-cerrado-coffee.jpg", buyAt: ["Day 2 浦添 PARCO CITY 1F「BeansStore 直營店」(Orange Zone)"], note: "⚠️ 那霸機場與國際通無常設門市！請務必於 Day 2 晚間逛 PARCO CITY 時一次買齊", checked: false },
+      { id: "shop-5", text: "宮古島の雪塩「雪塩さんど」白巧克力玉米脆片夾心餅 (6／12入)", image: "shop-yukishio-sando.jpg", buyAt: ["Day 1 宮古島の雪塩 國際通本店／松尾店", "Day 4 那霸機場國內線2F"], note: "連住 NEST 免換飯店可於 Day 1 雪塩本店先行入手大盒伴手禮", checked: false },
+      { id: "shop-6", text: "HOKA Bondi 8 'Black White' 厚底慢跑鞋 (男款 US 6／24cm｜1123202-BWHT)", image: "shop-hoka-bondi8.jpg", buyAt: ["Day 2 PARCO CITY 2F「SORA」", "Day 2 PARCO CITY 3F「ABC-MART GRAND STAGE／OSHMAN'S」", "Day 4 Sports Depo 天久店(備案)"], note: "ASHIBINAA Outlet 無 HOKA 專櫃，請於 Day 2 晚間 PARCO CITY 優先試穿尋碼 US 6", checked: false },
+      { id: "shop-7", text: "HOKA Wmns Clifton 9 'Sandstone Cream' 慢跑鞋 (女款奶油珊瑚粉｜1127896-SNC)", image: "shop-hoka-clifton9.jpg", buyAt: ["Day 2 PARCO CITY 2F「SORA」", "Day 2 PARCO CITY 3F「ABC-MART GRAND STAGE／OSHMAN'S」", "Day 4 Sports Depo 天久店(備案)"], note: "型號 1127896-SNC，同 Bondi 8 集中於 Day 2 PARCO CITY 館內一併比價挑選", checked: false },
+      { id: "shop-8", text: "ASICS GEL-KAYANO 31 'Triple Black' 黑武士慢跑鞋 (1011B867-001)", image: "shop-asics-kayano31.jpg", buyAt: ["Day 1 ASHIBINAA Outlet 1F「ASICS #260」", "Day 1 ASHIBINAA「ABC-MART #800」", "Day 2 PARCO CITY 3F ABC-MART"], note: "Day 1 下機直衝 ASHIBINAA #260 與 #800；Outlet 尺碼依當日庫存為主", checked: false },
+      { id: "shop-9", text: "ASICS GEL-NIMBUS 26 黑粉橘／黑玫瑰金慢跑鞋 (1011B996-002)", image: "shop-asics-nimbus26.jpg", buyAt: ["Day 1 ASHIBINAA Outlet 1F「ASICS #260」", "Day 1 ASHIBINAA「ABC-MART #800」", "Day 2 PARCO CITY 3F ABC-MART"], note: "型號 1011B996-002（PureGEL 漸層中底），可雙擊圖片放大給店員確認配色", checked: false },
+      { id: "shop-10", text: "Jo Malone London 經典古龍水 (100ml 透明瓶｜櫃上試香確認款式)", image: "shop-jomalone-clear.jpg", buyAt: ["Day 4 T Galleria by DFS 沖繩T廣場 1F (歌町站空橋直達)"], note: "免稅價約專櫃 6~7 折；結帳報回程班機並於那霸機場管制區提貨直接上機（原截圖文字較小，參考圖為鼠尾草與海鹽 100ml）", checked: false },
+      { id: "shop-11", text: "Jo Malone London「Oud & Bergamot」烏木與佛手柑芳醇古龍水 (100ml 黑瓶)", image: "shop-jomalone-oud.jpg", buyAt: ["Day 4 T Galleria by DFS 沖繩T廣場 1F (歌町站空橋直達)"], note: "Cologne Intense 黑瓶系列；結帳可出示 DFS Loyalty T 會員確認優惠，離境機場管制區領取免佔託運", checked: false },
+      { id: "shop-12", text: "Vivienne Westwood 黑色立體壓紋星花土星短夾 (Embossed Orb Wallet)", image: "shop-vw-wallet.jpg", buyAt: ["Day 1 ASHIBINAA Outlet 1F「Vivienne Westwood #540」"], note: "Day 1 抵達 Outlet 先衝 1F #540 找這款滿版壓紋＋銀色土星標；過季商品可遇不可求", checked: false },
+      { id: "shop-13", text: "Vivienne Westwood Conduit Street 黑琺瑯三環連動戒指 (銀×黑琺瑯)", image: "shop-vw-ring.jpg", buyAt: ["Day 1 ASHIBINAA Outlet 1F「Vivienne Westwood #540」"], note: "三環滾動結構＋黑琺瑯刻印字樣；現場建議雙擊大圖詢問 #540 櫃員是否有該款飾品", checked: false },
+      { id: "shop-14", text: "JT「Peace AMBER NOTE」2026 限定版香菸 (1946–2026 鐵盒／焦油 10mg・尼古丁 0.9mg)", image: "shop-peace-ambernote.jpg", buyAt: ["Day 4 那霸機場 國際線管制區免稅店", "Day 1 ＆ Day 4 國際通旁「翁長たばこ店」", "Day 1 ＆ Day 4 牧志站「いちまいるタバコ店」"], note: "100% 維吉尼亞菸葉專為搭配威士忌調製；超商無常設販售（單盒參考價約 ¥1,000／免稅條裝 10 盒約 ¥10,000）。那霸市區 T 廣場免稅店不售菸且目前無線上預訂；年滿 20 歲台灣入境免稅額為捲菸 200 支（1 條）", checked: false },
+      { id: "shop-15", text: "久米仙酒造「OKINAWA island BLUE」43 度 沖繩純米威士忌 (700ml／白橡木桶熟成)", image: "shop-okinawa-blue.jpg", buyAt: ["Day 4 那霸機場 國內線 3F「OKINAWA BLUE 那霸空港店」", "Day 4 那霸機場 國內線 2F「ANA FESTA」", "Day 4 San-A Main Place 1F / 國際通わしたショップ"], note: "呼應 Peace 鐵盒上「An aroma that goes well with whiskey」的沖繩代表酒款！以泡盛釀造工藝放入美國白橡木新桶在亞熱帶熟成，帶香草、芒果果香與溫潤木質尾韻（TWSC／ISC 金賞・參考價 ¥4,950～5,500）。700ml 需放託運行李，未滿台灣 1.5L 免稅上限", checked: false }
     ]
   },
 

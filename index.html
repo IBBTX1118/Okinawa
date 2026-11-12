@@ -31,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   
   <!-- Structured Itinerary Dataset -->
-  <script src="itinerary-data.js?v=20261117-v3.17"></script>
+  <script src="itinerary-data.js?v=20261117-v3.19"></script>
 
   <script>
     tailwind.config = {
@@ -752,14 +752,14 @@
   <!-- 2. Checklist & Shopping List Modal -->
   <div id="checklistModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 modal-bottom-sheet-container">
     <div class="modal-backdrop fixed inset-0" onclick="closeModal('checklistModal')"></div>
-    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-lg z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col modal-sheet-panel">
+    <div class="bg-white rounded-3xl p-5 sm:p-6 w-full max-w-2xl z-10 shadow-2xl space-y-4 border border-slate-200 relative max-h-[90vh] flex flex-col modal-sheet-panel">
       
       <div class="flex items-center justify-between border-b border-slate-100 pb-3 shrink-0">
         <div class="flex items-center space-x-2">
           <span class="text-2xl">🎒</span>
           <div>
             <h3 class="font-bold text-slate-900 text-base sm:text-lg">出國行前 ＆ 戰利品清單</h3>
-            <p class="text-[11px] text-slate-500">勾選狀態自動儲存於手機本地</p>
+            <p class="text-[11px] text-slate-500">勾選狀態自動儲存 • 戰利品縮圖可雙擊放大檢視 ＆ 附行程採買點</p>
           </div>
         </div>
         <button onclick="closeModal('checklistModal')" aria-label="關閉清單視窗" class="text-slate-400 hover:text-slate-600 text-lg font-bold p-2.5 -m-1.5 min-w-[44px] min-h-[44px] flex items-center justify-center">✕</button>
@@ -1756,6 +1756,43 @@
       }
     }
 
+    function mergeChecklistWithDefaults(existingChecklists) {
+      const result = existingChecklists && typeof existingChecklists === 'object' ? existingChecklists : {};
+      const defaultData = OKINAWA_TRIP_DATA.defaultChecklists || {};
+
+      // Essentials: preserve checkmarks + custom items, adopt new default chk-* items
+      const essDefaults = defaultData.essentials || [];
+      if (!Array.isArray(result.essentials)) {
+        result.essentials = JSON.parse(JSON.stringify(essDefaults));
+      } else {
+        essDefaults.forEach(defItem => {
+          const existing = result.essentials.find(it => it.id === defItem.id);
+          if (!existing) {
+            result.essentials.push(JSON.parse(JSON.stringify(defItem)));
+          } else if (existing.text !== defItem.text) {
+            existing.text = defItem.text;
+          }
+        });
+      }
+
+      // Shopping: replace legacy shp-* defaults cleanly while preserving shop-* checkmarks & user custom items
+      const shopDefaults = defaultData.shopping || [];
+      const prevShopping = Array.isArray(result.shopping) ? result.shopping : [];
+      const customShopping = prevShopping.filter(it => it && typeof it.id === 'string' && !it.id.startsWith('shp-') && !it.id.startsWith('shop-'));
+      result.shopping = [
+        ...shopDefaults.map(defItem => {
+          const prevMatch = prevShopping.find(it => it && it.id === defItem.id);
+          return {
+            ...JSON.parse(JSON.stringify(defItem)),
+            checked: prevMatch ? Boolean(prevMatch.checked) : Boolean(defItem.checked)
+          };
+        }),
+        ...customShopping
+      ];
+
+      return result;
+    }
+
     let checklists = null;
     try {
       const storedChecklists = localStorage.getItem('okinawa_checklists');
@@ -1763,28 +1800,16 @@
         if (!storedChecklists) {
           checklists = JSON.parse(JSON.stringify(OKINAWA_TRIP_DATA.defaultChecklists));
           localStorage.setItem('okinawa_checklists', JSON.stringify(checklists));
-        } else if (savedVersion !== CURRENT_DATA_VERSION) {
-          // Version updated: smart merge to adopt new default items (like Tax-Free apps) without losing user checkmarks
-          checklists = JSON.parse(storedChecklists);
-          ['essentials', 'shopping'].forEach(tab => {
-            const defaults = OKINAWA_TRIP_DATA.defaultChecklists[tab] || [];
-            if (!Array.isArray(checklists[tab])) {
-              checklists[tab] = JSON.parse(JSON.stringify(defaults));
-            } else {
-              defaults.forEach(defItem => {
-                const existing = checklists[tab].find(it => it.id === defItem.id);
-                if (!existing) {
-                  checklists[tab].push(JSON.parse(JSON.stringify(defItem)));
-                } else if (existing.text !== defItem.text) {
-                  // Keep text updated to latest while preserving user's checked status
-                  existing.text = defItem.text;
-                }
-              });
-            }
-          });
-          localStorage.setItem('okinawa_checklists', JSON.stringify(checklists));
         } else {
-          checklists = JSON.parse(storedChecklists);
+          const parsedChecklists = JSON.parse(storedChecklists);
+          const hasLegacyShopping = Array.isArray(parsedChecklists.shopping) && parsedChecklists.shopping.some(it => it && typeof it.id === 'string' && it.id.startsWith('shp-'));
+          const needsShoppingMetaSync = Array.isArray(parsedChecklists.shopping) && parsedChecklists.shopping.some(it => it && typeof it.id === 'string' && it.id.startsWith('shop-') && !it.image);
+          if (savedVersion !== CURRENT_DATA_VERSION || hasLegacyShopping || needsShoppingMetaSync) {
+            checklists = mergeChecklistWithDefaults(parsedChecklists);
+            localStorage.setItem('okinawa_checklists', JSON.stringify(checklists));
+          } else {
+            checklists = parsedChecklists;
+          }
         }
       } else if (storedChecklists) {
         checklists = JSON.parse(storedChecklists);
@@ -1881,9 +1906,24 @@
         console.warn('Widget init error:', e);
       }
 
-      // Global Escape key listener to close active modals
+      // Global Escape key listener to close active modals (topmost lightbox first)
       window.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
+          const zoomBox = document.getElementById('productZoomLightbox');
+          if (zoomBox && !zoomBox.classList.contains('hidden')) {
+            closeProductImageModal();
+            return;
+          }
+          const camBox = document.getElementById('speedCameraLightbox');
+          if (camBox && !camBox.classList.contains('hidden')) {
+            closeSpeedCameraLightbox();
+            return;
+          }
+          const floorBox = document.getElementById('ashibinaaFloorModal');
+          if (floorBox && !floorBox.classList.contains('hidden')) {
+            closeAshibinaaFloorModal();
+            return;
+          }
           const openModals = document.querySelectorAll('[id$="Modal"]:not(.hidden)');
           openModals.forEach(m => closeModal(m.id));
         }
@@ -3715,6 +3755,102 @@
       updateChecklistProgress();
     }
 
+    function escapeHtml(str) {
+      return String(str || '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
+    function getBuyAtBadgeClass(locText) {
+      if (locText.includes('Day 1')) return 'bg-sky-50 text-sky-800 border-sky-200';
+      if (locText.includes('Day 2')) return 'bg-emerald-50 text-emerald-800 border-emerald-200';
+      if (locText.includes('Day 3')) return 'bg-violet-50 text-violet-800 border-violet-200';
+      if (locText.includes('Day 4')) return 'bg-amber-50 text-amber-800 border-amber-200';
+      return 'bg-slate-100 text-slate-700 border-slate-200';
+    }
+
+    let _lastShopThumbTap = { id: null, time: 0 };
+    function handleShopThumbTouchEnd(event, itemId) {
+      const now = Date.now();
+      if (_lastShopThumbTap.id === itemId && (now - _lastShopThumbTap.time) < 340) {
+        event.preventDefault();
+        _lastShopThumbTap = { id: null, time: 0 };
+        openProductImageById(itemId);
+      } else {
+        _lastShopThumbTap = { id: itemId, time: now };
+      }
+    }
+
+    let _isProductImgZoomed = false;
+    function toggleProductZoomScale() {
+      const imgEl = document.getElementById('productZoomImg');
+      const btnEl = document.getElementById('productZoomScaleBtn');
+      if (!imgEl) return;
+      _isProductImgZoomed = !_isProductImgZoomed;
+      if (_isProductImgZoomed) {
+        imgEl.classList.remove('max-h-[60vh]', 'w-auto', 'cursor-zoom-in');
+        imgEl.classList.add('w-[175%]', 'max-w-none', 'cursor-zoom-out');
+        if (btnEl) btnEl.textContent = '🔍 恢復適中比例 (1x)';
+      } else {
+        imgEl.classList.remove('w-[175%]', 'max-w-none', 'cursor-zoom-out');
+        imgEl.classList.add('max-h-[60vh]', 'w-auto', 'cursor-zoom-in');
+        if (btnEl) btnEl.textContent = '🔎 再放大細節 (1.75x)';
+      }
+    }
+
+    function openProductImageById(itemId) {
+      const items = (checklists && checklists.shopping) || [];
+      const item = items.find(it => it.id === itemId);
+      if (!item || !item.image) return;
+
+      const box = document.getElementById('productZoomLightbox');
+      const imgEl = document.getElementById('productZoomImg');
+      const titleEl = document.getElementById('productZoomTitle');
+      const buyAtEl = document.getElementById('productZoomBuyAt');
+      const noteEl = document.getElementById('productZoomNote');
+      const wrapEl = document.getElementById('productZoomScrollWrap');
+      if (!box || !imgEl) return;
+
+      _isProductImgZoomed = true;
+      toggleProductZoomScale(); // reset cleanly to 1x fitted view
+
+      imgEl.src = item.image;
+      imgEl.alt = item.text || '商品高清圖片';
+      if (titleEl) titleEl.textContent = item.text || '';
+      if (buyAtEl) {
+        const locs = Array.isArray(item.buyAt) ? item.buyAt : [];
+        buyAtEl.innerHTML = locs.map(loc =>
+          `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[11px] font-bold border ${getBuyAtBadgeClass(loc)}">📍 ${escapeHtml(loc)}</span>`
+        ).join('');
+      }
+      if (noteEl) {
+        if (item.note) {
+          noteEl.textContent = item.note;
+          noteEl.classList.remove('hidden');
+        } else {
+          noteEl.classList.add('hidden');
+        }
+      }
+      if (wrapEl) wrapEl.scrollTo({ top: 0, left: 0 });
+
+      box.classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeProductImageModal() {
+      const box = document.getElementById('productZoomLightbox');
+      if (box) {
+        box.classList.add('hidden');
+      }
+      const checklistOpen = document.getElementById('checklistModal') && !document.getElementById('checklistModal').classList.contains('hidden');
+      if (!checklistOpen) {
+        document.body.style.overflow = '';
+      }
+    }
+
     function renderChecklistItems() {
       const container = document.getElementById('checklistItemsContainer');
       const items = checklists[currentChecklistTab] || [];
@@ -3724,19 +3860,73 @@
         return;
       }
 
-      container.innerHTML = items.map((item, idx) => {
+      const shoppingHintBanner = currentChecklistTab === 'shopping'
+        ? `<div class="flex items-center justify-between gap-2 px-3 py-2 rounded-xl bg-sky-50 border border-sky-200 text-[11px] text-sky-900 font-medium mb-1">
+             <span>🔍 <strong>雙擊商品縮圖</strong>可高清放大看細節，方便現場找貨比對</span>
+             <span class="shrink-0 text-[10px] font-bold bg-white/90 text-sky-700 px-2 py-0.5 rounded-full border border-sky-200">共 ${items.length} 項</span>
+           </div>`
+        : '';
+
+      const itemsHtml = items.map((item) => {
+        const hasRichCard = Boolean(item.image || (Array.isArray(item.buyAt) && item.buyAt.length) || item.note);
+        if (!hasRichCard) {
+          return `
+            <div class="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition text-xs">
+              <label class="flex items-center space-x-2.5 cursor-pointer flex-grow">
+                <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${escapeHtml(item.id)}')" class="w-4 h-4 rounded text-okinawa-ocean focus:ring-sky-500 chk-bounce-input">
+                <span class="chk-item-text ${item.checked ? 'is-checked' : 'text-slate-800 font-semibold'} transition">
+                  ${escapeHtml(item.text)}
+                </span>
+              </label>
+              <button onclick="deleteChecklistItem('${escapeHtml(item.id)}')" class="text-slate-300 hover:text-rose-500 p-1 text-xs chip-bounce">✕</button>
+            </div>
+          `;
+        }
+
+        const safeId = escapeHtml(item.id);
+        const inputDomId = `chk-input-${safeId}`;
+        const locs = Array.isArray(item.buyAt) ? item.buyAt : [];
+        const locBadges = locs.map(loc =>
+          `<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-md text-[10px] font-bold border ${getBuyAtBadgeClass(loc)}">📍 ${escapeHtml(loc)}</span>`
+        ).join('');
+        const locHtml = locs.length > 0
+          ? `<div class="flex flex-wrap gap-1 mt-1.5">${locBadges}</div>`
+          : '';
+        const noteHtml = item.note
+          ? `<p class="text-[10.5px] text-slate-500 leading-snug mt-1">${escapeHtml(item.note)}</p>`
+          : '';
+        const thumbHtml = item.image
+          ? `<div class="relative shrink-0 w-16 h-16 sm:w-[74px] sm:h-[74px] rounded-xl border border-slate-200 bg-white overflow-hidden shadow-2xs group select-none cursor-zoom-in"
+                  style="touch-action: manipulation;"
+                  title="雙擊放大檢視商品圖"
+                  ondblclick="openProductImageById('${safeId}')"
+                  ontouchend="handleShopThumbTouchEnd(event, '${safeId}')">
+               <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.text)}" class="w-full h-full object-contain p-0.5 group-hover:scale-105 transition duration-200 pointer-events-none">
+               <span class="absolute bottom-0.5 right-0.5 bg-slate-900/75 text-white text-[8px] font-bold px-1 py-0.2 rounded backdrop-blur-xs pointer-events-none">雙擊放大</span>
+             </div>`
+          : '';
+
         return `
-          <div class="flex items-center justify-between p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 transition text-xs">
-            <label class="flex items-center space-x-2.5 cursor-pointer flex-grow">
-              <input type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${item.id}')" class="w-4 h-4 rounded text-okinawa-ocean focus:ring-sky-500 chk-bounce-input">
-              <span class="chk-item-text ${item.checked ? 'is-checked' : 'text-slate-800 font-semibold'} transition">
-                ${item.text}
-              </span>
-            </label>
-            <button onclick="deleteChecklistItem('${item.id}')" class="text-slate-300 hover:text-rose-500 p-1 text-xs chip-bounce">✕</button>
+          <div class="flex items-start gap-2.5 sm:gap-3 p-2.5 sm:p-3 rounded-2xl border ${item.checked ? 'border-slate-200 bg-slate-50/70 opacity-75' : 'border-slate-200 bg-white hover:border-sky-300'} transition text-xs shadow-2xs">
+            <div class="pt-1 shrink-0">
+              <input id="${inputDomId}" type="checkbox" ${item.checked ? 'checked' : ''} onchange="toggleChecklistItem('${safeId}')" class="w-4 h-4 rounded text-okinawa-ocean focus:ring-sky-500 chk-bounce-input cursor-pointer">
+            </div>
+            ${thumbHtml}
+            <div class="flex-1 min-w-0">
+              <label for="${inputDomId}" class="block cursor-pointer">
+                <span class="chk-item-text ${item.checked ? 'is-checked text-slate-400' : 'text-slate-900 font-bold'} text-xs sm:text-[13px] leading-snug transition">
+                  ${escapeHtml(item.text)}
+                </span>
+              </label>
+              ${locHtml}
+              ${noteHtml}
+            </div>
+            <button onclick="deleteChecklistItem('${safeId}')" aria-label="刪除此項目" class="text-slate-300 hover:text-rose-500 p-1 text-xs chip-bounce shrink-0">✕</button>
           </div>
         `;
       }).join('');
+
+      container.innerHTML = shoppingHintBanner + itemsHtml;
     }
 
     function toggleChecklistItem(id) {
@@ -4097,9 +4287,10 @@
 
     function registerServiceWorker() {
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js')
+        navigator.serviceWorker.register('./service-worker.js', { updateViaCache: 'none' })
           .then((reg) => {
             console.log('[PWA] Service Worker registered successfully:', reg.scope);
+            reg.update().catch(() => {});
             updateOnlineStatus();
           })
           .catch((err) => {
@@ -4171,6 +4362,33 @@
       <button onclick="closeSpeedCameraLightbox()" class="absolute top-2 right-2 sm:top-4 sm:right-4 z-10 w-10 h-10 rounded-full bg-white/20 hover:bg-white/40 text-white font-bold flex items-center justify-center text-lg backdrop-blur-md transition">✕</button>
       <img src="speed-camera-map-2026.jpg" class="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/20" alt="2026 沖繩本島測速照相機實際設置地圖">
       <p class="text-white/80 text-xs mt-2.5 font-medium text-center">2026 沖繩本島測速照相機・車牌識別・道路監控系統 實際設置地圖 (點擊右上角或背景關閉)</p>
+    </div>
+  </div>
+
+  <!-- Shopping Product Zoom Lightbox Modal -->
+  <div id="productZoomLightbox" class="hidden fixed inset-0 z-[70] bg-black/90 backdrop-blur-md flex items-center justify-center p-2.5 sm:p-4 animate-in fade-in duration-200" onclick="closeProductImageModal()">
+    <div class="relative max-w-2xl max-h-[94vh] w-full bg-white rounded-3xl border border-slate-200 shadow-2xl flex flex-col overflow-hidden" onclick="event.stopPropagation()">
+      <div class="px-4 py-3 border-b border-slate-100 flex items-center justify-between gap-2 shrink-0 bg-slate-50">
+        <div class="min-w-0">
+          <div class="text-[10px] font-bold uppercase tracking-wider text-okinawa-ocean">🛍️ 現場找貨對照大圖</div>
+          <h4 id="productZoomTitle" class="font-bold text-slate-900 text-xs sm:text-sm truncate">商品高清放大檢視</h4>
+        </div>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button id="productZoomScaleBtn" type="button" onclick="toggleProductZoomScale()" class="px-2.5 py-1.5 rounded-xl bg-sky-100 hover:bg-sky-200 text-sky-800 text-[11px] font-bold transition cursor-pointer">
+            🔎 再放大細節 (1.75x)
+          </button>
+          <button type="button" onclick="closeProductImageModal()" aria-label="關閉放大圖片" class="w-9 h-9 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold flex items-center justify-center text-sm transition cursor-pointer">✕</button>
+        </div>
+      </div>
+
+      <div id="productZoomScrollWrap" class="flex-grow overflow-auto bg-white p-3 sm:p-5 flex items-center justify-center min-h-[260px]">
+        <img id="productZoomImg" src="" alt="商品高清圖片" onclick="toggleProductZoomScale()" class="max-h-[60vh] w-auto object-contain rounded-xl shadow-xs cursor-zoom-in transition-all duration-200 select-none">
+      </div>
+
+      <div class="px-4 py-3 border-t border-slate-100 bg-slate-50/90 space-y-1.5 shrink-0">
+        <div id="productZoomBuyAt" class="flex flex-wrap gap-1.5"></div>
+        <p id="productZoomNote" class="text-[11px] text-slate-600 leading-relaxed"></p>
+      </div>
     </div>
   </div>
 
